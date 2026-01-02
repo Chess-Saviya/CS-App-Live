@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIDE Top Rankings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-color: #0062FF;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --success-color: #2e7d32;
+            --danger-color: #d32f2f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--brand-color);
+            color: var(--white);
+            padding: 1.2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            justify-content: flex-end; /* Align right */
+            align-items: center;
+            padding: 1rem;
+            background-color: #fff;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .filter-label {
+            margin-right: 10px;
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .custom-select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .custom-select:focus {
+            border-color: var(--brand-color);
+        }
+
+        /* Ranking List Styles */
+        .ranking-header {
+            display: flex;
+            align-items: center;
+            background-color: #f1f3f5;
+            font-weight: 700;
+            padding: 1rem 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        .ranking-row {
+            display: flex;
+            align-items: center;
+            padding: 0.9rem 0.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ranking-row:hover {
+            background-color: #eef6ff;
+            transform: translateX(4px);
+        }
+
+        .ranking-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Column Widths */
+        .col-rank { width: 10%; text-align: center; font-weight: 700; }
+        .col-title { width: 10%; text-align: center; color: var(--brand-color); font-weight: 600; font-size: 0.9rem; }
+        .col-player { width: 50%; display: flex; align-items: center; gap: 12px; font-weight: 500; }
+        .col-flag { width: 15%; text-align: center; }
+        .col-rating { width: 15%; text-align: center; font-weight: 700; }
+
+        .player-img-list {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #eee; /* Placeholder color while loading */
+        }
+
+        .flag-img {
+            width: 28px;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .ranking-header, .ranking-row { padding: 0.8rem 0.3rem; font-size: 0.85rem; }
+            .col-rank { width: 10%; }
+            .col-title { width: 12%; }
+            .col-player { width: 43%; gap: 8px; }
+            .col-flag { width: 15%; }
+            .col-rating { width: 20%; }
+            
+            .player-img-list { width: 32px; height: 32px; }
+            .player-name-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px; display: inline-block; }
+            
+            .filter-section { justify-content: space-between; }
+        }
+
+        /* Popup Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-card {
+            background: var(--white);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(30px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .modal-overlay.active .profile-card {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            line-height: 1;
+            cursor: pointer;
+            color: #aaa;
+            background: none;
+            border: none;
+            transition: color 0.2s;
+        }
+        
+        .close-btn:hover { color: var(--text-color); }
+
+        /* Modern 4:5 Profile Image */
+        .profile-img-card {
+            width: 160px;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,66,255,0.2);
+            margin-bottom: 1rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #eee;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #222;
+        }
+
+        .profile-details {
+            text-align: left;
+            font-size: 0.95rem;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .status-active { color: var(--success-color); }
+        .status-inactive { color: var(--danger-color); }
+        
+        .rating-box {
+            background-color: var(--brand-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .footer-note {
+            margin-bottom: 1.5rem;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            display: inline-block;
+            font-style: normal;
+        }
+
+        .bottom-spacer { height: 3rem; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>FIDE Top Rankings</h1>
+    </header>
+
+    <div class="container">
+        <div class="filter-section">
+            <span class="filter-label">List View:</span>
+            <select id="player-filter" class="custom-select" onchange="renderRankings()">
+                <option value="active" selected>Active Players</option>
+                <option value="all">All Players</option>
+            </select>
+        </div>
+
+        <div class="ranking-header">
+            <div class="col-rank">#</div>
+            <div class="col-title"></div>
+            <div class="col-player">Player</div>
+            <div class="col-flag">Fed</div>
+            <div class="col-rating">Rating</div>
+        </div>
+
+        <div id="ranking-list"></div>
+    </div>
+
+    <div class="modal-overlay" id="profile-modal">
+        <div class="profile-card">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <img src="" alt="Player Profile" class="profile-img-card" id="modal-img">
+            <h2 class="profile-name" id="modal-name">Player Name</h2>
+            
+            <div class="profile-details">
+                <div class="detail-row">
+                    <span class="detail-label">FIDE ID:</span>
+                    <span class="detail-value" id="modal-id">0000000</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Birth Year:</span>
+                    <span class="detail-value" id="modal-birth">1990</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Gender:</span>
+                    <span class="detail-value" id="modal-gender">Male</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Title:</span>
+                    <span class="detail-value" id="modal-title">GM</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Federation:</span>
+                    <span class="detail-value" id="modal-fed">Country</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Active Status:</span>
+                    <span class="detail-value" id="modal-active">Yes</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Standard Rating:</span>
+                    <span class="detail-value rating-box" id="modal-rating">2800</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-note" id="dynamic-note">
+            </div>
+        <p>
+            &copy; <span id="year"></span> CHESS SAVIYA
+        </p>
+    </footer>
+
+    <div class="bottom-spacer"></div>
+
+    <script>
+        // Data for Top 30 Players (Active + Inactive)
+        const playersData = [
+            { name: "🥇 Magnus Carlsen", title: "GM", rating: 2840, fedCode: "no", country: "Norway", fideId: "1503014", birthYear: 1990, gender: "Male", active: true, img: "https://imgur.com/Nn1S9R9.png?text=MC" },
+            { name: "Garry Kasparov", title: "GM", rating: 2812, fedCode: "ru", country: "Russia", fideId: "4100018", birthYear: 1963, gender: "Male", active: false, img: "https://imgur.com/TM6mM77.png?text=GK" },
+            { name: "🥈 Hikaru Nakamura", title: "GM", rating: 2810, fedCode: "us", country: "United States", fideId: "2016192", birthYear: 1987, gender: "Male", active: true, img: "https://imgur.com/IPzKRWF.png?text=HN" },
+            { name: "🥉 Fabiano Caruana", title: "GM", rating: 2795, fedCode: "us", country: "United States", fideId: "2020009", birthYear: 1992, gender: "Male", active: true, img: "https://imgur.com/W8Uu6lp.png?text=FC" },
+            { name: "Vincent Keymer", title: "GM", rating: 2776, fedCode: "de", country: "Germany", fideId: "12940690", birthYear: 2004, gender: "Male", active: true, img: "https://imgur.com/Q6wizsU.png?text=VK" },
+            { name: "Arjun Erigaisi", title: "GM", rating: 2775, fedCode: "in", country: "India", fideId: "35009192", birthYear: 2003, gender: "Male", active: true, img: "https://imgur.com/TZkDlFx.png?text=AE" },
+            { name: "Alireza Firouzja", title: "GM", rating: 2762, fedCode: "fr", country: "France", fideId: "12573981", birthYear: 2003, gender: "Male", active: true, img: "https://imgur.com/v2p9snv.png?text=AF" },
+            { name: "R Praggnanandhaa", title: "GM", rating: 2761, fedCode: "in", country: "India", fideId: "25059530", birthYear: 2005, gender: "Male", active: true, img: "https://imgur.com/yjpVFGx.png?text=RP" },
+            { name: "Anish Giri", title: "GM", rating: 2760, fedCode: "nl", country: "Netherlands", fideId: "24116068", birthYear: 1994, gender: "Male", active: true, img: "https://imgur.com/4siLgoY.png?text=AG" },
+            { name: "👑 Gukesh D", title: "GM", rating: 2754, fedCode: "in", country: "India", fideId: "46616543", birthYear: 2006, gender: "Male", active: true, img: "https://imgur.com/6pWUZBR.png?text=GD" },
+            { name: "Wei Yi", title: "GM", rating: 2754, fedCode: "cn", country: "China", fideId: "8603405", birthYear: 1999, gender: "Male", active: true, img: "https://imgur.com/zk7cSCA.png?text=WY" },
+            { name: "Vladimir Kramnik", title: "GM", rating: 2753, fedCode: "ru", country: "Russia", fideId: "4101588", birthYear: 1975, gender: "Male", active: false, img: "https://imgur.com/wq8lSBX.png?text=VKr" },
+            { name: "Wesley So", title: "GM", rating: 2753, fedCode: "us", country: "United States", fideId: "5202213", birthYear: 1993, gender: "Male", active: true, img: "https://imgur.com/zc58GN5.png?text=WS" },
+            { name: "Sergey Karjakin", title: "GM", rating: 2750, fedCode: "ru", country: "Russia", fideId: "14109603", birthYear: 1990, gender: "Male", active: false, img: "https://imgur.com/vck5HeV.png?text=SK" },
+            { name: "Nodirbek Abdusattorov", title: "GM", rating: 2732, fedCode: "uz", country: "Uzbekistan", fideId: "14204118", birthYear: 2004, gender: "Male", active: true, img: "https://imgur.com/EyyBuIV.png?text=NA" },
+            // Players 16-30 for backend data
+            { name: "Viswanathan Anand", title: "GM", rating: 2743, fedCode: "in", country: "India", fideId: "5000017", birthYear: 1969, gender: "Male", active: true, img: "https://imgur.com/nsbH5fj.png?text=VA" },
+            { name: "Richard Rapport", title: "GM", rating: 2741, fedCode: "hu", country: "Hungary", fideId: "738590", birthYear: 1996, gender: "Male", active: true, img: "https://imgur.com/8HYBXig.png?text=RR" },
+            { name: "Leinier Dominguez Perez", title: "GM", rating: 2738, fedCode: "us", country: "United States", fideId: "3503240", birthYear: 1983, gender: "Male", active: true, img: "https://imgur.com/fAmrKf0.png?text=LD" },
+            { name: "Ding Liren", title: "GM", rating: 2734, fedCode: "cn", country: "China", fideId: "8603677", birthYear: 1992, gender: "Male", active: true, img: "https://imgur.com/2cZwT3M.png?text=DL" },
+            { name: "Maxime Vachier-Lagrave", title: "GM", rating: 2734, fedCode: "fr", country: "France", fideId: "623539", birthYear: 1990, gender: "Male", active: true, img: "https://imgur.com/BXHEgxL.png?text=MVL" },
+            { name: "Le Quang Liem", title: "GM", rating: 2731, fedCode: "vn", country: "Vietnam", fideId: "12401137", birthYear: 1991, gender: "Male", active: true, img: "https://imgur.com/KFsJacJ.png?text=LQL" },
+            { name: "Shakhriyar Mamedyarov", title: "GM", rating: 2730, fedCode: "az", country: "Azerbaijan", fideId: "13401319", birthYear: 1985, gender: "Male", active: true, img: "https://imgur.com/YchWlqW.png?text=SM" },
+            { name: "Levon Aronian", title: "GM", rating: 2729, fedCode: "us", country: "United States", fideId: "13300474", birthYear: 1982, gender: "Male", active: true, img: "https://imgur.com/FPua4Ln.png?text=LA" },
+            { name: "Jan-Krzysztof Duda", title: "GM", rating: 2729, fedCode: "pl", country: "Poland", fideId: "1170546", birthYear: 1998, gender: "Male", active: true, img: "https://imgur.com/tSXz56E.png?text=JKD" },
+            { name: "Javokhir Sindarov", title: "GM", rating: 2726, fedCode: "uz", country: "Uzbekistan", fideId: "14205483", birthYear: 2005, gender: "Male", active: true, img: "https://imgur.com/KFsJacJ.png?text=JS" },
+            { name: "Hans Niemann", title: "GM", rating: 2725, fedCode: "us", country: "United States", fideId: "2093596", birthYear: 2003, gender: "Male", active: true, img: "https://imgur.com/WkJ51Sz.png?text=HN" },
+            { name: "Ian Nepomniachtchi", title: "GM", rating: 2723, fedCode: "ru", country: "FIDE (Russia)", fideId: "4168119", birthYear: 1990, gender: "Male", active: true, img: "https://imgur.com/wXCihAG.png?text=IN" },
+            { name: "Veselin Topalov", title: "GM", rating: 2717, fedCode: "bg", country: "Bulgaria", fideId: "2900084", birthYear: 1975, gender: "Male", active: false, img: "https://imgur.com/f0N1xZL.png?text=VT" },
+            { name: "Yu Yangyi", title: "GM", rating: 2717, fedCode: "cn", country: "China", fideId: "8603820", birthYear: 1994, gender: "Male", active: true, img: "https://imgur.com/r337UoK.png?text=YY" },
+            { name: "Dmitry Andreikin", title: "GM", rating: 2710, fedCode: "ru", country: "FIDE (Russia)", fideId: "4158814", birthYear: 1990, gender: "Male", active: true, img: "https://imgur.com/kbYCKW2.png?text=DA" }
+        ];
+
+        // Function to render the Rankings
+        function renderRankings() {
+            const listContainer = document.getElementById('ranking-list');
+            const filterType = document.getElementById('player-filter').value;
+            const noteContainer = document.getElementById('dynamic-note');
+            
+            // Clear existing list
+            listContainer.innerHTML = '';
+
+            // 1. Filter Logic
+            let filteredPlayers = [...playersData];
+            
+            if (filterType === 'active') {
+                filteredPlayers = filteredPlayers.filter(player => player.active === true);
+                noteContainer.innerHTML = '<strong>Note:</strong> Showing current top 15 <strong>Active</strong> FIDE players.';
+            } else {
+                noteContainer.innerHTML = '<strong>Note:</strong> Showing top 15 players including <strong>Inactive</strong> records.';
+            }
+
+            // 2. Sort Logic (Descending by rating)
+            filteredPlayers.sort((a, b) => b.rating - a.rating);
+
+            // 3. Render Loop (Max 15 displayed, respecting ties)
+            let currentRank = 1;
+
+            for (let i = 0; i < filteredPlayers.length; i++) {
+                const player = filteredPlayers[i];
+
+                // Rank Calculation logic
+                if (i > 0 && player.rating === filteredPlayers[i - 1].rating) {
+                    // Tie: keep same rank
+                } else {
+                    currentRank = i + 1;
+                }
+
+                // Break if we go past rank 15
+                if (currentRank > 15) {
+                    break;
+                }
+
+                // Create Row
+                const row = document.createElement('div');
+                // Note: removed inactive-player class so all look the same
+                row.className = `ranking-row`;
+                
+                row.onclick = () => openModal(player);
+
+                const flagUrl = `https://flagcdn.com/w40/${player.fedCode}.png`;
+
+                // Img Optimization: added loading="lazy" and width/height attributes
+                row.innerHTML = `
+                    <div class="col-rank">${currentRank}</div>
+                    <div class="col-title">${player.title}</div>
+                    <div class="col-player">
+                        <img src="${player.img}" alt="${player.name}" class="player-img-list" loading="lazy" width="40" height="40">
+                        <span class="player-name-text">${player.name}</span>
+                    </div>
+                    <div class="col-flag">
+                        <img src="${flagUrl}" alt="${player.country}" class="flag-img" onerror="this.style.display='none'" loading="lazy" width="28">
+                    </div>
+                    <div class="col-rating">${player.rating}</div>
+                `;
+
+                listContainer.appendChild(row);
+            }
+        }
+
+        // Function to open Modal
+        function openModal(player) {
+            const modal = document.getElementById('profile-modal');
+            const statusColor = player.active ? 'status-active' : 'status-inactive';
+            
+            document.getElementById('modal-img').src = player.img;
+            document.getElementById('modal-name').innerText = player.name;
+            document.getElementById('modal-id').innerText = player.fideId;
+            document.getElementById('modal-birth').innerText = player.birthYear;
+            document.getElementById('modal-gender').innerText = player.gender;
+            document.getElementById('modal-title').innerText = player.title;
+            document.getElementById('modal-fed').innerText = player.country;
+            document.getElementById('modal-rating').innerText = player.rating;
+
+            const activeElem = document.getElementById('modal-active');
+            activeElem.innerText = player.active ? "Yes" : "No";
+            activeElem.className = `detail-value ${statusColor}`;
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('profile-modal').classList.remove('active');
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('profile-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        document.getElementById('year').innerText = new Date().getFullYear();
+
+        // Initialize with default filter (Active)
+        renderRankings();
+
+    </script>
+</body>
+</html>

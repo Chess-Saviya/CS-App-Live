@@ -1,36 +1,57 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>  
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Chess Puzzle</title>
     <style>
-        
-        body {
-            background-color: #ffffff;
+        /* Reset for consistent sizing across browsers */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
             margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #ffffff;
+            font-family: sans-serif;
         }
 
         .container {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 10px;
-            box-sizing: border-box;
+            justify-content: center; /* Horizontally center */
+            align-items: center;     /* Vertically center */
+            min-height: 100vh;       /* Full viewport height */
+            width: 100%;
+            padding: 20px;           /* Default padding */
         }
 
         iframe {
             width: 100%;
+            max-width: 650px; 
             height: 630px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
+            background-color: #fff;
         }
 
-        </style>
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+            
+            iframe {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <iframe src="https://www.shredderchess.com/online/applets/dailytactics.php?lang=en" width="100%" height="630px" style="border:none; border-radius: 10px;">
+        <iframe src="https://www.shredderchess.com/online/applets/dailytactics.php?lang=en" title="Daily Chess Tactics">
         </iframe>
     </div>
 </body>

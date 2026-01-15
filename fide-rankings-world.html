@@ -594,9 +594,9 @@
             
             if (filterType === 'active') {
                 filteredPlayers = filteredPlayers.filter(player => player.active === true);
-                noteContainer.innerHTML = '<strong>Note:</strong> Showing current top 15 <strong>Active</strong> FIDE players.';
+                noteContainer.innerHTML = 'The list of top chess players currently <strong>active</strong> in the world.';
             } else {
-                noteContainer.innerHTML = '<strong>Note:</strong> Showing top 15 players including <strong>Inactive</strong> records.';
+                noteContainer.innerHTML = 'The list of top chess players in the world, both <strong>active</strong> and <strong>inactive</strong>.';
             }
 
             // 2. Sort Logic (Descending by rating)
@@ -688,5 +688,6 @@
 </body>
 
 </html>
+
 
 

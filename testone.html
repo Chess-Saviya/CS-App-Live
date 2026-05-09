@@ -3,335 +3,1049 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sri Lanka National Chess Championship 2026 - Live Broadcast</title>
+    <title>Multi Functional Chess Clock (PS-1688) - Chess Saviya Store</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        :root {
-            --primary-blue: #0062ff;
-            --bg-color: #f4f7f6;
-            --text-main: #202124;
-            --text-muted: #5f6368;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --border-color: rgba(0, 98, 255, 0.1);
-            --tab-bg: rgba(255, 255, 255, 0.7);
-            --footer-bg: #202124;
-            --card-shadow: rgba(0,0,0,0.05);
-        }
+    :root {
+        --primary-blue: #0062FF;
+        --primary-blue-hover: #0050d1;
+        --white: #ffffff;
+        --bg-body: #f4f7f6;
+        --bg-card: #ffffff;
+        --text-dark: #222222;
+        --text-gray: #555555;
+        --text-light-gray: #888888;
+        --border-color: #d1d9e6;
+        --border-blue: #a3c2ff;
+        --success: #28a745;
+        --danger: #dc3545;
+        --warning: #ff9800;
+        --dark-bg: #1a1a2e;
+        /* Footer specific */
+        --footer-bg: #111827; 
+    }
 
-        /* Dark Mode Variables */
-        [data-theme="dark"] {
-            --primary-blue: #3a86ff;
-            --bg-color: #121212;
-            --text-main: #e8eaed;
-            --text-muted: #a0a0a0;
-            --glass-bg: rgba(30, 30, 30, 0.85);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --tab-bg: rgba(40, 40, 40, 0.8);
-            --footer-bg: #0a0a0a;
-            --card-shadow: rgba(0,0,0,0.3);
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Roboto", sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
-        
-        /* Tabs */
-        .top-tabs-container { position: sticky; top: 0; z-index: 1000; display: flex; width: 100%; background: #1a1a1a; border-bottom: 5px solid var(--tab-bg); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .top-tab-btn { height: 55px; flex: 1; background: var(--tab-bg); color: var(--text-main); border: none; padding: 1rem; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; }
-        .top-tab-btn:first-child { border-right: 1px solid rgba(0, 0, 0, 0.1); }
-        .top-tab-btn.active, .top-tab-btn:hover { background: var(--primary-blue); color: #ffffff; }
-        
-        /* Header - Decreased line height and padding to save space */
-        header { background-color: var(--primary-blue); color: #ffffff; padding: 0.5rem 1rem; text-align: center; box-shadow: 0 4px 12px rgba(0, 98, 255, 0.2); transition: background-color 0.3s; }
-        header h1 { font-weight: 900; font-size: 1.6rem; line-height: 1.2; letter-spacing: 1px; margin: 0; }
-        
-        /* Layout container */
-        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
-        .card { background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 8px 32px var(--card-shadow); transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; }
-        
-        /* Live Title & Badges - Added top margin for white space */
-        .live-header { text-align: center; margin-top: 1.5rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; align-items: center; }
-        .live-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; }
-        .live-badge { display: inline-flex; align-items: center; background-color: #6a112a; border-radius: 20px; padding: 4px 14px; margin-left: 12px; vertical-align: middle; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .live-dot { width: 10px; height: 10px; background-color: #ff4d4d; border-radius: 50%; margin-right: 8px; animation: pulse 1.5s infinite; }
-        .live-text { color: #fff; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.5px; }
-        @keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 255, 255, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
-        
-        /* Countdown Timer */
-        .countdown-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 1.5rem; }
-        .countdown-box { background-color: var(--primary-blue); color: #ffffff; border-radius: 12px; padding: 15px 20px; min-width: 90px; text-align: center; box-shadow: 0 6px 15px rgba(0, 98, 255, 0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: background-color 0.3s; }
-        .countdown-num { font-size: 2.5rem; font-weight: 900; line-height: 1; letter-spacing: -1px; }
-        .countdown-lbl { font-size: 0.85rem; font-weight: 700; margin-top: 6px; }
-        
-        /* Iframe Container */
-        .media-container {
-            position: relative;
-            width: 100%;
-            height: 75vh; 
-            min-height: 500px;
-            border-radius: 16px;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .media-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 16px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+    body { background-color: var(--bg-body); color: var(--text-dark); line-height: 1.6; }
+    a { color: var(--primary-blue); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--primary-blue-hover); text-decoration: underline; }
 
-        /* Theme Toggle Button */
-        .theme-toggle-container { display: flex; justify-content: center; margin-bottom: 2rem; }
-        .theme-toggle-btn { background: var(--glass-bg); color: var(--text-main); border: 1px solid var(--border-color); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 0.6rem 1.2rem; border-radius: 20px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; box-shadow: 0 4px 12px var(--card-shadow); }
-        .theme-toggle-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px var(--card-shadow); border-color: var(--primary-blue); }
-        
-        /* Footer - Added 3rem extra space below by expanding bottom padding to 6rem */
-        footer { background: var(--footer-bg); color: #ffffff; text-align: center; padding: 3rem 1rem 6rem 1rem; margin-top: 3rem; display: flex; flex-direction: column; align-items: center; transition: background 0.3s; }
-        
-        /* Responsive */
-        @media (max-width: 600px) {
-            .countdown-num { font-size: 2rem; }
-            .countdown-box { min-width: 75px; padding: 12px 10px; }
-            .top-tab-btn { font-size: 0.85rem; padding: 0.8rem 0.5rem; white-space: normal; }
-            header h1 { font-size: 1.3rem; line-height: 1.2; }
-            .live-title { font-size: 1.2rem; }
-        }
-        @media (max-width: 768px) {
-            .container { padding: 0; margin-top: 0; }
-            .card { border-radius: 0; padding: 1rem 0.5rem; margin-bottom: 0.5rem; }
-            .card:has(.media-container) { padding: 0; border: none; }
-            .media-container { border-radius: 0; height: 85vh; min-height: 550px; }
-            .theme-toggle-container { margin-top: 1.5rem; }
-        }
-    </style>
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+    /* Main Product Layout */
+    .product-wrapper {
+        display: flex; flex-direction: column; gap: 30px;
+        background: var(--white); padding: 20px;
+        border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px;
+    }
+    @media (min-width: 768px) { .product-wrapper { flex-direction: row; padding: 40px; } }
+
+    /* Gallery Section */
+    .gallery-section { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+    .main-display {
+        width: 100%; aspect-ratio: 1 / 1; background: #f9f9f9;
+        border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);
+        position: relative; cursor: zoom-in;
+    }
+    .main-display.is-video { cursor: default; }
+    .main-display img, .main-display iframe { width: 100%; height: 100%; object-fit: contain; border: none; }
+
+    .thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+    .thumbnails::-webkit-scrollbar { height: 6px; }
+    .thumbnails::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
+    
+    .thumbnail {
+        width: 70px; height: 70px; flex-shrink: 0; border: 2px solid transparent;
+        border-radius: 6px; cursor: pointer; overflow: hidden; transition: 0.2s ease;
+    }
+    .thumbnail.active { border-color: var(--primary-blue); }
+    .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+    .thumbnail.video-thumb { position: relative; }
+    .thumbnail.video-thumb::after {
+        content: '\f04b'; font-family: 'FontAwesome'; position: absolute;
+        top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--white);
+        background: rgba(0,0,0,0.6); width: 30px; height: 30px; display: flex;
+        align-items: center; justify-content: center; border-radius: 50%; font-size: 12px;
+    }
+
+    /* Lightbox */
+    .lightbox-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+        display: flex; align-items: center; justify-content: center; z-index: 2000;
+        opacity: 0; visibility: hidden; transition: 0.3s ease;
+    }
+    .lightbox-overlay.active { opacity: 1; visibility: visible; }
+    .lightbox-content { position: relative; max-width: 90%; max-height: 90%; }
+    .lightbox-img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .lightbox-close { position: absolute; top: -40px; right: 0; color: var(--white); font-size: 2rem; cursor: pointer; background: none; border: none; }
+
+    /* Info Section */
+    .info-section { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+    .product-title { font-size: 1.8rem; font-weight: 700; color: var(--text-dark); line-height: 1.3;}
+    .product-sku { font-size: 0.85rem; color: var(--text-light-gray); margin-top: -10px; margin-bottom: 5px; }
+
+    /* Stock Badges */
+    .badges-wrapper { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .stock-label { display: inline-block; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; }
+    .in-stock { background-color: #e6f4ea; color: var(--success); border: 1px solid var(--success); border-radius: 20px;}
+    .limited-stock { background-color: #fff3cd; color: var(--warning); border: 1px solid var(--warning); border-radius: 20px; }
+    .out-of-stock { 
+        background-color: var(--danger); color: var(--white); border: 2px solid #b02a37; border-radius: 4px;
+        font-size: 1rem; padding: 8px 18px; text-transform: uppercase; font-weight: 700; box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
+    }
+
+    .discount-badge {
+        background-color: var(--danger); color: var(--white); padding: 4px 10px;
+        border-radius: 4px; font-weight: bold; font-size: 0.85rem; display: none; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
+    }
+
+    /* Pricing */
+    .price-container { margin: 10px 0; display: flex; flex-direction: column; }
+    .special-offer-text {
+        font-size: 0.95rem; color: var(--white); background-color: var(--danger);
+        font-weight: 700; padding: 4px 10px; border-radius: 4px; display: none;
+        align-self: flex-start; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 5px rgba(220,53,69,0.3);
+    }
+    .current-price { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
+    .original-price { font-size: 1.4rem; color: var(--text-light-gray); text-decoration: line-through; margin-left: 12px; display: none; font-weight: 500; }
+
+    /* Buy Now Button */
+    .btn-primary {
+        background-color: var(--primary-blue); color: var(--white); border: none; padding: 15px 30px;
+        font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.3s, transform 0.1s; text-align: center; width: 100%;
+    }
+    .btn-primary:hover { background-color: var(--primary-blue-hover); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    /* Countdown UI */
+    .countdown-container { display: none; margin-top: 5px; }
+    .countdown-wrapper {
+        background: linear-gradient(135deg, var(--dark-bg), #0f3460); border-radius: 10px; padding: 20px;
+        text-align: center; color: var(--white); box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 1px solid #2a2a4a; transition: background 0.5s ease;
+    }
+    .countdown-title { font-weight: 600; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .countdown-boxes { display: flex; justify-content: center; gap: 15px; }
+    .cd-box { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; min-width: 65px; padding: 10px 5px; backdrop-filter: blur(5px); }
+    .cd-num { display: block; font-size: 1.8rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; }
+    .cd-label { display: block; font-size: 0.75rem; color: #ffffff; opacity: 0.8; text-transform: uppercase; font-weight: 500; }
+    .cd-offer-desc {
+        background: #eef3ff; border-left: 4px solid var(--primary-blue); color: var(--text-dark);
+        padding: 12px 15px; border-radius: 0 8px 8px 0; margin-top: 15px; font-size: 0.95rem; font-weight: 500; display: none;
+    }
+
+    /* Clickable Grid Cards */
+    .section-heading { font-size: 1.4rem; margin: 30px 0 15px; font-weight: 600; color: var(--text-dark); }
+    .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    @media (min-width: 576px) { .grid-container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; } }
+    
+    .card-box {
+        background: var(--white); border: 1px solid var(--border-blue); border-radius: 8px; padding: 15px 10px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; 
+        transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; user-select: none;
+    }
+    .card-box:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 98, 255, 0.1); }
+    .card-box:hover .more-info-link { text-decoration: underline; }
+    .card-box img { max-height: 40px; max-width: 90%; margin-bottom: 10px; object-fit: contain; }
+    .card-price { font-weight: 600; font-size: 1.05rem; color: var(--text-dark); margin-bottom: 5px; }
+    .more-info-link { font-size: 0.85rem; color: var(--primary-blue); text-decoration: none; margin-top: 5px; font-weight: 500; }
+
+    /* Description & Shipping */
+    .text-section { background: var(--white); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px; }
+    .text-section h3 { margin-bottom: 10px; font-size: 1.2rem; color: var(--text-dark); }
+    .text-section p { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 10px; line-height: 1.6; }
+    .text-section ul { font-size: 0.95rem; color: var(--text-gray); padding-left: 20px; list-style-type: disc; }
+    .text-section li { margin-bottom: 8px; }
+
+    /* Form Specific Elements */
+    .custom-select { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; margin-bottom: 15px; outline: none; background: var(--white); }
+    .custom-select:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(0,98,255,0.1); }
+    .price-breakdown { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border-color); display: none; }
+    .price-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-gray); font-size: 0.95rem; }
+    .price-row.total { font-weight: 700; color: var(--text-dark); font-size: 1.1rem; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 5px; }
+
+    /* FULL-WIDTH DARK FOOTER */
+    .site-footer {
+        background-color: var(--footer-bg);
+        color: #ffffff;
+        padding: 60px 20px;
+        margin-top: 60px;
+        text-align: center;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    
+    .site-footer .tagline { 
+        font-size: 1.6rem; 
+        font-weight: 700; 
+        color: var(--primary-blue); 
+    }
+    .site-footer .tagline span { 
+        font-size: 0.9rem; 
+        font-style: italic; 
+        color: #ffffff; 
+        display: block; 
+        margin-top: 5px; 
+    }
+
+    .site-footer .contact { margin: 25px 0; font-weight: 500; display: flex; flex-direction: column; gap: 5px; }
+    .site-footer .contact a { color: #d1d5db; font-weight: 600; transition: color 0.2s; }
+    .site-footer .contact a:hover { color: var(--primary-blue); text-decoration: none; }
+
+    .support-links { margin: 25px 0; }
+    .support-heading { font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
+    .support-links-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; font-size: 0.85rem; }
+    .support-links-row a { color: #d1d5db; transition: color 0.2s; }
+    .support-links-row a:hover { color: var(--primary-blue); text-decoration: underline; }
+
+    .social-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+    .social-icons a { 
+        display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; 
+        background: rgba(255, 255, 255, 0.1); color: #ffffff; border-radius: 50%; 
+        font-size: 1.2rem; transition: 0.3s; 
+    }
+    .social-icons a:hover { background: var(--primary-blue); color: #ffffff; text-decoration: none; }
+
+    .payment-partner { 
+        margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.85rem; color: #9ca3af; font-weight: 500; 
+    }
+    .payment-partner a { color: #d1d5db; }
+    .copyright { margin-top: 10px; font-size: 0.8rem; color: #6b7280; }
+
+    /* Modals */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 1000; padding: 20px; }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-content { background: var(--white); width: 100%; max-width: 500px; border-radius: 12px; padding: 25px; position: relative; transform: translateY(20px); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
+    .close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; color: var(--text-gray); cursor: pointer; }
+    .modal-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+    .modal-instruction { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 20px; font-weight: 500; }
+    .radio-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+    .radio-option { display: flex; align-items: center; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: 0.2s; }
+    .radio-option:hover { border-color: var(--primary-blue); background: rgba(0, 98, 255, 0.02); }
+    .radio-option input[type="radio"] { margin-right: 15px; transform: scale(1.2); accent-color: var(--primary-blue); }
+    .radio-option span { font-weight: 500; flex: 1; }
+
+    /* Installment Table UI */
+    .bank-installments { background: var(--bg-body); border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+    .bank-installments h4 { margin-bottom: 10px; color: var(--primary-blue); font-size: 1.1rem; }
+    .installment-grid-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .inst-box { background: var(--white); border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; text-align: center; }
+    .inst-box .months { font-size: 0.8rem; color: var(--text-gray); margin-bottom: 5px; }
+    .inst-box .price-pm { font-weight: 600; color: var(--text-dark); }
+    .btn-framed-close { background-color: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-gray); font-weight: 600; cursor: pointer; width: 100%; text-align: center; padding: 12px 0; margin-top: 15px; border-radius: 8px; font-size: 1rem; transition: background 0.2s; }
+    .btn-framed-close:hover { background-color: #e2e6eb; color: var(--text-dark); }
+
+    /* Global Helper Spacing */
+    .mt-10 { margin-top: 10px; } .mt-20 { margin-top: 20px; } .text-center { text-align: center; } .italic-gray { font-style: italic; color: var(--text-gray); font-size: 0.85rem;}
+</style>
 </head>
 <body>
 
-    <div class="top-tabs-container">
-        <button class="top-tab-btn active" id="tab-open" onclick="switchTab('open')">Open Section</button>
-        <button class="top-tab-btn" id="tab-women" onclick="switchTab('women')">Women Section</button>
-    </div>
-
-    <header>
-        <h1>Sri Lanka National Chess Championship 2026</h1>
-    </header>
-
-    <div class="container">
-        <div class="card">
-            <div class="live-header">
-                <div class="live-title" id="live-status-text">Loading Schedule...</div>
-                
-                <div class="countdown-container" id="countdown-timer" style="display: none;">
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="cd-hours">00</span>
-                        <span class="countdown-lbl">Hours</span>
-                    </div>
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="cd-mins">00</span>
-                        <span class="countdown-lbl">Mins</span>
-                    </div>
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="cd-secs">00</span>
-                        <span class="countdown-lbl">Secs</span>
-                    </div>
+<div class="container">
+    <div class="product-wrapper">
+        <div class="gallery-section">
+            <div class="main-display" id="mainDisplay" onclick="openLightbox()"></div>
+            
+            <div class="thumbnails">
+                <div class="thumbnail active" onclick="changeMedia('image', 'https://i.postimg.cc/Hx3SF66p/download-(4).png', this)">
+                    <img src="https://i.postimg.cc/Hx3SF66p/download-(4).png" alt="Thumb Main">
+                </div>
+                <div class="thumbnail video-thumb" onclick="changeMedia('video', 'https://www.youtube.com/embed/HcXEkVzfxd8?si=23pXfxXtb833FSyu&autoplay=1', this)">
+                    <img src="https://i.postimg.cc/Hx3SF66p/download-(4).png" alt="Video Thumbnail">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/2ShM5F0G/1.jpg', this)">
+                    <img src="https://i.postimg.cc/2ShM5F0G/1.jpg" alt="Thumb 1">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/dVrp0m55/2.jpg', this)">
+                    <img src="https://i.postimg.cc/dVrp0m55/2.jpg" alt="Thumb 2">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/DwLHzdxB/4.jpg', this)">
+                    <img src="https://i.postimg.cc/DwLHzdxB/4.jpg" alt="Thumb 4">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/CxkXKHcv/5.jpg', this)">
+                    <img src="https://i.postimg.cc/CxkXKHcv/5.jpg" alt="Thumb 5">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/7Z0dLMB8/6.jpg', this)">
+                    <img src="https://i.postimg.cc/7Z0dLMB8/6.jpg" alt="Thumb 6">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/cLw2JMDG/7.jpg', this)">
+                    <img src="https://i.postimg.cc/cLw2JMDG/7.jpg" alt="Thumb 7">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/jdGBKk4v/8.jpg', this)">
+                    <img src="https://i.postimg.cc/jdGBKk4v/8.jpg" alt="Thumb 8">
                 </div>
             </div>
-            
-            <div class="media-container">
-                <iframe id="broadcast-iframe" src="" frameborder="0" allowfullscreen></iframe>
-            </div>
         </div>
 
-        <div class="theme-toggle-container">
-            <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+        <div class="info-section">
+            <h1 class="product-title">Multi Functional Chess Clock (PS-1688)</h1>
+            <div class="product-sku">SKU: CSS-104</div>
+            
+            <div class="badges-wrapper">
+                <div id="stockLabel" class="stock-label in-stock">
+                    <i class="fas fa-check-circle"></i> In Stock
+                </div>
+                <div id="discountBadge" class="discount-badge">20% OFF</div>
+            </div>
+
+            <div class="price-container">
+                <span class="special-offer-text" id="specialOfferText">Special Offer Price</span>
+                <div>
+                    <span class="current-price" id="displayPriceMain">Rs. 0/-</span>
+                    <span class="original-price" id="originalPriceMain">Rs. 0/-</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="btnBuyNow" onclick="openModal('buyNowModal')">Buy Now</button>
+
+            <div class="countdown-container" id="salesCountdownContainer">
+                <div class="countdown-wrapper" id="salesCountdownBox">
+                    <div class="countdown-title" id="countdownTitleText">🔥 Offer Ends In</div>
+                    <div class="countdown-boxes" id="countdownBoxes"></div>
+                </div>
+                <div class="cd-offer-desc" id="offerDescText">Don't miss out on this amazing deal!</div>
+            </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; <span id="year"></span> CHESS SAVIYA</p>
-    </footer>
+    <div class="text-section">
+        <h3>Product Description</h3>
+        <p>Enhance your chess experience with the highly durable and professional PS-1688 Multi Functional Chess Clock. Designed for serious players, it provides accurate timing, multiple standard presets, and an intuitive interface perfect for tournaments or casual play.</p>
+        <ul>
+            <li><strong>Package:</strong> Chess Board with Chess Pieces</li>
+            <li><strong>Origin:</strong> Mainland China</li>
+            <li><strong>Chess Board Material:</strong> PVC</li>
+            <li><strong>Board Colour:</strong> Avocado Green</li>
+            <li><strong>Board Size:</strong> 34.5cm × 34.5cm</li>
+            <li><strong>Chess Piece material:</strong> Resin</li>
+            <li><strong>King Height:</strong> 65mm</li>
+        </ul>
+    </div>
 
-    <script>
-        // Start times in Sri Lanka Time (SLST: UTC+5:30)
-        const schedule = [
-            { round: 1, start: new Date("2026-04-18T09:00:00+05:30") },
-            { round: 2, start: new Date("2026-04-18T15:00:00+05:30") },
-            { round: 3, start: new Date("2026-04-19T09:00:00+05:30") },
-            { round: 4, start: new Date("2026-04-19T15:00:00+05:30") },
-            { round: 5, start: new Date("2026-04-20T09:00:00+05:30") },
-            { round: 6, start: new Date("2026-04-20T15:00:00+05:30") },
-            { round: 7, start: new Date("2026-04-24T09:00:00+05:30") },
-            { round: 8, start: new Date("2026-04-24T15:00:00+05:30") },
-            { round: 9, start: new Date("2026-04-25T09:00:00+05:30") },
-            { round: 10, start: new Date("2026-04-25T15:00:00+05:30") },
-            { round: 11, start: new Date("2026-04-26T09:00:00+05:30") },
-            { round: 12, start: new Date("2026-04-26T15:00:00+05:30") },
-            { round: 13, start: new Date("2026-04-27T09:00:00+05:30") }
-        ];
+    <div class="text-section mt-20">
+        <h3><i class="fas fa-truck"></i> Shipping Information</h3>
+        <p>We offer islandwide delivery, ensuring your order reaches your doorstep within just 2-3 working days.</p>
+        <p>Courier charges are payable directly to the delivery agent upon receiving your order. A convenient Cash on Delivery (COD) option is also available.</p>
+        <p>For any order-related inquiries, please contact us via <a href="#" id="shippingWaLink" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>.</p>
+    </div>
 
-        // Unique IDs for Lichess broadcasts
-        const links = {
-            open: [
-                "UHcAwsfo", "yPnCCNU5", "FeNvFHvC", "4p98VYXD", "1hiF2AL7", "scMtoCLo",
-                "nbw3He2T", "nm7syZJ9", "pnVgdKCl", "VKy4j3sJ", "6BlLYlkB", "Wax4yNFl", "Navi2bd1"
-            ],
-            women: [
-                "8R7HQyqK", "vGsASHgS", "JEgQJNKa", "NrT4BG5N", "g2ARYZKo", "x9ULMr0O",
-                "eSRln8tQ", "ptKmq5xG", "wNYxzve7", "v5P0WjmM", "R4C1LejS", "jSBj3Ulh", "ImFaUi28"
-            ]
-        };
+    <h2 class="section-heading">Payment Information</h2>
+    <div class="grid-container">
+        <div class="card-box" onclick="openModal('bankTransferModal')">
+            <img src="https://i.postimg.cc/WzrrL37y/symbols.png" alt="Bank Transfer">
+            <div class="card-price" id="gridPriceBank">Rs. 0/-</div>
+            <div class="more-info-link">More information</div>
+        </div>
+        <div class="card-box">
+            <img src="https://i.postimg.cc/g0gnwKnX/COD.png" alt="Cash on Delivery">
+            <div class="card-price" id="gridPriceCOD">Rs. 0/-</div>
+        </div>
+        <div class="card-box">
+            <img src="https://i.postimg.cc/NGrRrJwH/imgi-37-pay-visa-master.png" alt="Visa Mastercard">
+            <div class="card-price" id="gridPriceCard">Rs. 0/-</div>
+        </div>
+        <div class="card-box">
+            <img src="https://i.postimg.cc/dQTGTHKS/Google-pay-acceptance-mark-icon-svg.png" alt="Digital Wallets">
+            <div class="card-price" id="gridPriceWallet">Rs. 0/-</div>
+        </div>
+        <div class="card-box" id="darazOptionCard" onclick="openModal('darazModal')">
+            <img src="https://i.postimg.cc/CMfbfPVk/Daraz-logo.png" alt="Daraz">
+            <div class="card-price" id="gridPriceDaraz">Rs. 0/-</div>
+            <div class="more-info-link">More information</div>
+        </div>
+    </div>
 
-        let currentCategory = 'open';
-        let lastRenderedUrl = "";
-        let isDarkMode = false; // Default is light mode
+    <div id="installmentsSectionWrapper">
+        <h2 class="section-heading">Installments</h2>
+        <div class="grid-container">
+            <div class="card-box" onclick="openModal('installmentsModal')">
+                <img src="https://i.postimg.cc/tJPPQT5y/download-(1).png" alt="Commercial Bank">
+                <div class="card-price" id="gridInstComm">Rs. 0/- x 12</div>
+                <div class="more-info-link">More information</div>
+            </div>
+            <div class="card-box" onclick="openModal('installmentsModal')">
+                <img src="https://i.postimg.cc/90TT5MpX/download-(4).png" alt="DFCC Bank">
+                <div class="card-price" id="gridInstDFCC">Rs. 0/- x 12</div>
+                <div class="more-info-link">More information</div>
+            </div>
+            <div class="card-box" onclick="openModal('installmentsModal')">
+                <img src="https://i.postimg.cc/8C7P7Yrq/download-(3).png" alt="HNB Bank">
+                <div class="card-price" id="gridInstHNB">Rs. 0/- x 6</div>
+                <div class="more-info-link">More information</div>
+            </div>
+        </div>
+    </div>
+        
+</div> 
 
-        function switchTab(category) {
-            currentCategory = category;
-            document.getElementById('tab-open').classList.toggle('active', category === 'open');
-            document.getElementById('tab-women').classList.toggle('active', category === 'women');
-            updateLogic();
-        }
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="tagline">
+            Chess Saviya Store
+            <span>Best Move for Trusted Chess Products</span>
+        </div>
+        
+        <div class="contact">
+            <div>Contact: <a href="tel:+94704484126">070 44 84 126</a></div>
+            <div>Email: <a href="mailto:chesssaviyastore@gmail.com">chesssaviyastore@gmail.com</a></div>
+        </div>
 
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            if (isDarkMode) {
-                document.body.setAttribute('data-theme', 'dark');
-                document.getElementById('theme-toggle').innerText = '☀️ Light Mode';
-            } else {
-                document.body.removeAttribute('data-theme');
-                document.getElementById('theme-toggle').innerText = '🌙 Dark Mode';
-            }
-            // Clear last rendered URL to force iframe reload with new bg parameter
-            lastRenderedUrl = "";
-            updateLogic();
-        }
+        <div class="support-links">
+            <p class="support-heading">Support Links</p>
+            <div class="support-links-row">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Delivery & Returns</a>
+            </div>
+        </div>
 
-        function getLiveBadge() {
-            return `<span class="live-badge"><span class="live-dot"></span><span class="live-text">LIVE</span></span>`;
-        }
+        <p style="margin-bottom: 15px; font-size: 0.9rem; color: #9ca3af;">Find us on</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/ChessSaviyaStoreLK/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/94704484126" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.youtube.com/@ChessSaviyaStore" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/chess_saviya.store/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
 
-        function updateLogic() {
-            // Get current time in Sri Lanka
-            const slstString = new Date().toLocaleString("en-US", {timeZone: "Asia/Colombo"});
-            const now = new Date(slstString);
+        <div class="payment-partner">
+            Payment Partner: <a href="https://www.payhere.lk" id="footerPayHereLink" target="_blank">PayHere</a>
+        </div>
+
+        <div class="copyright">
+            &copy; <span id="currentYear"></span> Chess Saviya Store. All Rights Reserved.
+        </div>
+    </div>
+</footer>
+    
+
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox(event)">
+    <div class="lightbox-content">
+        <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <img src="" alt="Enlarged view" class="lightbox-img" id="lightboxImage">
+    </div>
+</div>
+
+<div class="modal-overlay" id="buyNowModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('buyNowModal')">&times;</button>
+        <h2 class="modal-title">Checkout Options</h2>
+        <p class="modal-instruction">Please select a payment method to proceed with your order.</p>
+        <form id="checkoutForm">
+            <div class="radio-list">
+                <label class="radio-option"><input type="radio" name="paymentMethod" value="bank"><span>Bank Transfer <i class="fab fa-whatsapp" style="color: #25D366; margin-left:5px;"></i></span></label>
+                <label class="radio-option"><input type="radio" name="paymentMethod" value="card"><span>Visa / Mastercard</span></label>
+                <label class="radio-option"><input type="radio" name="paymentMethod" value="wallet"><span>Google Pay / Hela Pay / iPay / FriMi / Q+ App</span></label>
+                <label class="radio-option"><input type="radio" name="paymentMethod" value="cod"><span>Cash on Delivery (COD)</span></label>
+                <label class="radio-option" id="buyNowInstallmentOption"><input type="radio" name="paymentMethod" value="installments"><span>Installments (Commercial / DFCC / HNB Banks)</span></label>
+                <label class="radio-option" id="buyNowDarazOption"><input type="radio" name="paymentMethod" value="daraz"><span>Order on Daraz</span></label>
+            </div>
+            <button type="button" class="btn-primary" onclick="processCheckout()">Proceed to Buy</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal-overlay" id="codModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('codModal')">&times;</button>
+        <h2 class="modal-title">Cash on Delivery Information</h2>
+        <p class="modal-instruction">Select your district to view the exact shipping fee details.</p>
+        
+        <select class="custom-select" id="districtSelect" onchange="handleDistrictChange()">
+            <option value="" disabled selected>-- Select your District --</option>
+            <!-- Generated via JS -->
+        </select>
+
+        <!-- Locate this section in your existing codModal -->
+<div class="price-breakdown" id="codPriceDetails">
+    <form id="shipping-form">
+        <div class="price-row">
+            <span>Product Price</span>
+            <span id="codItemPrice">Rs. 0/-</span>
+        </div>
+        <div class="price-row">
+            <span>Delivery Fee</span>
+            <span id="codDeliveryFee">Rs. 0/-</span>
+        </div>
+        <div class="price-row total">
+            <span>Total Amount</span>
+            <span id="codTotalPrice" style="color: var(--text-dark);">Rs. 0/-</span>
+        </div>
+
+        <!-- Hidden fields for the Apps Script -->
+        <input type="hidden" id="productName" name="product" value="Multi Functional Chess Clock (PS-1688)">
+        <input type="hidden" id="hiddenTotalAmount" name="total" value="0">
+
+        <!-- New Form Fields -->
+        <div class="input-group" style="margin-top: 15px; text-align: left;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Full Name</label>
+            <input type="text" name="name" class="custom-select" style="margin-bottom: 10px;" placeholder="Your Name" required>
             
-            let activeRoundIndex = -1;
-            let phase = ""; // "UPCOMING", "LIVE", "RANKING"
-            let countdownTo = null;
-
-            // Determine Tournament State
-            for (let i = 0; i < schedule.length; i++) {
-                let rStart = schedule[i].start;
-                let rEnd = new Date(rStart.getTime() + (4 * 60 * 60 * 1000)); // Start time + 4 hours
-
-                if (now < rStart) {
-                    activeRoundIndex = i;
-                    phase = "UPCOMING";
-                    // Only show countdown if within 24 hours of start
-                    if (rStart - now <= 24 * 60 * 60 * 1000) {
-                        countdownTo = rStart;
-                    }
-                    break;
-                } else if (now >= rStart && now < rEnd) {
-                    activeRoundIndex = i;
-                    phase = "LIVE";
-                    break; // Currently live
-                } else if (i === schedule.length - 1 || now < schedule[i+1].start) {
-                    // After 4 hours, but before next round starts
-                    activeRoundIndex = i;
-                    phase = "RANKING";
-                    // If not the last round, prepare countdown for the next round
-                    if (i < schedule.length - 1) {
-                        let nextStart = schedule[i+1].start;
-                        if (nextStart - now <= 24 * 60 * 60 * 1000) {
-                            countdownTo = nextStart;
-                        }
-                    }
-                    break;
-                }
-            }
-
-            // Fallbacks for before and after the entire tournament
-            if (activeRoundIndex === -1 && schedule.length > 0) {
-                if (now < schedule[0].start) {
-                    activeRoundIndex = 0;
-                    phase = "UPCOMING";
-                } else {
-                    activeRoundIndex = schedule.length - 1;
-                    phase = "RANKING";
-                }
-            }
-
-            // Determine what exactly to display on screen
-            let displayRound = schedule[activeRoundIndex].round;
-            let iframeId = links[currentCategory][activeRoundIndex];
-            let showPlayersHash = false;
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Phone Number</label>
+            <input type="tel" name="phone" class="custom-select" style="margin-bottom: 10px;" placeholder="07X XXXXXXX" required>
             
-            // If we are waiting for a round to start (and it's not Round 1), 
-            // show the PREVIOUS round's ranking table
-            if (phase === "UPCOMING" && activeRoundIndex > 0) {
-                displayRound = schedule[activeRoundIndex - 1].round;
-                iframeId = links[currentCategory][activeRoundIndex - 1];
-                showPlayersHash = true;
-            }
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Delivery Address</label>
+            <textarea name="address" class="custom-select" style="height: 80px; resize: none;" placeholder="House No, Street, City" required></textarea>
+        </div>
 
-            if (phase === "RANKING") {
-                showPlayersHash = true;
-            }
+        <p class="mt-10" style="font-size: 0.9rem; color: var(--text-gray); line-height: 1.5;">
+            Your order will be delivered islandwide in just 2-3 working days. Total amount is payable upon delivery.
+        </p>
 
-            // Construct Iframe URL with dynamic theme background
-            const bgTheme = isDarkMode ? "dark" : "light";
-            const baseUrl = `https://lichess.org/embed/broadcast/sri-lanka-national-chess-championship-2026--${currentCategory}/round-${displayRound}/${iframeId}`;
-            const params = `?theme=blue3&pieceSet=merida&bg=${bgTheme}`;
-            let finalUrl = baseUrl + params;
-            if (showPlayersHash) {
-                finalUrl += "#players";
-            }
+        <button type="submit" class="btn-primary mt-20" id="submit-order-btn" style="background-color: var(--primary-blue);">
+            Confirm COD Order
+        </button>
+    </form>
+    
+    <div id="form-status" style="display:none; margin-top:15px; padding: 10px; background: #e6f4ea; color: var(--success); border-radius: 8px; font-weight: 600; text-align: center;">
+        Order placed successfully!
+    </div>
+</div>            
+        </div>
+    </div>
+</div>
 
-            // Update Iframe
-            const iframe = document.getElementById("broadcast-iframe");
-            if (lastRenderedUrl !== finalUrl) {
-                iframe.src = finalUrl;
-                lastRenderedUrl = finalUrl;
-            }
+<div class="modal-overlay" id="payhereModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('payhereModal')">&times;</button>
+        <h2 class="modal-title" id="payhereModalTitle">Secure Online Payment</h2>
+        <p class="modal-instruction" style="font-size: 1.1rem; color: var(--text-dark);">
+            Price: <strong id="payhereModalPrice" style="color: var(--text-dark); font-size: 1.2rem;">Rs. 0/-</strong>
+        </p>
+        <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-gray);">
+            Delivery is available islandwide within 2-3 working days. The standard courier fee (<span id="payhereCourierFee" style="font-weight: 600;">Rs. 450/-</span>) can be paid directly to the delivery agent upon receiving your order.
+        </p>
+        <p style="margin-bottom: 25px; font-size: 0.95rem; color: var(--text-gray);">
+            To complete your purchase, please provide your shipping details (First Name, Last Name, Email, Phone Number, Address, and City) on the secure payment page and proceed with your selected method.
+        </p>
+        <button class="btn-primary" onclick="openPayHere()">Proceed to PayHere</button>
+    </div>
+</div>
 
-            // UI Elements
-            const titleEl = document.getElementById("live-status-text");
-            const timerContainer = document.getElementById("countdown-timer");
+<div class="modal-overlay" id="installmentCheckoutModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('installmentCheckoutModal')">&times;</button>
+        <h2 class="modal-title">Installment Payment Plans</h2>
+        <p class="modal-instruction" style="font-size: 1.1rem; color: var(--text-dark);">
+            Price: <strong id="installmentModalPrice" style="color: var(--text-dark); font-size: 1.2rem;">Rs. 0/-</strong>
+        </p>
+        <p style="margin-bottom: 10px; font-size: 0.95rem; color: var(--text-gray);">
+            <strong>Available Terms:</strong> 3 Months / 6 Months / 12 Months
+        </p>
+        <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-gray);">
+            Enjoy flexible installment plans when you use credit cards from <strong>Commercial Bank, DFCC Bank, or HNB Bank</strong> at checkout.
+        </p>
+        <p style="margin-bottom: 25px; font-size: 0.95rem; color: var(--text-gray);">
+            Delivery is available islandwide within 2-3 working days. The standard courier fee (<span id="installmentCourierFee" style="font-weight: 600;">Rs. 450/-</span>) can be paid directly to the delivery agent upon receiving your order.
+        </p>
+        <button class="btn-primary" onclick="openPayHere()">Proceed to PayHere</button>
+    </div>
+</div>
 
-            // Update Titles and Countdown
-            if (countdownTo) {
-                timerContainer.style.display = "flex";
-                
-                const diff = countdownTo - now;
-                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const m = Math.floor((diff / 1000 / 60) % 60);
-                const s = Math.floor((diff / 1000) % 60);
-                
-                document.getElementById("cd-hours").innerText = String(h).padStart(2, '0');
-                document.getElementById("cd-mins").innerText = String(m).padStart(2, '0');
-                document.getElementById("cd-secs").innerText = String(s).padStart(2, '0');
-                
-                let nextRnd = (phase === "UPCOMING") ? schedule[activeRoundIndex].round : schedule[activeRoundIndex + 1].round;
-                titleEl.innerHTML = `Round ${nextRnd} Begins In:`;
+<div class="modal-overlay" id="bankTransferModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('bankTransferModal')">&times;</button>
+        <h2 class="modal-title">Bank Transfer Instructions</h2>
+        <p>Please get the bank details via <a href="#" id="modalWaTextLink" target="_blank"><strong>WhatsApp</strong></a> at <strong>+94704484126</strong> and send a photo of the bank receipt or payment screenshot for payment confirmation with these details:</p>
+        <ul style="margin: 15px 0 20px 20px;"><li>Name</li><li>Shipping Address</li><li>Contact Number(s)</li><li>Email Address</li></ul>
+        <button class="btn-primary" style="background-color: #25D366;" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> Order on WhatsApp</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="darazModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('darazModal')">&times;</button>
+        <h2 class="modal-title">Order on Daraz</h2>
+        <p>Cash on Delivery and Koko pay installments available on our Daraz Store.</p>
+        <div style="display: flex; gap: 15px; margin: 20px 0; align-items: center; justify-content: center;">
+            <img src="https://i.postimg.cc/6qRRJ30N/Cash-on-Delivery.png" alt="COD" style="height: 40px;">
+            <img src="https://i.postimg.cc/Hn55Dx2m/Daraz-Koko.png" alt="Koko Pay" style="height: 40px;">
+        </div>
+        <p class="italic-gray text-center" style="margin-bottom: 20px;">Price may vary due to seasonal offers on Daraz.</p>
+        <button class="btn-primary" style="background-color: #f85606;" onclick="openDaraz()">Order on Daraz</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="installmentsModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('installmentsModal')">&times;</button>
+        <h2 class="modal-title">Installment Plans</h2>
+        <p style="margin-bottom: 20px; color: var(--text-gray);">Installment Plans available for your convenience</p>
+        
+        <div class="bank-installments">
+            <h4>COMMERCIAL BANK</h4>
+            <div class="installment-grid-inner">
+                <div class="inst-box"><div class="months">3 Months</div><div class="price-pm" id="modComm3">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">6 Months</div><div class="price-pm" id="modComm6">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">12 Months</div><div class="price-pm" id="modComm12">Rs. 0 /m</div></div>
+            </div>
+        </div>
+        <div class="bank-installments">
+            <h4>DFCC BANK</h4>
+            <div class="installment-grid-inner">
+                <div class="inst-box"><div class="months">3 Months</div><div class="price-pm" id="modDfcc3">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">6 Months</div><div class="price-pm" id="modDfcc6">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">12 Months</div><div class="price-pm" id="modDfcc12">Rs. 0 /m</div></div>
+            </div>
+        </div>
+        <div class="bank-installments">
+            <h4>HNB BANK</h4>
+            <div class="installment-grid-inner">
+                <div class="inst-box"><div class="months">3 Months</div><div class="price-pm" id="modHnb3">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">6 Months</div><div class="price-pm" id="modHnb6">Rs. 0 /m</div></div>
+            </div>
+        </div>
+        <button class="btn-framed-close" onclick="closeModal('installmentsModal')">Close</button>
+    </div>
+</div>
+
+<script>
+    /* =========================================================
+       CENTRALIZED CONFIGURATION PANEL
+       ========================================================= */
+    const config = {
+        stockStatus: 'in-stock',  // 'in-stock', 'out-of-stock', 'limited-stock'
+        
+        ui: {
+            showOriginalPrice: true, 
+            showDiscountBadge: true,   // Toggle for the percentage badge
+            discountPercentage: 10,    // The number to display in the discount badge (e.g. 15, 20, 25)
+            showDaraz: true,           
+            showInstallments: true     
+        },
+
+        images: {
+            regularMain: "https://i.postimg.cc/Hx3SF66p/download-(4).png",
+            saleMain: "https://i.postimg.cc/Hx3SF66p/download-(4).png" // Replace with your highlighted Sale image
+        },
+
+        links: {
+            whatsappBaseUrl: "https://wa.me/94704484126",
+            whatsappRegular: "?text=Inquiry:%20Chess%20Clock%20(Regular%20Price)",
+            whatsappSale: "?text=Inquiry:%20Chess%20Clock%20(Special%20Offer%20Price)",
+            googleFormCOD: "https://docs.google.com/forms/your-form-link", // ADD YOUR GOOGLE FORM LINK HERE
+            darazProduct: "https://www.daraz.lk/products/your-link",
+            payhereRegular: "https://link-to-regular-checkout",
+            payhereSale: "https://link-to-sale-checkout"
+        },
+
+        prices: {
+            regular: { mainDisplay: 1900, originalMSRP: 2500, bank: 11790, card: 11990, wallet: 11990, cod: 12000, daraz: 12299 },
+            sale: { mainDisplay: 1500, originalMSRP: 1900, bank: 10500, card: 10800, wallet: 10800, cod: 10500, daraz: 11000 }
+        },
+
+        shipping: {
+            baseFee: 450,
+            distantFee: 550,
+            payhereFeeText: "Rs. 450/-"
+        },
+
+        sale: {
+            isActive: true,                
+            startTime: "2026-04-28T00:00:00", 
+            endTime: "2026-05-15T23:59:59",   
+            showCountdownBoxes: true,      
+            showOfferDescription: true,    
+            offerDescription: "Special Avurudu Sale! Grab it before stocks run out."
+        }
+    };
+
+    const srilankaDistricts = [
+        "Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle", "Gampaha", "Hambantota", 
+        "Jaffna", "Kalutara", "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", "Matale", 
+        "Matara", "Moneragala", "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura", 
+        "Trincomalee", "Vavuniya"
+    ];
+
+    let currentPricingState = 'regular'; 
+    let countdownInterval;
+
+    function initPage() {
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+        populateDistricts();
+        evaluateSaleStatus();
+        updateStockBadges();
+        updatePricingUI();
+        updateLinks();
+        toggleConditionalSections();
+
+        const initialThumb = document.querySelector('.thumbnail.active');
+        if(initialThumb) initialThumb.click();
+    }
+
+    function populateDistricts() {
+        const select = document.getElementById('districtSelect');
+        srilankaDistricts.forEach(district => {
+            const option = document.createElement('option');
+            option.value = district;
+            option.text = district;
+            select.appendChild(option);
+        });
+    }
+
+    function evaluateSaleStatus() {
+        const countdownContainer = document.getElementById('salesCountdownContainer');
+        const countdownBox = document.getElementById('salesCountdownBox');
+        const titleText = document.getElementById('countdownTitleText');
+        const specialOffer = document.getElementById('specialOfferText');
+        const firstThumbImg = document.querySelector('.thumbnail.active img');
+        const discountBadge = document.getElementById('discountBadge');
+
+        if (!config.sale.isActive) {
+            currentPricingState = 'regular';
+            countdownContainer.style.display = 'none';
+            specialOffer.style.display = 'none';
+            discountBadge.style.display = 'none';
+            if (firstThumbImg) firstThumbImg.src = config.images.regularMain;
+            return;
+        }
+
+        const now = new Date().getTime();
+        const start = new Date(config.sale.startTime).getTime();
+        const end = new Date(config.sale.endTime).getTime();
+
+        if (now >= start && now <= end) {
+            currentPricingState = 'sale';
+            specialOffer.style.display = 'inline-block';
+            
+            if (config.ui.showDiscountBadge) {
+                discountBadge.style.display = 'inline-block';
+                discountBadge.innerText = `${config.ui.discountPercentage}% OFF`;
             } else {
-                timerContainer.style.display = "none";
-                
-                if (phase === "LIVE") {
-                    titleEl.innerHTML = `Round ${displayRound} Broadcast ` + getLiveBadge();
-                } else if (showPlayersHash) {
-                    // Changed from "Round X Results" to "Ranking After Round X"
-                    titleEl.innerHTML = `Ranking After Round ${displayRound}`;
-                } else {
-                    titleEl.innerHTML = `Round ${displayRound} Upcoming`;
-                }
+                discountBadge.style.display = 'none';
             }
+
+            if (firstThumbImg) firstThumbImg.src = config.images.saleMain;
+
+            if (config.sale.showCountdownBoxes) {
+                countdownContainer.style.display = 'block';
+                titleText.innerText = "🔥 Limited Time Offer Ends In";
+                titleText.style.color = "#ffffff";
+
+                const timeLeftToEnd = end - now;
+                if (timeLeftToEnd <= (24 * 60 * 60 * 1000)) {
+                    countdownBox.style.background = "linear-gradient(135deg, #800000, #4a0000)"; 
+                } else {
+                    countdownBox.style.background = "linear-gradient(135deg, #4D94FF, #0062FF, #003C8F)";
+                }
+                startCountdown(end);
+            }
+            
+            const descEl = document.getElementById('offerDescText');
+            if(config.sale.showOfferDescription) {
+                descEl.style.display = 'block';
+                descEl.innerText = config.sale.offerDescription;
+            }
+            
+        } else if (now < start) {
+            currentPricingState = 'regular';
+            discountBadge.style.display = 'none';
+            if (firstThumbImg) firstThumbImg.src = config.images.regularMain;
+            
+            const timeToStart = start - now;
+            if (timeToStart <= (24 * 60 * 60 * 1000)) {
+                if (config.sale.showCountdownBoxes) {
+                    countdownContainer.style.display = 'block';
+                    titleText.innerText = "⏳ Special Sale Starts In";
+                    countdownBox.style.background = "linear-gradient(135deg, #1a1a2e, #0f3460)"; 
+                    titleText.style.color = "#0062FF";
+                    startCountdown(start);
+                }
+            } else {
+                countdownContainer.style.display = 'none';
+            }
+        } else {
+            currentPricingState = 'regular';
+            discountBadge.style.display = 'none';
+            if (firstThumbImg) firstThumbImg.src = config.images.regularMain;
+            countdownContainer.style.display = 'none';
+            specialOffer.style.display = 'none';
+        }
+    }
+
+    function updateStockBadges() {
+        const stockLabel = document.getElementById('stockLabel');
+        const btnBuyNow = document.getElementById('btnBuyNow');
+        
+        if (config.stockStatus === 'out-of-stock') {
+            stockLabel.className = 'stock-label out-of-stock';
+            stockLabel.innerHTML = 'Out of Stock';
+            btnBuyNow.style.display = 'none';
+        } else if (config.stockStatus === 'limited-stock') {
+            stockLabel.className = 'stock-label limited-stock';
+            stockLabel.innerHTML = 'Limited Stock Only';
+            btnBuyNow.style.display = 'block';
+        } else {
+            stockLabel.className = 'stock-label in-stock';
+            stockLabel.innerHTML = '<i class="fas fa-check-circle"></i> In Stock';
+            btnBuyNow.style.display = 'block';
+        }
+    }
+
+    function updatePricingUI() {
+        const pObj = currentPricingState === 'sale' ? config.prices.sale : config.prices.regular;
+        
+        document.getElementById('displayPriceMain').innerText = `Rs. ${pObj.mainDisplay}/-`;
+        const origPriceEl = document.getElementById('originalPriceMain');
+        if (config.ui.showOriginalPrice && pObj.originalMSRP > 0) {
+            origPriceEl.innerText = `Rs. ${pObj.originalMSRP}/-`;
+            origPriceEl.style.display = 'inline-block';
+        } else {
+            origPriceEl.style.display = 'none';
         }
 
-        window.onload = () => {
-            document.getElementById("year").innerText = new Date().getFullYear();
-            updateLogic();
-            // Refresh logic every second to keep the timer and phase transitions accurate
-            setInterval(updateLogic, 1000);
+        document.getElementById('gridPriceBank').innerText = `Rs. ${pObj.bank}/-`;
+        document.getElementById('gridPriceCard').innerText = `Rs. ${pObj.card}/-`;
+        document.getElementById('gridPriceWallet').innerText = `Rs. ${pObj.wallet}/-`;
+        document.getElementById('gridPriceCOD').innerText = `Rs. ${pObj.cod}/-`;
+        document.getElementById('gridPriceDaraz').innerText = `Rs. ${pObj.daraz}/-`;
+
+        const base = pObj.card;
+        const c3 = Math.round(base / 3); const c6 = Math.round((base * 1.06) / 6); const c12 = Math.round((base * 1.10) / 12);
+        const d3 = Math.round((base * 1.04) / 3); const d6 = Math.round((base * 1.05) / 6); const d12 = Math.round((base * 1.08) / 12);
+        const h3 = Math.round(base / 3); const h6 = Math.round(base / 6);
+
+        document.getElementById('gridInstComm').innerText = `Rs. ${c12}/- x 12`;
+        document.getElementById('gridInstDFCC').innerText = `Rs. ${d12}/- x 12`;
+        document.getElementById('gridInstHNB').innerText = `Rs. ${h6}/- x 6`;
+
+        document.getElementById('modComm3').innerText = `Rs. ${c3}.00 /m`; document.getElementById('modComm6').innerText = `Rs. ${c6}.00 /m`; document.getElementById('modComm12').innerText = `Rs. ${c12}.00 /m`;
+        document.getElementById('modDfcc3').innerText = `Rs. ${d3}.00 /m`; document.getElementById('modDfcc6').innerText = `Rs. ${d6}.00 /m`; document.getElementById('modDfcc12').innerText = `Rs. ${d12}.00 /m`;
+        document.getElementById('modHnb3').innerText = `Rs. ${h3}.00 /m`; document.getElementById('modHnb6').innerText = `Rs. ${h6}.00 /m`;
+        
+        document.getElementById('payhereCourierFee').innerText = config.shipping.payhereFeeText;
+        document.getElementById('installmentCourierFee').innerText = config.shipping.payhereFeeText;
+    }
+
+    function updateLinks() {
+        const waBase = config.links.whatsappBaseUrl;
+        const customMsg = currentPricingState === 'sale' ? config.links.whatsappSale : config.links.whatsappRegular;
+        const fullWaLink = waBase + customMsg;
+
+        const shipLink = document.getElementById('shippingWaLink');
+        if (shipLink) shipLink.href = fullWaLink;
+
+        const modLink = document.getElementById('modalWaTextLink');
+        if (modLink) modLink.href = fullWaLink;
+
+        const codWaLink = document.getElementById('codModalWaLink');
+        if (codWaLink) codWaLink.href = waBase; 
+
+        const payLink = document.getElementById('footerPayHereLink');
+        if (payLink) payLink.href = "https://www.payhere.lk";
+    }
+
+    function toggleConditionalSections() {
+        if (!config.ui.showDaraz) { document.getElementById('darazOptionCard').style.display = 'none'; document.getElementById('buyNowDarazOption').style.display = 'none'; }
+        if (!config.ui.showInstallments) { document.getElementById('installmentsSectionWrapper').style.display = 'none'; document.getElementById('buyNowInstallmentOption').style.display = 'none'; }
+    }
+
+    function startCountdown(targetDateMs) {
+        const boxesContainer = document.getElementById('countdownBoxes');
+        if(countdownInterval) clearInterval(countdownInterval);
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = targetDateMs - now;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                evaluateSaleStatus(); 
+                updatePricingUI();
+                updateLinks();
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const pad = (num) => String(num).padStart(2, '0');
+
+            if (days > 0) {
+                boxesContainer.innerHTML = `<div class="cd-box"><span class="cd-num">${pad(days)}</span><span class="cd-label">Days</span></div><div class="cd-box"><span class="cd-num">${pad(hours)}</span><span class="cd-label">Hrs</span></div><div class="cd-box"><span class="cd-num">${pad(minutes)}</span><span class="cd-label">Min</span></div>`;
+            } else {
+                boxesContainer.innerHTML = `<div class="cd-box"><span class="cd-num">${pad(hours)}</span><span class="cd-label">Hrs</span></div><div class="cd-box"><span class="cd-num">${pad(minutes)}</span><span class="cd-label">Min</span></div><div class="cd-box"><span class="cd-num">${pad(seconds)}</span><span class="cd-label">Sec</span></div>`;
+            }
         }
-    </script>
+        updateTimer();
+        countdownInterval = setInterval(updateTimer, 1000);
+    }
+
+    /* INTERACTION */
+    function changeMedia(type, source, thumbnailElement) {
+        const displayContainer = document.getElementById('mainDisplay');
+        document.querySelectorAll('.thumbnail').forEach(el => el.classList.remove('active'));
+        if(thumbnailElement) thumbnailElement.classList.add('active');
+
+        if (type === 'video') {
+            displayContainer.innerHTML = `<iframe src="${source}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+            displayContainer.classList.add('is-video'); displayContainer.dataset.source = ""; 
+        } else {
+            displayContainer.innerHTML = `<img src="${source}" alt="Product Image">`;
+            displayContainer.classList.remove('is-video'); displayContainer.dataset.source = source;
+        }
+    }
+
+    function openLightbox() {
+        const source = document.getElementById('mainDisplay').dataset.source;
+        if (source) { document.getElementById('lightboxImage').src = source; document.getElementById('lightboxOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
+    }
+
+    function closeLightbox(event) {
+        if (event.target.id === 'lightboxOverlay' || event.target.classList.contains('lightbox-close')) {
+            document.getElementById('lightboxOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; document.getElementById('lightboxImage').src = ''; 
+        }
+    }
+
+    function openModal(modalId) { document.getElementById(modalId).classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); document.body.style.overflow = 'auto'; }
+
+    document.querySelectorAll('.modal-overlay:not(.lightbox-overlay)').forEach(overlay => {
+        overlay.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
+    });
+
+    function openWhatsApp() { 
+        const waBase = config.links.whatsappBaseUrl;
+        const customMsg = currentPricingState === 'sale' ? config.links.whatsappSale : config.links.whatsappRegular;
+        window.open(waBase + customMsg, '_blank'); 
+    }
+    
+    function openGoogleForm() { 
+        window.open(config.links.googleFormCOD, '_blank'); 
+    }
+
+    function openDaraz() { window.open(config.links.darazProduct, '_blank'); }
+    function openPayHere() { window.open(currentPricingState === 'sale' ? config.links.payhereSale : config.links.payhereRegular, '_blank'); }
+
+    function handleDistrictChange() {
+        const select = document.getElementById('districtSelect');
+        const breakdown = document.getElementById('codPriceDetails');
+        
+        if(!select.value) { 
+            breakdown.style.display = 'none'; 
+            return; 
+        }
+
+        const distantDistricts = ['Jaffna', 'Kilinochchi', 'Mannar', 'Mullaitivu', 'Vavuniya', 'Trincomalee', 'Batticaloa', 'Ampara'];
+        let fee = config.shipping.baseFee;
+        
+        if(distantDistricts.includes(select.value)) {
+            fee = config.shipping.distantFee;
+        }
+
+        const pObj = currentPricingState === 'sale' ? config.prices.sale : config.prices.regular;
+        const codPrice = pObj.cod;
+        const total = codPrice + fee;
+
+        document.getElementById('codItemPrice').innerText = `Rs. ${codPrice}/-`;
+        document.getElementById('codDeliveryFee').innerText = `Rs. ${fee}/-`;
+        document.getElementById('codTotalPrice').innerText = `Rs. ${total}/-`;
+        
+        breakdown.style.display = 'block';
+    }
+
+    function setupPayhereModal(titleText, amount) {
+        document.getElementById('payhereModalTitle').innerText = titleText;
+        document.getElementById('payhereModalPrice').innerText = `Rs. ${amount}/-`;
+    }
+
+    function setupInstallmentModal(amount) {
+        document.getElementById('installmentModalPrice').innerText = `Rs. ${amount}/-`;
+    }
+
+    function processCheckout() {
+        const selectedOption = document.querySelector('input[name="paymentMethod"]:checked');
+        if (!selectedOption) return alert('Please select a payment method to proceed.');
+        
+        const pObj = currentPricingState === 'sale' ? config.prices.sale : config.prices.regular;
+
+        switch(selectedOption.value) {
+            case 'bank': 
+                closeModal('buyNowModal'); 
+                openModal('bankTransferModal'); 
+                break;
+            case 'card': 
+                closeModal('buyNowModal');
+                setupPayhereModal('Visa / Mastercard Payment', pObj.card);
+                openModal('payhereModal');
+                break;
+            case 'wallet': 
+                closeModal('buyNowModal');
+                setupPayhereModal('Digital Wallet Payment', pObj.wallet);
+                openModal('payhereModal');
+                break;
+            case 'cod':
+                closeModal('buyNowModal');
+                document.getElementById('districtSelect').value = '';
+                document.getElementById('codPriceDetails').style.display = 'none';
+                openModal('codModal');
+                break;
+            case 'installments': 
+                closeModal('buyNowModal');
+                setupInstallmentModal(pObj.card); // Usually based on standard card price
+                openModal('installmentCheckoutModal');
+                break;
+            case 'daraz': 
+                closeModal('buyNowModal'); 
+                openModal('darazModal'); 
+                break;
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', initPage);
+    
+    // 1. Update the handleDistrictChange function to set the hidden input
+const originalHandleDistrictChange = handleDistrictChange;
+handleDistrictChange = function() {
+    originalHandleDistrictChange(); // Run your existing logic first
+    
+    // Capture the calculated total and set it in the hidden form field
+    const totalText = document.getElementById('codTotalPrice').innerText;
+    const numericTotal = totalText.replace(/[^0-9]/g, '');
+    document.getElementById('hiddenTotalAmount').value = numericTotal;
+};
+
+// 2. Add the Form Submission Logic
+const scriptURL = 'https://script.google.com/macros/s/AKfycbziSezd2NDl8no5FJ74IwQQMluuGW2-ZkS1lsZ6o5liJukBfhkx8Nt8eBVT0vTDZiwF/exec'; // Replace with your Web App URL
+const form = document.getElementById('shipping-form');
+const statusMsg = document.getElementById('form-status');
+const submitBtn = document.getElementById('submit-order-btn');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Processing Order...";
+
+    fetch(scriptURL, { 
+        method: 'POST', 
+        body: new FormData(form)
+    })
+    .then(response => {
+        statusMsg.style.display = "block";
+        form.style.display = "none"; // Hide form on success
+        submitBtn.innerText = "Order Confirmed!";
+        
+        // Auto-close modal after 3 seconds
+        setTimeout(() => {
+            closeModal('codModal');
+            statusMsg.style.display = "none";
+            form.style.display = "block";
+            form.reset();
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Confirm COD Order";
+        }, 3000);
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        alert("Something went wrong. Please try again.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Try Again";
+    });
+});
+</script>
 </body>
 </html>

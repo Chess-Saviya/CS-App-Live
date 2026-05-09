@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Functional Chess Clock - Chess Saviya Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+    :root {
+        --primary-blue: #0062ff;
+        --primary-blue-hover: #0050d1;
+        --white: #ffffff;
+        --bg-body: #f4f7f6;
+        --bg-card: #ffffff;
+        --text-dark: #222222;
+        --text-gray: #555555;
+        --text-light-gray: #888888;
+        --border-color: #d1d9e6;
+        --border-blue: #a3c2ff;
+        --success: #28a745;
+        --danger: #dc3545;
+        --warning: #ff9800;
+        --dark-bg: #1a1a2e;
+        --footer-bg: #111827;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Roboto", sans-serif; }
+    body { background-color: var(--bg-body); color: var(--text-dark); line-height: 1.6; }
+    a { color: var(--primary-blue); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--primary-blue-hover); text-decoration: underline; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+    /* Main Product Layout */
+    .product-wrapper { display: flex; flex-direction: column; gap: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); margin-bottom: 30px; }
+    @media (min-width: 768px) { .product-wrapper { flex-direction: row; padding: 40px; } }
+
+    /* Gallery Section */
+    .gallery-section { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+    .main-display { width: 100%; aspect-ratio: 1 / 1; background: #f9f9f9; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); position: relative; cursor: zoom-in; }
+    .main-display.is-video { cursor: default; }
+    .main-display img, .main-display iframe { width: 100%; height: 100%; object-fit: contain; border: none; }
+
+    .thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+    .thumbnails::-webkit-scrollbar { height: 6px; }
+    .thumbnails::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
+    .thumbnail { width: 70px; height: 70px; flex-shrink: 0; border: 2px solid transparent; border-radius: 6px; cursor: pointer; overflow: hidden; transition: 0.2s ease; }
+    .thumbnail.active { border-color: var(--primary-blue); }
+    .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+    .thumbnail.video-thumb { position: relative; }
+    .thumbnail.video-thumb::after { content: "\f04b"; font-family: "FontAwesome"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--white); background: rgba(0, 0, 0, 0.6); width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; }
+
+    /* Lightbox */
+    .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s ease; }
+    .lightbox-overlay.active { opacity: 1; visibility: visible; }
+    .lightbox-content { position: relative; max-width: 90%; max-height: 90%; }
+    .lightbox-img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+    .lightbox-close { position: absolute; top: -40px; right: 0; color: var(--white); font-size: 2rem; cursor: pointer; background: none; border: none; }
+
+    /* Info Section */
+    .info-section { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+    .product-title { font-size: 1.8rem; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
+    .product-sku { font-size: 0.85rem; color: var(--text-light-gray); margin-top: -10px; margin-bottom: 5px; }
+
+    /* Variation Selector UI */
+    .variation-selector { margin: 5px 0 15px 0; }
+    .variation-selector p { font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-dark); }
+    .variation-options { display: flex; gap: 10px; flex-wrap: wrap; }
+    .var-btn { padding: 8px 16px; border: 1px solid var(--border-color); background: var(--white); border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: 0.2s; color: var(--text-gray); }
+    .var-btn:hover { border-color: var(--primary-blue); color: var(--primary-blue); }
+    .var-btn.active { border-color: var(--primary-blue); background: #eef3ff; color: var(--primary-blue); font-weight: 700; box-shadow: 0 2px 5px rgba(0, 98, 255, 0.1); }
+
+    /* Stock Badges & Discounts */
+    .badges-wrapper { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .stock-label { display: inline-block; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; }
+    .in-stock { background-color: #e6f4ea; color: var(--success); border: 1px solid var(--success); border-radius: 20px; }
+    .limited-stock { background-color: #fff3cd; color: var(--warning); border: 1px solid var(--warning); border-radius: 20px; }
+    .out-of-stock { background-color: var(--danger); color: var(--white); border: 2px solid #b02a37; border-radius: 4px; font-size: 1rem; padding: 8px 18px; text-transform: uppercase; font-weight: 700; box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3); }
+    .discount-badge { background-color: var(--danger); color: var(--white); padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; display: none; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3); }
+
+    /* Pricing */
+    .price-container { margin: 10px 0; display: flex; flex-direction: column; }
+    .special-offer-text { font-size: 0.95rem; color: var(--white); background-color: var(--danger); font-weight: 700; padding: 4px 10px; border-radius: 4px; display: none; align-self: flex-start; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3); }
+    .current-price { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
+    .original-price { font-size: 1.4rem; color: var(--text-light-gray); text-decoration: line-through; margin-left: 12px; display: none; font-weight: 500; }
+
+    /* Buttons */
+    .btn-primary { background-color: var(--primary-blue); color: var(--white); border: none; padding: 15px 30px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.3s, transform 0.1s; text-align: center; width: 100%; }
+    .btn-primary:hover { background-color: var(--primary-blue-hover); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { background-color: #a0c4ff; cursor: not-allowed; }
+
+    /* Countdown UI */
+    .countdown-container { display: none; margin-top: 5px; }
+    .countdown-wrapper { background: linear-gradient(135deg, var(--dark-bg), #0f3460); border-radius: 10px; padding: 20px; text-align: center; color: var(--white); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); border: 1px solid #2a2a4a; transition: background 0.5s ease; }
+    .countdown-title { font-weight: 600; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .countdown-boxes { display: flex; justify-content: center; gap: 15px; }
+    .cd-box { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; min-width: 65px; padding: 10px 5px; backdrop-filter: blur(5px); }
+    .cd-num { display: block; font-size: 1.8rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; }
+    .cd-label { display: block; font-size: 0.75rem; color: #ffffff; opacity: 0.8; text-transform: uppercase; font-weight: 500; }
+    .cd-offer-desc { background: #eef3ff; border-left: 4px solid var(--primary-blue); color: var(--text-dark); padding: 12px 15px; border-radius: 0 8px 8px 0; margin-top: 15px; font-size: 0.95rem; font-weight: 500; display: none; }
+
+    /* Grid Cards */
+    .section-heading { font-size: 1.4rem; margin: 30px 0 15px; font-weight: 600; color: var(--text-dark); }
+    .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    @media (min-width: 576px) { .grid-container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; } }
+    .card-box { background: var(--white); border: 1px solid var(--border-blue); border-radius: 8px; padding: 15px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; user-select: none; }
+    .card-box:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 98, 255, 0.1); }
+    .card-box:hover .more-info-link { text-decoration: underline; }
+    .card-box img { max-height: 40px; max-width: 90%; margin-bottom: 10px; object-fit: contain; }
+    .card-price { font-weight: 600; font-size: 1.05rem; color: var(--text-dark); margin-bottom: 5px; }
+    .more-info-link { font-size: 0.85rem; color: var(--primary-blue); text-decoration: none; margin-top: 5px; font-weight: 500; }
+
+    /* Description & Form Elements */
+    .text-section { background: var(--white); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px; }
+    .text-section h3 { margin-bottom: 10px; font-size: 1.2rem; color: var(--text-dark); }
+    .text-section p, .text-section ul { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 10px; line-height: 1.6; }
+    .text-section ul { padding-left: 20px; list-style-type: disc; }
+    
+    .custom-select { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; margin-bottom: 5px; outline: none; background: var(--white); transition: border-color 0.2s; }
+    .custom-select:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(0,98,255,0.1); }
+    .price-breakdown { background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); display: none; }
+    .price-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-gray); font-size: 0.95rem; }
+    .price-row.total { font-weight: 700; color: var(--text-dark); font-size: 1.1rem; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 5px; }
+
+    /* Footer */
+    .site-footer { background-color: var(--footer-bg); color: #ffffff; padding: 60px 20px; margin-top: 60px; text-align: center; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .site-footer .tagline { font-size: 1.4rem; font-weight: 700; color: var(--primary-blue); }
+    .site-footer .tagline span { font-size: 0.9rem; font-style: italic; color: #ffffff; display: block; margin-top: 5px; }
+    .site-footer .contact { margin: 25px 0; font-weight: 500; display: flex; flex-direction: column; gap: 5px; }
+    .site-footer .contact a, .support-links-row a, .payment-partner a { color: #d1d5db; transition: color 0.2s; }
+    .site-footer .contact a:hover, .support-links-row a:hover { color: var(--primary-blue); text-decoration: none; }
+    .support-links { margin: 25px 0; }
+    .support-heading { font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
+    .support-links-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; font-size: 0.85rem; }
+    .social-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+    .social-icons a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); color: #ffffff; border-radius: 50%; font-size: 1.2rem; transition: 0.3s; }
+    .social-icons a:hover { background: var(--primary-blue); color: #ffffff; text-decoration: none; }
+    .payment-partner { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem; color: #9ca3af; font-weight: 500; }
+    .copyright { margin-top: 10px; font-size: 0.8rem; color: #6b7280; }
+
+    /* Modals */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 1000; padding: 20px; }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-content { background: var(--white); width: 100%; max-width: 500px; border-radius: 12px; padding: 25px; position: relative; transform: translateY(20px); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
+    .close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; color: var(--text-gray); cursor: pointer; z-index: 10; }
+    .modal-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+    .modal-instruction { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 20px; font-weight: 500; }
+    
+    .radio-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+    .radio-option { display: flex; align-items: center; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: 0.2s; }
+    .radio-option:hover { border-color: var(--primary-blue); background: rgba(0, 98, 255, 0.02); }
+    .radio-option input[type="radio"] { margin-right: 15px; transform: scale(1.2); accent-color: var(--primary-blue); }
+    .radio-option span { font-weight: 500; flex: 1; }
+
+    .bank-installments { background: var(--bg-body); border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+    .bank-installments h4 { margin-bottom: 10px; color: var(--primary-blue); font-size: 1.1rem; }
+    .installment-grid-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .inst-box { background: var(--white); border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; text-align: center; }
+    .inst-box .months { font-size: 0.8rem; color: var(--text-gray); margin-bottom: 5px; }
+    .inst-box .price-pm { font-weight: 600; color: var(--text-dark); }
+    
+    .btn-framed-close { background-color: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-gray); font-weight: 600; cursor: pointer; width: 100%; text-align: center; padding: 12px 0; margin-top: 15px; border-radius: 8px; font-size: 1rem; transition: background 0.2s; }
+    .btn-framed-close:hover { background-color: #e2e6eb; color: var(--text-dark); }
+
+    .mt-10 { margin-top: 10px; } .mt-20 { margin-top: 20px; } .text-center { text-align: center; } .italic-gray { font-style: italic; color: var(--text-gray); font-size: 0.85rem; }
+    .input-group { margin-bottom: 15px; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="product-wrapper">
+        <div class="gallery-section">
+            <div class="main-display" id="mainDisplay" onclick="openLightbox()"></div>
+            
+            <div class="thumbnails">
+                <div class="thumbnail active" onclick="changeMedia('image', this.querySelector('img').src, this)" id="masterThumb">
+                    <img src="https://i.postimg.cc/Hx3SF66p/download-(4).png" alt="Thumb Main" id="firstThumbImg">
+                </div>
+                <div class="thumbnail video-thumb" onclick="changeMedia('video', 'https://www.youtube.com/embed/HcXEkVzfxd8?si=23pXfxXtb833FSyu&autoplay=1', this)">
+                    <img src="https://i.postimg.cc/Hx3SF66p/download-(4).png" alt="Video Thumbnail">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                    <img src="https://i.postimg.cc/2ShM5F0G/1.jpg" alt="Thumb 1">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                    <img src="https://i.postimg.cc/dVrp0m55/2.jpg" alt="Thumb 2">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                    <img src="https://i.postimg.cc/DwLHzdxB/4.jpg" alt="Thumb 4">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                    <img src="https://i.postimg.cc/CxkXKHcv/5.jpg" alt="Thumb 5">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                    <img src="https://i.postimg.cc/7Z0dLMB8/6.jpg" alt="Thumb 6">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                    <img src="https://i.postimg.cc/cLw2JMDG/7.jpg" alt="Thumb 7">
+                </div>
+                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                    <img src="https://i.postimg.cc/jdGBKk4v/8.jpg" alt="Thumb 8">
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h1 class="product-title" id="productTitleText">Multi Functional Chess Clock</h1>
+            <div class="product-sku" id="productSkuText">SKU: CSS-104</div>
+
+            <div class="variation-selector">
+                <p>Select Variant:</p>
+                <div class="variation-options">
+                    <button class="var-btn active" onclick="updateVariant('avocado', this)">Avocado Green</button>
+                    <button class="var-btn" onclick="updateVariant('sapphire', this)">Sapphire Blue</button>
+                </div>
+            </div>
+            
+            <div class="badges-wrapper">
+                <div id="stockLabel" class="stock-label in-stock"><i class="fas fa-check-circle"></i> In Stock</div>
+                <div id="discountBadge" class="discount-badge">20% OFF</div>
+            </div>
+
+            <div class="price-container">
+                <span class="special-offer-text" id="specialOfferText">Special Offer Price</span>
+                <div>
+                    <span class="current-price" id="displayPriceMain">Rs. 0/-</span>
+                    <span class="original-price" id="originalPriceMain">Rs. 0/-</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="btnBuyNow" onclick="openModal('buyNowModal')">Buy Now</button>
+
+            <div class="countdown-container" id="salesCountdownContainer">
+                <div class="countdown-wrapper" id="salesCountdownBox">
+                    <div class="countdown-title" id="countdownTitleText">🔥 Offer Ends In</div>
+                    <div class="countdown-boxes" id="countdownBoxes"></div>
+                </div>
+                <div class="cd-offer-desc" id="offerDescText">Don't miss out on this amazing deal!</div>
+            </div>
+
+            <div class="text-section mt-20">
+                <h3><i class="fas fa-truck"></i> Shipping Information</h3>
+                <p>We offer islandwide delivery, ensuring your order reaches your doorstep within just 2-3 working days.</p>
+                <p>Courier charges are payable directly to the delivery agent upon receiving your order. A convenient Cash on Delivery (COD) option is also available.</p>
+                <p>Contact us via <a href="#" id="shippingWaLink" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a> for order inquiries.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-section">
+        <h3>Product Description</h3>
+        <p>Enhance your chess experience with the highly durable and professional PS-1688 Multi Functional Chess Clock. Designed for serious players, it provides accurate timing, multiple standard presets, and an intuitive interface perfect for tournaments or casual play.</p>
+        <ul>
+            <li><strong>Package:</strong> Chess Board with Chess Pieces</li>
+            <li><strong>Origin:</strong> Mainland China</li>
+            <li><strong>Chess Board Material:</strong> PVC</li>
+            <li><strong>Board Colour:</strong> Avocado Green / Sapphire Blue</li>
+            <li><strong>Board Size:</strong> 34.5cm × 34.5cm</li>
+            <li><strong>Chess Piece material:</strong> Resin</li>
+            <li><strong>King Height:</strong> 65mm</li>
+        </ul>
+    </div>
+
+    <h2 class="section-heading">Payment Information</h2>
+    <div class="grid-container">
+        <div class="card-box" onclick="openModal('bankTransferModal')">
+            <img src="https://i.postimg.cc/WzrrL37y/symbols.png" alt="Bank Transfer">
+            <div class="card-price" id="gridPriceBank">Rs. 0/-</div>
+            <div class="more-info-link">More information</div>
+        </div>
+        <div class="card-box" onclick="openModal('codModal')">
+            <img src="https://i.postimg.cc/g0gnwKnX/COD.png" alt="Cash on Delivery">
+            <div class="card-price" id="gridPriceCOD">Rs. 0/-</div>
+            <div class="more-info-link">Order via Form</div>
+        </div>
+        <div class="card-box">
+            <img src="https://i.postimg.cc/NGrRrJwH/imgi-37-pay-visa-master.png" alt="Visa Mastercard">
+            <div class="card-price" id="gridPriceCard">Rs. 0/-</div>
+        </div>
+        <div class="card-box">
+            <img src="https://i.postimg.cc/dQTGTHKS/Google-pay-acceptance-mark-icon-svg.png" alt="Digital Wallets">
+            <div class="card-price" id="gridPriceWallet">Rs. 0/-</div>
+        </div>
+        <div class="card-box" id="darazOptionCard" onclick="openModal('darazModal')">
+            <img src="https://i.postimg.cc/CMfbfPVk/Daraz-logo.png" alt="Daraz">
+            <div class="card-price" id="gridPriceDaraz">Rs. 0/-</div>
+            <div class="more-info-link">More information</div>
+        </div>
+    </div>
+
+    <div id="installmentsSectionWrapper">
+        <h2 class="section-heading">Installments</h2>
+        <div class="grid-container">
+            <div class="card-box" onclick="openModal('installmentsModal')">
+                <img src="https://i.postimg.cc/tJPPQT5y/download-(1).png" alt="Commercial Bank">
+                <div class="card-price" id="gridInstComm">Rs. 0/- x 12</div>
+                <div class="more-info-link">More information</div>
+            </div>
+            <div class="card-box" onclick="openModal('installmentsModal')">
+                <img src="https://i.postimg.cc/90TT5MpX/download-(4).png" alt="DFCC Bank">
+                <div class="card-price" id="gridInstDFCC">Rs. 0/- x 12</div>
+                <div class="more-info-link">More information</div>
+            </div>
+            <div class="card-box" onclick="openModal('installmentsModal')">
+                <img src="https://i.postimg.cc/8C7P7Yrq/download-(3).png" alt="HNB Bank">
+                <div class="card-price" id="gridInstHNB">Rs. 0/- x 6</div>
+                <div class="more-info-link">More information</div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="tagline">
+            Chess Saviya Store
+            <span>Best Move for Trusted Chess Products</span>
+        </div>
+        
+        <div class="contact">
+            <div>Contact: <a href="tel:+94704484126">070 44 84 126</a></div>
+            <div>Email: <a href="mailto:chesssaviyastore@gmail.com">chesssaviyastore@gmail.com</a></div>
+        </div>
+
+        <div class="support-links">
+            <p class="support-heading">Support Links</p>
+            <div class="support-links-row">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Delivery & Returns</a>
+            </div>
+        </div>
+
+        <p style="margin-bottom: 15px; font-size: 0.9rem; color: #9ca3af;">Find us on</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/ChessSaviyaStoreLK/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/94704484126" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.youtube.com/@ChessSaviyaStore" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/chess_saviya.store/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+
+        <div class="payment-partner">
+            Payment Partner: <a href="https://www.payhere.lk" id="footerPayHereLink" target="_blank">PayHere</a>
+        </div>
+
+        <div class="copyright">
+            &copy; <span id="currentYear"></span> Chess Saviya Store. All Rights Reserved.
+        </div>
+    </div>
+</footer>
+
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox(event)">
+    <div class="lightbox-content">
+        <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <img src="" alt="Enlarged view" class="lightbox-img" id="lightboxImage">
+    </div>
+</div>
+
+<!-- Main Checkout Methods Modal -->
+<div class="modal-overlay" id="buyNowModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('buyNowModal')">&times;</button>
+        <h2 class="modal-title">Checkout Options</h2>
+        <p class="modal-instruction">Please select a payment method to proceed with your order.</p>
+        <form id="checkoutForm">
+            <div class="radio-list">
+                <label class="radio-option"><input type="radio" name="paymentMethod" value="bank"><span>Bank Transfer <i class="fab fa-whatsapp" style="color: #25D366; margin-left:5px;"></i></span></label>
+                <label class="radio-option"><input type="radio" name="paymentMethod" value="card"><span>Visa / Mastercard</span></label>
+                <label class="radio-option"><input type="radio" name="paymentMethod" value="wallet"><span>Google Pay / Hela Pay / iPay / FriMi / Q+ App</span></label>
+                <label class="radio-option"><input type="radio" name="paymentMethod" value="cod"><span>Cash on Delivery (COD)</span></label>
+                <label class="radio-option" id="buyNowInstallmentOption"><input type="radio" name="paymentMethod" value="installments"><span>Installments (Commercial / DFCC / HNB Banks)</span></label>
+                <label class="radio-option" id="buyNowDarazOption"><input type="radio" name="paymentMethod" value="daraz"><span>Order on Daraz</span></label>
+            </div>
+            <button type="button" class="btn-primary" onclick="processCheckout()">Proceed to Buy</button>
+        </form>
+    </div>
+</div>
+
+<!-- Advanced COD Checkout Modal -->
+<div class="modal-overlay" id="codModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('codModal')">&times;</button>
+        
+        <!-- Phase 1: Checkout Form -->
+        <div id="checkout-container">
+            <h2 class="modal-title">Cash on Delivery Checkout</h2>
+            
+            <form id="shipping-form" novalidate>
+                <!-- Product Data (Hidden, updated via JS variant logic) -->
+                <input type="hidden" id="hiddenProductName" name="product" value="">
+                <input type="hidden" id="hiddenProductSku" name="sku" value="">
+                <input type="hidden" id="hiddenPrice" name="item_price" value="0">
+                <input type="hidden" id="hiddenTotalAmount" name="total" value="0">
+
+                <!-- District Selection -->
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">District *</label>
+                    <select class="custom-select" id="districtSelect" name="district" onchange="handleDistrictChange()" required>
+                        <option value="" disabled selected>-- Select your District --</option>
+                    </select>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Please select your district.</small>
+                </div>
+
+                <!-- Price Breakdown (Appears after District selection) -->
+                <div class="price-breakdown" id="codPriceDetails" style="margin-bottom: 20px;">
+                    <div class="price-row"><span>Item Price:</span> <span id="codItemPrice">Rs. 0/-</span></div>
+                    <div class="price-row"><span>Delivery:</span> <span id="codDeliveryFee">Rs. 0/-</span></div>
+                    <div class="price-row total"><span>Total:</span> <span id="codTotalPrice" style="color: var(--text-dark);">Rs. 0/-</span></div>
+                </div>
+
+                <!-- Customer Details -->
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Full Name *</label>
+                    <input type="text" name="name" class="custom-select" placeholder="Enter your full name" required>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Name is required.</small>
+                </div>
+
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Shipping Address *</label>
+                    <input type="text" name="address1" class="custom-select" style="margin-bottom:8px" placeholder="Home number and street name" required>
+                    <input type="text" name="address2" class="custom-select" placeholder="Apartment, suite, etc. (optional)">
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Street address is required.</small>
+                </div>
+
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Town / City *</label>
+                    <input type="text" name="city" class="custom-select" placeholder="Enter your city" required>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Town or city is required.</small>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="input-group" style="flex: 1;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Phone *</label>
+                        <input type="tel" name="phone" class="custom-select" placeholder="07XXXXXXXX" required>
+                        <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid phone is required.</small>
+                    </div>
+                    <div class="input-group" style="flex: 1;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Email *</label>
+                        <input type="email" name="email" class="custom-select" placeholder="email@example.com" required>
+                        <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid email is required.</small>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Order Notes (optional)</label>
+                    <textarea name="notes" class="custom-select" style="height: 60px; resize: none;" placeholder="Notes about your order, e.g. special delivery instructions."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submit-order-btn" style="margin-top: 10px;">Place COD Order</button>
+            </form>
+        </div>
+
+        <!-- Phase 2: Modern Thank You Card (Hidden by default) -->
+        <div id="thank-you-card" style="display: none; text-align: center; padding: 20px;">
+            <div style="font-size: 4rem; color: var(--success); margin-bottom: 15px;">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 style="color: var(--text-dark); margin-bottom: 10px;">Order Placed Successfully!</h2>
+            <p style="color: var(--text-gray); margin-bottom: 20px;">Thank you for your order. We are now processing it and will deliver your professional chess equipment shortly.</p>
+            <div style="background: #f8f9fa; border: 1px dashed var(--border-color); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <p style="font-size: 0.85rem; color: var(--text-gray);">Our team will contact you via phone or WhatsApp if any further details are needed.</p>
+            </div>
+            <button class="btn-primary" style="background-color: var(--text-gray);" onclick="closeModal('codModal'); location.reload();">Back to Store</button>
+        </div>
+    </div>
+</div>
+
+<!-- Secure PayHere Modal -->
+<div class="modal-overlay" id="payhereModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('payhereModal')">&times;</button>
+        <h2 class="modal-title" id="payhereModalTitle">Secure Online Payment</h2>
+        <p class="modal-instruction" style="font-size: 1.1rem; color: var(--text-dark);">
+            Price: <strong id="payhereModalPrice" style="color: var(--text-dark); font-size: 1.2rem;">Rs. 0/-</strong>
+        </p>
+        <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-gray);">
+            Delivery is available islandwide within 2-3 working days. The standard courier fee (<span id="payhereCourierFee" style="font-weight: 600;">Rs. 450/-</span>) can be paid directly to the delivery agent upon receiving your order.
+        </p>
+        <p style="margin-bottom: 25px; font-size: 0.95rem; color: var(--text-gray);">
+            To complete your purchase, please provide your shipping details (First Name, Last Name, Email, Phone Number, Address, and City) on the secure payment page and proceed with your selected method.
+        </p>
+        <button class="btn-primary" onclick="openPayHere()">Proceed to PayHere</button>
+    </div>
+</div>
+
+<!-- Installment Checkout Modal -->
+<div class="modal-overlay" id="installmentCheckoutModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('installmentCheckoutModal')">&times;</button>
+        <h2 class="modal-title">Installment Payment Plans</h2>
+        <p class="modal-instruction" style="font-size: 1.1rem; color: var(--text-dark);">
+            Price: <strong id="installmentModalPrice" style="color: var(--text-dark); font-size: 1.2rem;">Rs. 0/-</strong>
+        </p>
+        <p style="margin-bottom: 10px; font-size: 0.95rem; color: var(--text-gray);">
+            <strong>Available Terms:</strong> 3 Months / 6 Months / 12 Months
+        </p>
+        <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-gray);">
+            Enjoy flexible installment plans when you use credit cards from <strong>Commercial Bank, DFCC Bank, or HNB Bank</strong> at checkout.
+        </p>
+        <p style="margin-bottom: 25px; font-size: 0.95rem; color: var(--text-gray);">
+            Delivery is available islandwide within 2-3 working days. The standard courier fee (<span id="installmentCourierFee" style="font-weight: 600;">Rs. 450/-</span>) can be paid directly to the delivery agent upon receiving your order.
+        </p>
+        <button class="btn-primary" onclick="openPayHere()">Proceed to PayHere</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="bankTransferModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('bankTransferModal')">&times;</button>
+        <h2 class="modal-title">Bank Transfer Instructions</h2>
+        <p>Please get the bank details via <a href="#" id="modalWaTextLink" target="_blank"><strong>WhatsApp</strong></a> at <strong>+94704484126</strong> and send a photo of the bank receipt or payment screenshot for payment confirmation with these details:</p>
+        <ul style="margin: 15px 0 20px 20px;"><li>Name</li><li>Shipping Address</li><li>Contact Number(s)</li><li>Email Address</li></ul>
+        <button class="btn-primary" style="background-color: #25D366;" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> Order on WhatsApp</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="darazModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('darazModal')">&times;</button>
+        <h2 class="modal-title">Order on Daraz</h2>
+        <p>Cash on Delivery and Koko pay installments available on our Daraz Store.</p>
+        <div style="display: flex; gap: 15px; margin: 20px 0; align-items: center; justify-content: center;">
+            <img src="https://i.postimg.cc/6qRRJ30N/Cash-on-Delivery.png" alt="COD" style="height: 40px;">
+            <img src="https://i.postimg.cc/Hn55Dx2m/Daraz-Koko.png" alt="Koko Pay" style="height: 40px;">
+        </div>
+        <p class="italic-gray text-center" style="margin-bottom: 20px;">Price may vary due to seasonal offers on Daraz.</p>
+        <button class="btn-primary" style="background-color: #f85606;" onclick="openDaraz()">Order on Daraz</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="installmentsModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('installmentsModal')">&times;</button>
+        <h2 class="modal-title">Installment Plans</h2>
+        <p style="margin-bottom: 20px; color: var(--text-gray);">Installment Plans available for your convenience</p>
+        
+        <div class="bank-installments">
+            <h4>COMMERCIAL BANK</h4>
+            <div class="installment-grid-inner">
+                <div class="inst-box"><div class="months">3 Months</div><div class="price-pm" id="modComm3">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">6 Months</div><div class="price-pm" id="modComm6">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">12 Months</div><div class="price-pm" id="modComm12">Rs. 0 /m</div></div>
+            </div>
+        </div>
+        <div class="bank-installments">
+            <h4>DFCC BANK</h4>
+            <div class="installment-grid-inner">
+                <div class="inst-box"><div class="months">3 Months</div><div class="price-pm" id="modDfcc3">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">6 Months</div><div class="price-pm" id="modDfcc6">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">12 Months</div><div class="price-pm" id="modDfcc12">Rs. 0 /m</div></div>
+            </div>
+        </div>
+        <div class="bank-installments">
+            <h4>HNB BANK</h4>
+            <div class="installment-grid-inner">
+                <div class="inst-box"><div class="months">3 Months</div><div class="price-pm" id="modHnb3">Rs. 0 /m</div></div>
+                <div class="inst-box"><div class="months">6 Months</div><div class="price-pm" id="modHnb6">Rs. 0 /m</div></div>
+            </div>
+        </div>
+        <button class="btn-framed-close" onclick="closeModal('installmentsModal')">Close</button>
+    </div>
+</div>
+
+<script>
+    /* =========================================================
+       ADVANCED VARIABLE CONFIGURATION PANEL
+       ========================================================= */
+    const config = {
+        ui: {
+            showOriginalPrice: true, 
+            showDiscountBadge: true,   
+            showDaraz: true,           
+            showInstallments: true     
+        },
+
+        shipping: {
+            baseFee: 450,
+            distantFee: 550,
+            payhereFeeText: "Rs. 450/-"
+        },
+
+        sale: {
+            isActive: true,                
+            startTime: "2026-04-28T00:00:00", 
+            endTime: "2026-05-15T23:59:59",   
+            showCountdownBoxes: true,      
+            showOfferDescription: true,    
+            offerDescription: "Special Avurudu Sale! Grab your favorite color now."
+        },
+
+        activeVariant: "avocado", 
+
+        // Master Variant Database 
+        variants: {
+            "avocado": {
+                name: "Multi Functional Chess Clock (Avocado Green)",
+                sku: "CSS-104-AG",
+                stockStatus: 'in-stock', 
+                discountPercentage: 20,
+                images: {
+                    regularMain: "https://i.postimg.cc/Hx3SF66p/download-(4).png",
+                    saleMain: "https://i.postimg.cc/Hx3SF66p/download-(4).png" 
+                },
+                prices: {
+                    regular: { mainDisplay: 1900, originalMSRP: 2500, bank: 11790, card: 11990, wallet: 11990, cod: 12000, daraz: 12299 },
+                    sale: { mainDisplay: 1500, originalMSRP: 1900, bank: 10500, card: 10800, wallet: 10800, cod: 10500, daraz: 11000 }
+                },
+                links: {
+                    whatsappRegular: "?text=Order%20Inquiry:%20Avocado%20Green%20Clock%20(Regular%20Price)",
+                    whatsappSale: "?text=Order%20Inquiry:%20Avocado%20Green%20Clock%20(Offer%20Price)",
+                    darazProduct: "https://www.daraz.lk/products/green-clock",
+                    payhereRegular: "https://sandbox.payhere.lk/pay/green-regular",
+                    payhereSale: "https://sandbox.payhere.lk/pay/green-sale"
+                }
+            },
+            "sapphire": {
+                name: "Multi Functional Chess Clock (Sapphire Blue)",
+                sku: "CSS-104-SB",
+                stockStatus: 'limited-stock', 
+                discountPercentage: 15,
+                images: {
+                    regularMain: "https://i.postimg.cc/2ShM5F0G/1.jpg", 
+                    saleMain: "https://i.postimg.cc/2ShM5F0G/1.jpg" 
+                },
+                prices: {
+                    regular: { mainDisplay: 2200, originalMSRP: 2800, bank: 12790, card: 12990, wallet: 12990, cod: 13000, daraz: 13299 },
+                    sale: { mainDisplay: 1800, originalMSRP: 2200, bank: 11500, card: 11800, wallet: 11800, cod: 11500, daraz: 12000 }
+                },
+                links: {
+                    whatsappRegular: "?text=Order%20Inquiry:%20Sapphire%20Blue%20Clock%20(Regular%20Price)",
+                    whatsappSale: "?text=Order%20Inquiry:%20Sapphire%20Blue%20Clock%20(Offer%20Price)",
+                    darazProduct: "https://www.daraz.lk/products/blue-clock",
+                    payhereRegular: "https://sandbox.payhere.lk/pay/blue-regular",
+                    payhereSale: "https://sandbox.payhere.lk/pay/blue-sale"
+                }
+            }
+        }
+    };
+
+    const srilankaDistricts = [
+        "Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle", "Gampaha", "Hambantota", 
+        "Jaffna", "Kalutara", "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar", "Matale", 
+        "Matara", "Moneragala", "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura", 
+        "Trincomalee", "Vavuniya"
+    ];
+
+    let currentPricingState = 'regular'; 
+    let countdownInterval;
+
+    function initPage() {
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+        populateDistricts();
+        updateVariant(config.activeVariant, document.querySelector('.var-btn.active'));
+        toggleConditionalSections();
+    }
+
+    function populateDistricts() {
+        const select = document.getElementById('districtSelect');
+        srilankaDistricts.forEach(district => {
+            const option = document.createElement('option');
+            option.value = district;
+            option.text = district;
+            select.appendChild(option);
+        });
+    }
+
+    // Handles the switching logic when a user clicks a color/type button
+    function updateVariant(variantKey, btnElement) {
+        config.activeVariant = variantKey;
+
+        // Visual UI update for the buttons
+        document.querySelectorAll('.var-btn').forEach(btn => btn.classList.remove('active'));
+        if(btnElement) btnElement.classList.add('active');
+
+        // Update Title & SKU
+        const vData = config.variants[variantKey];
+        document.getElementById('productTitleText').innerText = vData.name;
+        document.getElementById('productSkuText').innerText = `SKU: ${vData.sku}`;
+
+        // Bind data to hidden COD form fields
+        document.getElementById('hiddenProductName').value = vData.name;
+        document.getElementById('hiddenProductSku').value = vData.sku;
+
+        // Re-calculate everything based on new variant
+        evaluateSaleStatus();
+        updateStockBadges();
+        updatePricingUI();
+        updateLinks();
+
+        // Refresh dynamic district calculations if the modal form was already touched
+        if(document.getElementById('districtSelect').value !== '') {
+            handleDistrictChange();
+        }
+
+        // Switch to the main image for this specific variant
+        const masterThumb = document.getElementById('masterThumb');
+        if (masterThumb) masterThumb.click();
+    }
+
+    function evaluateSaleStatus() {
+        const countdownContainer = document.getElementById('salesCountdownContainer');
+        const countdownBox = document.getElementById('salesCountdownBox');
+        const titleText = document.getElementById('countdownTitleText');
+        const specialOffer = document.getElementById('specialOfferText');
+        const firstThumbImg = document.getElementById('firstThumbImg');
+        const discountBadge = document.getElementById('discountBadge');
+        const activeData = config.variants[config.activeVariant];
+
+        if (!config.sale.isActive) {
+            currentPricingState = 'regular';
+            countdownContainer.style.display = 'none'; specialOffer.style.display = 'none'; discountBadge.style.display = 'none';
+            if (firstThumbImg) firstThumbImg.src = activeData.images.regularMain;
+            return;
+        }
+
+        const now = new Date().getTime();
+        const start = new Date(config.sale.startTime).getTime();
+        const end = new Date(config.sale.endTime).getTime();
+
+        if (now >= start && now <= end) {
+            currentPricingState = 'sale';
+            specialOffer.style.display = 'inline-block';
+            
+            if (config.ui.showDiscountBadge) {
+                discountBadge.style.display = 'inline-block';
+                discountBadge.innerText = `${activeData.discountPercentage}% OFF`; 
+            } else { discountBadge.style.display = 'none'; }
+
+            if (firstThumbImg) firstThumbImg.src = activeData.images.saleMain;
+
+            if (config.sale.showCountdownBoxes) {
+                countdownContainer.style.display = 'block';
+                titleText.innerText = "🔥 Limited Time Offer Ends In"; titleText.style.color = "#ffffff";
+
+                const timeLeftToEnd = end - now;
+                if (timeLeftToEnd <= (24 * 60 * 60 * 1000)) {
+                    countdownBox.style.background = "linear-gradient(135deg, #800000, #4a0000)"; 
+                } else {
+                    countdownBox.style.background = "linear-gradient(135deg, #4D94FF, #0062FF, #003C8F)";
+                }
+                startCountdown(end);
+            }
+            
+            const descEl = document.getElementById('offerDescText');
+            if(config.sale.showOfferDescription) {
+                descEl.style.display = 'block'; descEl.innerText = config.sale.offerDescription;
+            }
+            
+        } else if (now < start) {
+            currentPricingState = 'regular';
+            discountBadge.style.display = 'none';
+            if (firstThumbImg) firstThumbImg.src = activeData.images.regularMain;
+            
+            const timeToStart = start - now;
+            if (timeToStart <= (24 * 60 * 60 * 1000)) {
+                if (config.sale.showCountdownBoxes) {
+                    countdownContainer.style.display = 'block';
+                    titleText.innerText = "⏳ Special Sale Starts In";
+                    countdownBox.style.background = "linear-gradient(135deg, #1a1a2e, #0f3460)"; 
+                    titleText.style.color = "#0062FF";
+                    startCountdown(start);
+                }
+            } else { countdownContainer.style.display = 'none'; }
+        } else {
+            currentPricingState = 'regular'; discountBadge.style.display = 'none';
+            if (firstThumbImg) firstThumbImg.src = activeData.images.regularMain;
+            countdownContainer.style.display = 'none'; specialOffer.style.display = 'none';
+        }
+    }
+
+    function updateStockBadges() {
+        const activeData = config.variants[config.activeVariant];
+        const stockLabel = document.getElementById('stockLabel'); 
+        const btnBuyNow = document.getElementById('btnBuyNow');
+        
+        if (activeData.stockStatus === 'out-of-stock') {
+            stockLabel.className = 'stock-label out-of-stock'; stockLabel.innerHTML = 'Out of Stock'; btnBuyNow.style.display = 'none';
+        } else if (activeData.stockStatus === 'limited-stock') {
+            stockLabel.className = 'stock-label limited-stock'; stockLabel.innerHTML = 'Limited Stock Only'; btnBuyNow.style.display = 'block';
+        } else {
+            stockLabel.className = 'stock-label in-stock'; stockLabel.innerHTML = '<i class="fas fa-check-circle"></i> In Stock'; btnBuyNow.style.display = 'block';
+        }
+    }
+
+    function updatePricingUI() {
+        const activeData = config.variants[config.activeVariant];
+        const pObj = currentPricingState === 'sale' ? activeData.prices.sale : activeData.prices.regular;
+        
+        document.getElementById('displayPriceMain').innerText = `Rs. ${pObj.mainDisplay}/-`;
+        const origPriceEl = document.getElementById('originalPriceMain');
+        if (config.ui.showOriginalPrice && pObj.originalMSRP > 0) {
+            origPriceEl.innerText = `Rs. ${pObj.originalMSRP}/-`; origPriceEl.style.display = 'inline-block';
+        } else { origPriceEl.style.display = 'none'; }
+
+        document.getElementById('gridPriceBank').innerText = `Rs. ${pObj.bank}/-`;
+        document.getElementById('gridPriceCard').innerText = `Rs. ${pObj.card}/-`;
+        document.getElementById('gridPriceWallet').innerText = `Rs. ${pObj.wallet}/-`;
+        document.getElementById('gridPriceCOD').innerText = `Rs. ${pObj.cod}/-`;
+        document.getElementById('gridPriceDaraz').innerText = `Rs. ${pObj.daraz}/-`;
+
+        const base = pObj.card;
+        const c3 = Math.round(base / 3); const c6 = Math.round((base * 1.06) / 6); const c12 = Math.round((base * 1.10) / 12);
+        const d3 = Math.round((base * 1.04) / 3); const d6 = Math.round((base * 1.05) / 6); const d12 = Math.round((base * 1.08) / 12);
+        const h3 = Math.round(base / 3); const h6 = Math.round(base / 6);
+
+        document.getElementById('gridInstComm').innerText = `Rs. ${c12}/- x 12`;
+        document.getElementById('gridInstDFCC').innerText = `Rs. ${d12}/- x 12`;
+        document.getElementById('gridInstHNB').innerText = `Rs. ${h6}/- x 6`;
+
+        document.getElementById('modComm3').innerText = `Rs. ${c3}.00 /m`; document.getElementById('modComm6').innerText = `Rs. ${c6}.00 /m`; document.getElementById('modComm12').innerText = `Rs. ${c12}.00 /m`;
+        document.getElementById('modDfcc3').innerText = `Rs. ${d3}.00 /m`; document.getElementById('modDfcc6').innerText = `Rs. ${d6}.00 /m`; document.getElementById('modDfcc12').innerText = `Rs. ${d12}.00 /m`;
+        document.getElementById('modHnb3').innerText = `Rs. ${h3}.00 /m`; document.getElementById('modHnb6').innerText = `Rs. ${h6}.00 /m`;
+
+        document.getElementById('payhereCourierFee').innerText = config.shipping.payhereFeeText;
+        document.getElementById('installmentCourierFee').innerText = config.shipping.payhereFeeText;
+    }
+
+    function updateLinks() {
+        const activeData = config.variants[config.activeVariant];
+        const waBase = "https://wa.me/94704484126";
+        const customMsg = currentPricingState === 'sale' ? activeData.links.whatsappSale : activeData.links.whatsappRegular;
+        const fullWaLink = waBase + customMsg;
+
+        const shipLink = document.getElementById('shippingWaLink');
+        if (shipLink) shipLink.href = fullWaLink;
+
+        const modLink = document.getElementById('modalWaTextLink');
+        if (modLink) modLink.href = fullWaLink;
+
+        const payLink = document.getElementById('footerPayHereLink');
+        if (payLink) payLink.href = "https://www.payhere.lk";
+    }
+
+    function toggleConditionalSections() {
+        if (!config.ui.showDaraz) { document.getElementById('darazOptionCard').style.display = 'none'; document.getElementById('buyNowDarazOption').style.display = 'none'; }
+        if (!config.ui.showInstallments) { document.getElementById('installmentsSectionWrapper').style.display = 'none'; document.getElementById('buyNowInstallmentOption').style.display = 'none'; }
+    }
+
+    function startCountdown(targetDateMs) {
+        const boxesContainer = document.getElementById('countdownBoxes');
+        if(countdownInterval) clearInterval(countdownInterval);
+
+        function updateTimer() {
+            const now = new Date().getTime(); const distance = targetDateMs - now;
+            if (distance < 0) {
+                clearInterval(countdownInterval); evaluateSaleStatus(); updatePricingUI(); updateLinks(); return;
+            }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const pad = (num) => String(num).padStart(2, '0');
+
+            if (days > 0) {
+                boxesContainer.innerHTML = `<div class="cd-box"><span class="cd-num">${pad(days)}</span><span class="cd-label">Days</span></div><div class="cd-box"><span class="cd-num">${pad(hours)}</span><span class="cd-label">Hrs</span></div><div class="cd-box"><span class="cd-num">${pad(minutes)}</span><span class="cd-label">Min</span></div>`;
+            } else {
+                boxesContainer.innerHTML = `<div class="cd-box"><span class="cd-num">${pad(hours)}</span><span class="cd-label">Hrs</span></div><div class="cd-box"><span class="cd-num">${pad(minutes)}</span><span class="cd-label">Min</span></div><div class="cd-box"><span class="cd-num">${pad(seconds)}</span><span class="cd-label">Sec</span></div>`;
+            }
+        }
+        updateTimer(); countdownInterval = setInterval(updateTimer, 1000);
+    }
+
+    /* INTERACTION LOGIC */
+    function changeMedia(type, source, thumbnailElement) {
+        const displayContainer = document.getElementById('mainDisplay');
+        document.querySelectorAll('.thumbnail').forEach(el => el.classList.remove('active'));
+        if(thumbnailElement) thumbnailElement.classList.add('active');
+
+        if (type === 'video') {
+            displayContainer.innerHTML = `<iframe src="${source}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+            displayContainer.classList.add('is-video'); displayContainer.dataset.source = ""; 
+        } else {
+            displayContainer.innerHTML = `<img src="${source}" alt="Product Image">`;
+            displayContainer.classList.remove('is-video'); displayContainer.dataset.source = source;
+        }
+    }
+
+    function openLightbox() {
+        const source = document.getElementById('mainDisplay').dataset.source;
+        if (source) { document.getElementById('lightboxImage').src = source; document.getElementById('lightboxOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
+    }
+
+    function closeLightbox(event) {
+        if (event.target.id === 'lightboxOverlay' || event.target.classList.contains('lightbox-close')) {
+            document.getElementById('lightboxOverlay').classList.remove('active'); document.body.style.overflow = 'auto'; document.getElementById('lightboxImage').src = ''; 
+        }
+    }
+
+    function openModal(modalId) { document.getElementById(modalId).classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); document.body.style.overflow = 'auto'; }
+
+    document.querySelectorAll('.modal-overlay:not(.lightbox-overlay)').forEach(overlay => {
+        overlay.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
+    });
+
+    function openWhatsApp() { 
+        const activeData = config.variants[config.activeVariant];
+        const waBase = "https://wa.me/94704484126";
+        const customMsg = currentPricingState === 'sale' ? activeData.links.whatsappSale : activeData.links.whatsappRegular;
+        window.open(waBase + customMsg, '_blank'); 
+    }
+    
+    function openDaraz() { 
+        const activeData = config.variants[config.activeVariant];
+        window.open(activeData.links.darazProduct, '_blank'); 
+    }
+    
+    function openPayHere() { 
+        const activeData = config.variants[config.activeVariant];
+        const link = currentPricingState === 'sale' ? activeData.links.payhereSale : activeData.links.payhereRegular;
+        window.open(link, '_blank'); 
+    }
+
+    // Dynamic Checkout Handlers
+    function handleDistrictChange() {
+        const select = document.getElementById('districtSelect');
+        const breakdown = document.getElementById('codPriceDetails');
+        
+        if(!select.value) { 
+            breakdown.style.display = 'none'; 
+            return; 
+        }
+
+        const distantDistricts = ['Jaffna', 'Kilinochchi', 'Mannar', 'Mullaitivu', 'Vavuniya', 'Trincomalee', 'Batticaloa', 'Ampara'];
+        let fee = config.shipping.baseFee;
+        if(distantDistricts.includes(select.value)) {
+            fee = config.shipping.distantFee;
+        }
+
+        const activeData = config.variants[config.activeVariant];
+        const pObj = currentPricingState === 'sale' ? activeData.prices.sale : activeData.prices.regular;
+        const codPrice = pObj.cod;
+        const total = codPrice + fee;
+
+        document.getElementById('codItemPrice').innerText = `Rs. ${codPrice}/-`;
+        document.getElementById('codDeliveryFee').innerText = `Rs. ${fee}/-`;
+        document.getElementById('codTotalPrice').innerText = `Rs. ${total}/-`;
+        
+        // Pass to Google form hidden inputs
+        document.getElementById('hiddenPrice').value = codPrice; 
+        document.getElementById('hiddenTotalAmount').value = total;
+
+        breakdown.style.display = 'block';
+    }
+
+    function setupPayhereModal(titleText, amount) {
+        document.getElementById('payhereModalTitle').innerText = titleText;
+        document.getElementById('payhereModalPrice').innerText = `Rs. ${amount}/-`;
+    }
+
+    function setupInstallmentModal(amount) {
+        document.getElementById('installmentModalPrice').innerText = `Rs. ${amount}/-`;
+    }
+
+    function processCheckout() {
+        const selectedOption = document.querySelector('input[name="paymentMethod"]:checked');
+        if (!selectedOption) return alert('Please select a payment method to proceed.');
+        
+        const activeData = config.variants[config.activeVariant];
+        const pObj = currentPricingState === 'sale' ? activeData.prices.sale : activeData.prices.regular;
+
+        switch(selectedOption.value) {
+            case 'bank': 
+                closeModal('buyNowModal'); openModal('bankTransferModal'); break;
+            case 'card': 
+                closeModal('buyNowModal');
+                setupPayhereModal('Visa / Mastercard Payment', pObj.card);
+                openModal('payhereModal');
+                break;
+            case 'wallet': 
+                closeModal('buyNowModal');
+                setupPayhereModal('Digital Wallet Payment', pObj.wallet);
+                openModal('payhereModal');
+                break;
+            case 'cod':
+                closeModal('buyNowModal');
+                document.getElementById('districtSelect').value = '';
+                document.getElementById('codPriceDetails').style.display = 'none';
+                openModal('codModal');
+                break;
+            case 'installments': 
+                closeModal('buyNowModal');
+                setupInstallmentModal(pObj.card); 
+                openModal('installmentCheckoutModal');
+                break;
+            case 'daraz': 
+                closeModal('buyNowModal'); openModal('darazModal'); break;
+        }
+    }
+
+    // Google Apps Script Form Submission Logic
+    const scriptURL = 'YOUR_GOOGLE_SCRIPT_WEB_APP_URL'; // Replace with actual URL
+    const form = document.getElementById('shipping-form');
+    const checkoutContainer = document.getElementById('checkout-container');
+    const thankYouCard = document.getElementById('thank-you-card');
+    const submitBtn = document.getElementById('submit-order-btn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        let isValid = true;
+
+        form.querySelectorAll('[required]').forEach(input => {
+            const error = input.nextElementSibling;
+            if (!input.value || (input.type === 'email' && !input.value.includes('@'))) {
+                if (error && error.classList.contains('error-msg')) error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+                isValid = false;
+            } else {
+                if (error && error.classList.contains('error-msg')) error.style.display = 'none';
+                input.style.borderColor = 'var(--border-color)';
+            }
+        });
+
+        if (!isValid) return;
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Processing Your Order...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            checkoutContainer.style.display = "none";
+            thankYouCard.style.display = "block";
+        })
+        .catch(error => {
+            alert("Connectivity error. Please try again or contact WhatsApp support.");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Place COD Order";
+        });
+    });
+
+    window.addEventListener('DOMContentLoaded', initPage);
+</script>
+</body>
+</html>

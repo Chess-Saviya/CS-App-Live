@@ -450,61 +450,88 @@
 
 <div class="modal-overlay" id="codModal">
     <div class="modal-content">
-        <button class="close-btn" onclick="closeModal('codModal')">&times;</button>
-        <h2 class="modal-title">Cash on Delivery Information</h2>
-        <p class="modal-instruction">Select your district to view the exact shipping fee details.</p>
-        
-        <select class="custom-select" id="districtSelect" onchange="handleDistrictChange()">
-            <option value="" disabled selected>-- Select your District --</option>
-            <!-- Generated via JS -->
-        </select>
-
-        <!-- Locate this section in your existing codModal -->
-<div class="price-breakdown" id="codPriceDetails">
-    <form id="shipping-form">
-        <div class="price-row">
-            <span>Product Price</span>
-            <span id="codItemPrice">Rs. 0/-</span>
-        </div>
-        <div class="price-row">
-            <span>Delivery Fee</span>
-            <span id="codDeliveryFee">Rs. 0/-</span>
-        </div>
-        <div class="price-row total">
-            <span>Total Amount</span>
-            <span id="codTotalPrice" style="color: var(--text-dark);">Rs. 0/-</span>
-        </div>
-
-        <!-- Hidden fields for the Apps Script -->
-        <input type="hidden" id="productName" name="product" value="Multi Functional Chess Clock (PS-1688)">
-        <input type="hidden" id="hiddenTotalAmount" name="total" value="0">
-
-        <!-- New Form Fields -->
-        <div class="input-group" style="margin-top: 15px; text-align: left;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Full Name</label>
-            <input type="text" name="name" class="custom-select" style="margin-bottom: 10px;" placeholder="Your Name" required>
-            
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Phone Number</label>
-            <input type="tel" name="phone" class="custom-select" style="margin-bottom: 10px;" placeholder="07X XXXXXXX" required>
-            
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Delivery Address</label>
-            <textarea name="address" class="custom-select" style="height: 80px; resize: none;" placeholder="House No, Street, City" required></textarea>
-        </div>
-
-        <p class="mt-10" style="font-size: 0.9rem; color: var(--text-gray); line-height: 1.5;">
-            Your order will be delivered islandwide in just 2-3 working days. Total amount is payable upon delivery.
-        </p>
-
-        <button type="submit" class="btn-primary mt-20" id="submit-order-btn" style="background-color: var(--primary-blue);">
-            Confirm COD Order
-        </button>
-    </form>
+    <button class="close-btn" onclick="closeModal('codModal')">&times;</button>
     
-    <div id="form-status" style="display:none; margin-top:15px; padding: 10px; background: #e6f4ea; color: var(--success); border-radius: 8px; font-weight: 600; text-align: center;">
-        Order placed successfully!
+    <!-- Phase 1: Checkout Form -->
+    <div id="checkout-container">
+        <h2 class="modal-title">Cash on Delivery Checkout</h2>
+        
+        <form id="shipping-form" novalidate>
+            <!-- Product Data (Hidden) -->
+            <input type="hidden" name="product" value="Multi Functional Chess Clock (PS-1688)">
+            <input type="hidden" name="sku" value="CSS-104">
+            <input type="hidden" id="hiddenPrice" name="item_price" value="0">
+            <input type="hidden" id="hiddenTotalAmount" name="total" value="0">
+
+            <!-- District Selection -->
+            <div class="input-group">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">District *</label>
+                <select class="custom-select" id="districtSelect" name="district" onchange="handleDistrictChange()" required>
+                    <option value="" disabled selected>-- Select your District --</option>
+                </select>
+                <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Please select your district.</small>
+            </div>
+
+            <!-- Price Breakdown (Appears after District selection) -->
+            <div class="price-breakdown" id="codPriceDetails" style="margin-bottom: 20px;">
+                <div class="price-row"><span>Item Price:</span> <span id="codItemPrice">Rs. 0/-</span></div>
+                <div class="price-row"><span>Delivery:</span> <span id="codDeliveryFee">Rs. 0/-</span></div>
+                <div class="price-row total"><span>Total:</span> <span id="codTotalPrice">Rs. 0/-</span></div>
+            </div>
+
+            <!-- Customer Details -->
+            <div class="input-group">
+                <label>Full Name *</label>
+                <input type="text" name="name" class="custom-select" placeholder="Enter your full name" required>
+                <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Name is required.</small>
+            </div>
+
+            <div class="input-group">
+                <label>Shipping Address *</label>
+                <input type="text" name="address1" class="custom-select" style="margin-bottom:8px" placeholder="Home number and street name" required>
+                <input type="text" name="address2" class="custom-select" placeholder="Apartment, suite, etc. (optional)">
+                <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Street address is required.</small>
+            </div>
+
+            <div class="input-group">
+                <label>Town / City *</label>
+                <input type="text" name="city" class="custom-select" placeholder="Enter your city" required>
+                <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Town or city is required.</small>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Phone *</label>
+                    <input type="tel" name="phone" class="custom-select" placeholder="07XXXXXXXX" required>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid phone is required.</small>
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Email *</label>
+                    <input type="email" name="email" class="custom-select" placeholder="email@example.com" required>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid email is required.</small>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Order Notes (optional)</label>
+                <textarea name="notes" class="custom-select" style="height: 60px; resize: none;" placeholder="Notes about your order, e.g. special delivery instructions."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" id="submit-order-btn" style="margin-top: 10px;">Place Order</button>
+        </form>
     </div>
-</div>            
+
+    <!-- Phase 2: Modern Thank You Card (Hidden by default) -->
+    <div id="thank-you-card" style="display: none; text-align: center; padding: 20px;">
+        <div style="font-size: 4rem; color: var(--success); margin-bottom: 15px;">
+            <i class="fas fa-check-circle"></i>
         </div>
+        <h2 style="color: var(--text-dark); margin-bottom: 10px;">Order Placed Successfully!</h2>
+        <p style="color: var(--text-gray); margin-bottom: 20px;">Thank you for your order. We are now processing it and will deliver your professional chess equipment shortly.</p>
+        <div style="background: #f8f9fa; border: 1px dashed var(--border-color); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="font-size: 0.85rem; color: var(--text-gray);">Our team will contact you via phone or WhatsApp if any further details are needed.</p>
+        </div>
+        <button class="btn-framed-close" onclick="closeModal('codModal'); location.reload();">Back to Store</button>
     </div>
 </div>
 
@@ -998,52 +1025,57 @@
 
     window.addEventListener('DOMContentLoaded', initPage);
     
-    // 1. Update the handleDistrictChange function to set the hidden input
+    // Update handleDistrictChange to capture active pricing (Sale/Regular)
 const originalHandleDistrictChange = handleDistrictChange;
 handleDistrictChange = function() {
-    originalHandleDistrictChange(); // Run your existing logic first
+    originalHandleDistrictChange(); 
+    const pObj = currentPricingState === 'sale' ? config.prices.sale : config.prices.regular;
     
-    // Capture the calculated total and set it in the hidden form field
     const totalText = document.getElementById('codTotalPrice').innerText;
     const numericTotal = totalText.replace(/[^0-9]/g, '');
-    document.getElementById('hiddenTotalAmount').value = numericTotal;
+    
+    document.getElementById('hiddenPrice').value = pObj.cod; // Item price
+    document.getElementById('hiddenTotalAmount').value = numericTotal; // Final COD total
 };
 
-// 2. Add the Form Submission Logic
-const scriptURL = 'https://script.google.com/macros/s/AKfycbziSezd2NDl8no5FJ74IwQQMluuGW2-ZkS1lsZ6o5liJukBfhkx8Nt8eBVT0vTDZiwF/exec'; // Replace with your Web App URL
+// Form Validation and Submission
+const scriptURL = 'https://script.google.com/macros/s/AKfycbziSezd2NDl8no5FJ74IwQQMluuGW2-ZkS1lsZ6o5liJukBfhkx8Nt8eBVT0vTDZiwF/exec';
 const form = document.getElementById('shipping-form');
-const statusMsg = document.getElementById('form-status');
+const checkoutContainer = document.getElementById('checkout-container');
+const thankYouCard = document.getElementById('thank-you-card');
 const submitBtn = document.getElementById('submit-order-btn');
 
 form.addEventListener('submit', e => {
     e.preventDefault();
-    submitBtn.disabled = true;
-    submitBtn.innerText = "Processing Order...";
+    let isValid = true;
 
-    fetch(scriptURL, { 
-        method: 'POST', 
-        body: new FormData(form)
-    })
+    // Reset and Validate
+    form.querySelectorAll('[required]').forEach(input => {
+        const error = input.nextElementSibling;
+        if (!input.value || (input.type === 'email' && !input.value.includes('@'))) {
+            if (error && error.classList.contains('error-msg')) error.style.display = 'block';
+            input.style.borderColor = 'var(--danger)';
+            isValid = false;
+        } else {
+            if (error && error.classList.contains('error-msg')) error.style.display = 'none';
+            input.style.borderColor = 'var(--border-color)';
+        }
+    });
+
+    if (!isValid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Processing Your Order...";
+
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
     .then(response => {
-        statusMsg.style.display = "block";
-        form.style.display = "none"; // Hide form on success
-        submitBtn.innerText = "Order Confirmed!";
-        
-        // Auto-close modal after 3 seconds
-        setTimeout(() => {
-            closeModal('codModal');
-            statusMsg.style.display = "none";
-            form.style.display = "block";
-            form.reset();
-            submitBtn.disabled = false;
-            submitBtn.innerText = "Confirm COD Order";
-        }, 3000);
+        checkoutContainer.style.display = "none";
+        thankYouCard.style.display = "block";
     })
     .catch(error => {
-        console.error('Error!', error.message);
-        alert("Something went wrong. Please try again.");
+        alert("Connectivity error. Please try again or contact WhatsApp support.");
         submitBtn.disabled = false;
-        submitBtn.innerText = "Try Again";
+        submitBtn.innerText = "Place COD Order";
     });
 });
 </script>

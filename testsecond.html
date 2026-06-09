@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi Functional Chess Clock - Chess Saviya Store</title>
+    <title>Multi Functional Chess Clock (PS-1688) - Chess Saviya Store</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -11,166 +11,915 @@
     
     <style>
     :root {
-        --primary-blue: #0062ff;
-        --primary-blue-hover: #0050d1;
-        --white: #ffffff;
-        --bg-body: #f4f7f6;
-        --bg-card: #ffffff;
-        --text-dark: #222222;
-        --text-gray: #555555;
-        --text-light-gray: #888888;
-        --border-color: #d1d9e6;
-        --border-blue: #a3c2ff;
-        --success: #28a745;
-        --danger: #dc3545;
-        --warning: #ff9800;
-        --dark-bg: #1a1a2e;
-        --footer-bg: #111827;
-    }
+  --primary-blue: #0062ff;
+  --primary-blue-hover: #0050d1;
+  --white: #ffffff;
+  --bg-body: #f4f7f6;
+  --bg-card: #ffffff;
+  --text-dark: #222222;
+  --text-gray: #555555;
+  --text-light-gray: #888888;
+  --border-color: #d1d9e6;
+  --border-blue: #a3c2ff;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ff9800;
+  --dark-bg: #1a1a2e;
+  --footer-bg: #111827;
+}
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Roboto", sans-serif; }
-    body { background-color: var(--bg-body); color: var(--text-dark); line-height: 1.6; }
-    a { color: var(--primary-blue); text-decoration: none; transition: color 0.2s; }
-    a:hover { color: var(--primary-blue-hover); text-decoration: underline; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+body {
+  background-color: var(--bg-body);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--primary-blue-hover);
+  text-decoration: underline;
+}
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-    /* Main Product Layout */
-    .product-wrapper { display: flex; flex-direction: column; gap: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); margin-bottom: 30px; }
-    @media (min-width: 768px) { .product-wrapper { flex-direction: row; padding: 40px; } }
+/* Main Product Layout */
+.product-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+@media (min-width: 768px) {
+  .product-wrapper {
+    flex-direction: row;
+    padding: 40px;
+  }
+}
 
-    /* Gallery Section */
-    .gallery-section { flex: 1; display: flex; flex-direction: column; gap: 15px; }
-    .main-display { width: 100%; aspect-ratio: 1 / 1; background: #f9f9f9; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); position: relative; cursor: zoom-in; }
-    .main-display.is-video { cursor: default; }
-    .main-display img, .main-display iframe { width: 100%; height: 100%; object-fit: contain; border: none; }
+/* Gallery Section */
+.gallery-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.main-display {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  position: relative;
+  cursor: zoom-in;
+}
+.main-display.is-video {
+  cursor: default;
+}
+.main-display img,
+.main-display iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: none;
+}
 
-    .thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
-    .thumbnails::-webkit-scrollbar { height: 6px; }
-    .thumbnails::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
-    .thumbnail { width: 70px; height: 70px; flex-shrink: 0; border: 2px solid transparent; border-radius: 6px; cursor: pointer; overflow: hidden; transition: 0.2s ease; }
-    .thumbnail.active { border-color: var(--primary-blue); }
-    .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
-    .thumbnail.video-thumb { position: relative; }
-    .thumbnail.video-thumb::after { content: "\f04b"; font-family: "FontAwesome"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--white); background: rgba(0, 0, 0, 0.6); width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; }
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+.thumbnails::-webkit-scrollbar {
+  height: 6px;
+}
+.thumbnails::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 4px;
+}
 
-    /* Lightbox */
-    .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s ease; }
-    .lightbox-overlay.active { opacity: 1; visibility: visible; }
-    .lightbox-content { position: relative; max-width: 90%; max-height: 90%; }
-    .lightbox-img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-    .lightbox-close { position: absolute; top: -40px; right: 0; color: var(--white); font-size: 2rem; cursor: pointer; background: none; border: none; }
+.thumbnail {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.2s ease;
+}
+.thumbnail.active {
+  border-color: var(--primary-blue);
+}
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumbnail.video-thumb {
+  position: relative;
+}
+.thumbnail.video-thumb::after {
+  content: "\f04b";
+  font-family: "FontAwesome";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white);
+  background: rgba(0, 0, 0, 0.6);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+}
 
-    /* Info Section */
-    .info-section { flex: 1; display: flex; flex-direction: column; gap: 15px; }
-    .product-title { font-size: 1.8rem; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
-    .product-sku { font-size: 0.85rem; color: var(--text-light-gray); margin-top: -10px; margin-bottom: 5px; }
+/* Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+}
+.lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+.lightbox-img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
 
-    /* Variation Selector UI */
-    .variation-selector { margin: 5px 0 15px 0; }
-    .variation-selector p { font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-dark); }
-    .variation-options { display: flex; gap: 10px; flex-wrap: wrap; }
-    .var-btn { padding: 8px 16px; border: 1px solid var(--border-color); background: var(--white); border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: 0.2s; color: var(--text-gray); }
-    .var-btn:hover { border-color: var(--primary-blue); color: var(--primary-blue); }
-    .var-btn.active { border-color: var(--primary-blue); background: #eef3ff; color: var(--primary-blue); font-weight: 700; box-shadow: 0 2px 5px rgba(0, 98, 255, 0.1); }
+/* Info Section */
+.info-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.product-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+.product-sku {
+  font-size: 0.85rem;
+  color: var(--text-light-gray);
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
 
-    /* Stock Badges & Discounts */
-    .badges-wrapper { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-    .stock-label { display: inline-block; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; }
-    .in-stock { background-color: #e6f4ea; color: var(--success); border: 1px solid var(--success); border-radius: 20px; }
-    .limited-stock { background-color: #fff3cd; color: var(--warning); border: 1px solid var(--warning); border-radius: 20px; }
-    .out-of-stock { background-color: var(--danger); color: var(--white); border: 2px solid #b02a37; border-radius: 4px; font-size: 1rem; padding: 8px 18px; text-transform: uppercase; font-weight: 700; box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3); }
-    .discount-badge { background-color: var(--danger); color: var(--white); padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; display: none; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3); }
+/* Stock Badges */
+.badges-wrapper {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.stock-label {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.in-stock {
+  background-color: #e6f4ea;
+  color: var(--success);
+  border: 1px solid var(--success);
+  border-radius: 20px;
+}
+.limited-stock {
+  background-color: #fff3cd;
+  color: var(--warning);
+  border: 1px solid var(--warning);
+  border-radius: 20px;
+}
+.out-of-stock {
+  background-color: var(--danger);
+  color: var(--white);
+  border: 2px solid #b02a37;
+  border-radius: 4px;
+  font-size: 1rem;
+  padding: 8px 18px;
+  text-transform: uppercase;
+  font-weight: 700;
+  box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
+}
+.discount-badge {
+  background-color: var(--danger);
+  color: var(--white);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  display: none;
+  box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
+}
 
-    /* Pricing */
-    .price-container { margin: 10px 0; display: flex; flex-direction: column; }
-    .special-offer-text { font-size: 0.95rem; color: var(--white); background-color: var(--danger); font-weight: 700; padding: 4px 10px; border-radius: 4px; display: none; align-self: flex-start; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3); }
-    .current-price { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
-    .original-price { font-size: 1.4rem; color: var(--text-light-gray); text-decoration: line-through; margin-left: 12px; display: none; font-weight: 500; }
+/* Pricing */
+.price-container {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+.special-offer-text {
+  font-size: 0.95rem;
+  color: var(--white);
+  background-color: var(--danger);
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: none;
+  align-self: flex-start;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
+}
+.current-price {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+}
+.original-price {
+  font-size: 1.4rem;
+  color: var(--text-light-gray);
+  text-decoration: line-through;
+  margin-left: 12px;
+  display: none;
+  font-weight: 500;
+}
 
-    /* Buttons */
-    .btn-primary { background-color: var(--primary-blue); color: var(--white); border: none; padding: 15px 30px; font-size: 1.1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.3s, transform 0.1s; text-align: center; width: 100%; }
-    .btn-primary:hover { background-color: var(--primary-blue-hover); }
-    .btn-primary:active { transform: scale(0.98); }
-    .btn-primary:disabled { background-color: #a0c4ff; cursor: not-allowed; }
+/* Buttons & Promos */
+.btn-primary {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  text-align: center;
+  width: 100%;
+}
+.btn-primary:hover {
+  background-color: var(--primary-blue-hover);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+.btn-primary:disabled {
+  background-color: #a0c4ff;
+  cursor: not-allowed;
+}
 
-    /* Countdown UI */
-    .countdown-container { display: none; margin-top: 5px; }
-    .countdown-wrapper { background: linear-gradient(135deg, var(--dark-bg), #0f3460); border-radius: 10px; padding: 20px; text-align: center; color: var(--white); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); border: 1px solid #2a2a4a; transition: background 0.5s ease; }
-    .countdown-title { font-weight: 600; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-    .countdown-boxes { display: flex; justify-content: center; gap: 15px; }
-    .cd-box { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; min-width: 65px; padding: 10px 5px; backdrop-filter: blur(5px); }
-    .cd-num { display: block; font-size: 1.8rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 4px; }
-    .cd-label { display: block; font-size: 0.75rem; color: #ffffff; opacity: 0.8; text-transform: uppercase; font-weight: 500; }
-    .cd-offer-desc { background: #eef3ff; border-left: 4px solid var(--primary-blue); color: var(--text-dark); padding: 12px 15px; border-radius: 0 8px 8px 0; margin-top: 15px; font-size: 0.95rem; font-weight: 500; display: none; }
+.free-delivery-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #e6f4ea;
+  border: 2px solid var(--success);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: default;
+  animation: pulse-green 2s infinite;
+  margin-top: 15px;
+}
+.free-delivery-strip span {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--success);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.free-delivery-strip img {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+}
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+  }
+}
 
-    /* Grid Cards */
-    .section-heading { font-size: 1.4rem; margin: 30px 0 15px; font-weight: 600; color: var(--text-dark); }
-    .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    @media (min-width: 576px) { .grid-container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; } }
-    .card-box { background: var(--white); border: 1px solid var(--border-blue); border-radius: 8px; padding: 15px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; user-select: none; }
-    .card-box:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 98, 255, 0.1); }
-    .card-box:hover .more-info-link { text-decoration: underline; }
-    .card-box img { max-height: 40px; max-width: 90%; margin-bottom: 10px; object-fit: contain; }
-    .card-price { font-weight: 600; font-size: 1.05rem; color: var(--text-dark); margin-bottom: 5px; }
-    .more-info-link { font-size: 0.85rem; color: var(--primary-blue); text-decoration: none; margin-top: 5px; font-weight: 500; }
+.bank-promo-strip {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  padding: 15px 25px;
+  border-radius: 8px;
+  margin-top: 15px;
+  display: none;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.bank-promo-strip:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.bank-promo-strip span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--warning);
+  white-space: nowrap;
+}
+.promo-logos {
+  display: flex;
+  gap: 8px;
+  overflow: hidden;
+}
+.promo-logos img {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+  background: white;
+  border-radius: 2px;
+  padding: 2px;
+  border: 1px solid #eee;
+}
 
-    /* Description & Form Elements */
-    .text-section { background: var(--white); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px; }
-    .text-section h3 { margin-bottom: 10px; font-size: 1.2rem; color: var(--text-dark); }
-    .text-section p, .text-section ul { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 10px; line-height: 1.6; }
-    .text-section ul { padding-left: 20px; list-style-type: disc; }
-    
-    .custom-select { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; margin-bottom: 5px; outline: none; background: var(--white); transition: border-color 0.2s; }
-    .custom-select:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(0,98,255,0.1); }
-    .price-breakdown { background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); display: none; }
-    .price-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-gray); font-size: 0.95rem; }
-    .price-row.total { font-weight: 700; color: var(--text-dark); font-size: 1.1rem; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 5px; }
+/* Countdown UI */
+.countdown-container {
+  display: none;
+  margin-top: 5px;
+}
+.countdown-wrapper {
+  background: linear-gradient(135deg, var(--dark-bg), #0f3460);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid #2a2a4a;
+  transition: background 0.5s ease;
+}
+.countdown-title {
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.countdown-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.cd-box {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  min-width: 65px;
+  padding: 10px 5px;
+  backdrop-filter: blur(5px);
+}
+.cd-num {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.cd-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #ffffff;
+  opacity: 0.8;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.cd-offer-desc {
+  background: #eef3ff;
+  border-left: 4px solid var(--primary-blue);
+  color: var(--text-dark);
+  padding: 12px 15px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 15px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: none;
+}
 
-    /* Footer */
-    .site-footer { background-color: var(--footer-bg); color: #ffffff; padding: 60px 20px; margin-top: 60px; text-align: center; }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
-    .site-footer .tagline { font-size: 1.4rem; font-weight: 700; color: var(--primary-blue); }
-    .site-footer .tagline span { font-size: 0.9rem; font-style: italic; color: #ffffff; display: block; margin-top: 5px; }
-    .site-footer .contact { margin: 25px 0; font-weight: 500; display: flex; flex-direction: column; gap: 5px; }
-    .site-footer .contact a, .support-links-row a, .payment-partner a { color: #d1d5db; transition: color 0.2s; }
-    .site-footer .contact a:hover, .support-links-row a:hover { color: var(--primary-blue); text-decoration: none; }
-    .support-links { margin: 25px 0; }
-    .support-heading { font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
-    .support-links-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; font-size: 0.85rem; }
-    .social-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
-    .social-icons a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); color: #ffffff; border-radius: 50%; font-size: 1.2rem; transition: 0.3s; }
-    .social-icons a:hover { background: var(--primary-blue); color: #ffffff; text-decoration: none; }
-    .payment-partner { margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem; color: #9ca3af; font-weight: 500; }
-    .copyright { margin-top: 10px; font-size: 0.8rem; color: #6b7280; }
+/* Clickable Grid Cards */
+.section-heading {
+  font-size: 1.4rem;
+  margin: 30px 0 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (min-width: 576px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+}
 
-    /* Modals */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 1000; padding: 20px; }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-content { background: var(--white); width: 100%; max-width: 500px; border-radius: 12px; padding: 25px; position: relative; transform: translateY(20px); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
-    .modal-overlay.active .modal-content { transform: translateY(0); }
-    .close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; color: var(--text-gray); cursor: pointer; z-index: 10; }
-    .modal-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-    .modal-instruction { font-size: 0.95rem; color: var(--text-gray); margin-bottom: 20px; font-weight: 500; }
-    
-    .radio-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
-    .radio-option { display: flex; align-items: center; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: 0.2s; }
-    .radio-option:hover { border-color: var(--primary-blue); background: rgba(0, 98, 255, 0.02); }
-    .radio-option input[type="radio"] { margin-right: 15px; transform: scale(1.2); accent-color: var(--primary-blue); }
-    .radio-option span { font-weight: 500; flex: 1; }
+.card-box {
+  background: var(--white);
+  border: 1px solid var(--border-blue);
+  border-radius: 8px;
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+.card-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 98, 255, 0.1);
+}
+.card-box:hover .more-info-link {
+  text-decoration: underline;
+}
+.card-box img {
+  max-height: 50px;
+  max-width: 95%;
+  margin-bottom: 10px;
+  object-fit: contain;
+  z-index: 2;
+}
+.card-price {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  margin-bottom: 5px;
+  z-index: 2;
+}
+.more-info-link {
+  font-size: 0.85rem;
+  color: var(--primary-blue);
+  text-decoration: none;
+  margin-top: 5px;
+  font-weight: 500;
+  z-index: 2;
+}
 
-    .bank-installments { background: var(--bg-body); border-radius: 8px; padding: 15px; margin-bottom: 20px; }
-    .bank-installments h4 { margin-bottom: 10px; color: var(--primary-blue); font-size: 1.1rem; }
-    .installment-grid-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .inst-box { background: var(--white); border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; text-align: center; }
-    .inst-box .months { font-size: 0.8rem; color: var(--text-gray); margin-bottom: 5px; }
-    .inst-box .price-pm { font-weight: 600; color: var(--text-dark); }
-    
-    .btn-framed-close { background-color: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-gray); font-weight: 600; cursor: pointer; width: 100%; text-align: center; padding: 12px 0; margin-top: 15px; border-radius: 8px; font-size: 1rem; transition: background 0.2s; }
-    .btn-framed-close:hover { background-color: #e2e6eb; color: var(--text-dark); }
+/* Red Card Sidebar */
+.discount-sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 25px;
+  background: var(--danger);
+  color: var(--white);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+.has-discount {
+  padding-left: 30px;
+}
+.has-discount .discount-sidebar {
+  display: flex;
+}
 
-    .mt-10 { margin-top: 10px; } .mt-20 { margin-top: 20px; } .text-center { text-align: center; } .italic-gray { font-style: italic; color: var(--text-gray); font-size: 0.85rem; }
-    .input-group { margin-bottom: 15px; text-align: left; }
+/* Description & Shipping */
+.text-section {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+.text-section h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+}
+.text-section p,
+.text-section ul {
+  font-size: 0.95rem;
+  color: var(--text-gray);
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+.text-section ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+.text-section li {
+  margin-bottom: 8px;
+}
+
+/* Form Specific Elements */
+.custom-select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+  outline: none;
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+.custom-select:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 98, 255, 0.1);
+}
+.price-breakdown {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  display: none;
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--text-gray);
+  font-size: 0.95rem;
+}
+.price-row.total {
+  font-weight: 700;
+  color: var(--text-dark);
+  font-size: 1.1rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+  margin-top: 5px;
+}
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+/* FULL-WIDTH DARK FOOTER */
+.site-footer {
+  background-color: var(--footer-bg);
+  color: #ffffff;
+  padding: 60px 20px;
+  margin-top: 60px;
+  text-align: center;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.site-footer .tagline {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+}
+.site-footer .tagline span {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #ffffff;
+  display: block;
+  margin-top: 5px;
+}
+.site-footer .contact {
+  margin: 25px 0;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.site-footer .contact a,
+.support-links-row a,
+.payment-partner a {
+  color: #d1d5db;
+  transition: color 0.2s;
+}
+.site-footer .contact a:hover,
+.support-links-row a:hover {
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+.support-links {
+  margin: 25px 0;
+}
+.support-heading {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.support-links-row {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+}
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+.social-icons a:hover {
+  background: var(--primary-blue);
+  color: #ffffff;
+  text-decoration: none;
+}
+.payment-partner {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+.copyright {
+  margin-top: 10px;
+  margin-bottom: 3.5rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 1000;
+  padding: 20px;
+}
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-content {
+  background: var(--white);
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  padding: 25px;
+  position: relative;
+  transform: translateY(20px);
+  transition: 0.3s;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-gray);
+  cursor: pointer;
+  z-index: 10;
+}
+.modal-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--text-dark);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+.modal-instruction {
+  font-size: 0.95rem;
+  color: var(--text-gray);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.radio-option {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.radio-option:hover {
+  border-color: var(--primary-blue);
+  background: rgba(0, 98, 255, 0.02);
+}
+.radio-option input[type="radio"] {
+  margin-right: 15px;
+  transform: scale(1.2);
+  accent-color: var(--primary-blue);
+}
+.radio-option span {
+  font-weight: 500;
+  flex: 1;
+}
+
+/* Discount List UI */
+.bank-discount-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+.bank-discount-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fafafa;
+}
+.bank-discount-item img {
+  height: 35px;
+  width: 75px;
+  object-fit: contain;
+  margin-right: 15px;
+  background: white;
+  padding: 1px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+.bank-discount-rates {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.9rem;
+}
+.bank-discount-rates div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bank-discount-rates span {
+  font-weight: 700;
+  color: var(--primary-blue);
+}
+
+/* Installment Table UI */
+.bank-installments {
+  background: var(--bg-body);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.bank-installments h4 {
+  margin-bottom: 10px;
+  color: var(--primary-blue);
+  font-size: 1.1rem;
+}
+.installment-grid-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.inst-box {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+.inst-box .months {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  margin-bottom: 5px;
+}
+.inst-box .price-pm {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+.btn-framed-close {
+  background-color: var(--bg-body);
+  border: 1px solid var(--border-color);
+  color: var(--text-gray);
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0;
+  margin-top: 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.btn-framed-close:hover {
+  background-color: #e2e6eb;
+  color: var(--text-dark);
+}
+
+/* Global Helper Spacing */
+.mt-10 {
+  margin-top: 10px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.text-center {
+  text-align: center;
+}
+.italic-gray {
+  font-style: italic;
+  color: var(--text-gray);
+  font-size: 0.85rem;
+}
     </style>
 </head>
 <body>
@@ -181,51 +930,45 @@
             <div class="main-display" id="mainDisplay" onclick="openLightbox()"></div>
             
             <div class="thumbnails">
-                <div class="thumbnail active" onclick="changeMedia('image', this.querySelector('img').src, this)" id="masterThumb">
-                    <img src="https://i.postimg.cc/Hx3SF66p/download-(4).png" alt="Thumb Main" id="firstThumbImg">
+                <div class="thumbnail active" onclick="changeMedia('image', 'https://i.postimg.cc/Hx3SF66p/download-(4).png', this)">
+                    <img src="https://i.postimg.cc/Hx3SF66p/download-(4).png" alt="Thumb Main">
                 </div>
                 <div class="thumbnail video-thumb" onclick="changeMedia('video', 'https://www.youtube.com/embed/HcXEkVzfxd8?si=23pXfxXtb833FSyu&autoplay=1', this)">
                     <img src="https://i.postimg.cc/Hx3SF66p/download-(4).png" alt="Video Thumbnail">
                 </div>
-                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/2ShM5F0G/1.jpg', this)">
                     <img src="https://i.postimg.cc/2ShM5F0G/1.jpg" alt="Thumb 1">
                 </div>
-                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/dVrp0m55/2.jpg', this)">
                     <img src="https://i.postimg.cc/dVrp0m55/2.jpg" alt="Thumb 2">
                 </div>
-                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/DwLHzdxB/4.jpg', this)">
                     <img src="https://i.postimg.cc/DwLHzdxB/4.jpg" alt="Thumb 4">
                 </div>
-                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/CxkXKHcv/5.jpg', this)">
                     <img src="https://i.postimg.cc/CxkXKHcv/5.jpg" alt="Thumb 5">
                 </div>
-                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/7Z0dLMB8/6.jpg', this)">
                     <img src="https://i.postimg.cc/7Z0dLMB8/6.jpg" alt="Thumb 6">
                 </div>
-                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/cLw2JMDG/7.jpg', this)">
                     <img src="https://i.postimg.cc/cLw2JMDG/7.jpg" alt="Thumb 7">
                 </div>
-                <div class="thumbnail" onclick="changeMedia('image', this.querySelector('img').src, this)">
+                <div class="thumbnail" onclick="changeMedia('image', 'https://i.postimg.cc/jdGBKk4v/8.jpg', this)">
                     <img src="https://i.postimg.cc/jdGBKk4v/8.jpg" alt="Thumb 8">
                 </div>
             </div>
         </div>
 
         <div class="info-section">
-            <h1 class="product-title" id="productTitleText">Multi Functional Chess Clock</h1>
-            <div class="product-sku" id="productSkuText">SKU: CSS-104</div>
-
-            <div class="variation-selector">
-                <p>Select Variant:</p>
-                <div class="variation-options">
-                    <button class="var-btn active" onclick="updateVariant('avocado', this)">Avocado Green</button>
-                    <button class="var-btn" onclick="updateVariant('sapphire', this)">Sapphire Blue</button>
-                </div>
-            </div>
+            <h1 class="product-title">Multi Functional Chess Clock (PS-1688)</h1>
+            <div class="product-sku">SKU: CSS-105-A</div>
             
             <div class="badges-wrapper">
-                <div id="stockLabel" class="stock-label in-stock"><i class="fas fa-check-circle"></i> In Stock</div>
-                <div id="discountBadge" class="discount-badge">20% OFF</div>
+                <div id="stockLabel" class="stock-label in-stock">
+                    <i class="fas fa-check-circle"></i> In Stock
+                </div>
+                <div id="discountBadge" class="discount-badge">05% OFF</div>
             </div>
 
             <div class="price-container">
@@ -237,6 +980,16 @@
             </div>
 
             <button class="btn-primary" id="btnBuyNow" onclick="openModal('buyNowModal')">Buy Now</button>
+            
+            <div id="freeDeliveryStrip" class="free-delivery-strip" style="display: none;">
+                <span>Free Delivery</span>
+                <img src="https://i.postimg.cc/xdyLLz05/Delivery-Icon.png" alt="Free Delivery">
+            </div>
+
+            <div id="bankPromoStrip" class="bank-promo-strip" onclick="openModal('cardDiscountModal')">
+                <span><i class="fas fa-gift"></i> Special Card Offers:</span>
+                <div class="promo-logos" id="promoLogosContainer"></div>
+            </div>
 
             <div class="countdown-container" id="salesCountdownContainer">
                 <div class="countdown-wrapper" id="salesCountdownBox">
@@ -245,52 +998,50 @@
                 </div>
                 <div class="cd-offer-desc" id="offerDescText">Don't miss out on this amazing deal!</div>
             </div>
-
-            <div class="text-section mt-20">
-                <h3><i class="fas fa-truck"></i> Shipping Information</h3>
-                <p>We offer islandwide delivery, ensuring your order reaches your doorstep within just 2-3 working days.</p>
-                <p>Courier charges are payable directly to the delivery agent upon receiving your order. A convenient Cash on Delivery (COD) option is also available.</p>
-                <p>Contact us via <a href="#" id="shippingWaLink" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a> for order inquiries.</p>
-            </div>
         </div>
     </div>
 
     <div class="text-section">
         <h3>Product Description</h3>
-        <p>Enhance your chess experience with the highly durable and professional PS-1688 Multi Functional Chess Clock. Designed for serious players, it provides accurate timing, multiple standard presets, and an intuitive interface perfect for tournaments or casual play.</p>
+        <p>This professional digital chess clock features 8 timing modes with 42 preset rules, including countdown, delay, increment, bonus time, and count-up options. Custom settings can be saved for easy reuse, while responsive rocker-style buttons ensure quick and accurate operation. Most timing parameters can be adjusted during play, and the built-in memory function retains settings after power-off. Additional features include move counting and mute mode, making it ideal for casual and tournament chess.</p>
         <ul>
-            <li><strong>Package:</strong> Chess Board with Chess Pieces</li>
-            <li><strong>Origin:</strong> Mainland China</li>
-            <li><strong>Chess Board Material:</strong> PVC</li>
-            <li><strong>Board Colour:</strong> Avocado Green / Sapphire Blue</li>
-            <li><strong>Board Size:</strong> 34.5cm × 34.5cm</li>
-            <li><strong>Chess Piece material:</strong> Resin</li>
-            <li><strong>King Height:</strong> 65mm</li>
-        </ul>
+            <li><strong>Model Number:</strong> PS-1688</li>
+            <li><strong>Main material:</strong> ABS</li>
+            <li><strong>Product colour:</strong> Blue</li>
+            <li><strong>Power supply mode:</strong> DC 3V power supply (excluding two AA batteries)</li>
+            </ul>
+            </div>
+
+    <div class="text-section mt-20">
+        <h3><i class="fas fa-truck"></i> Shipping Information</h3>
+        <p id="shippingInfoText">Islandwide Delivery available. Delivered to your doorstep in just 2-3 working days. Standard courier charges apply.</p>
+        <p>Contact us via <a href="#" id="shippingWaLink" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a> for order inquiries.</p>
     </div>
 
     <h2 class="section-heading">Payment Information</h2>
     <div class="grid-container">
         <div class="card-box" onclick="openModal('bankTransferModal')">
-            <img src="https://i.postimg.cc/WzrrL37y/symbols.png" alt="Bank Transfer">
+            <img src="https://i.postimg.cc/sxHzwK9n/Bank-Transfer.png" alt="Bank Transfer">
             <div class="card-price" id="gridPriceBank">Rs. 0/-</div>
-            <div class="more-info-link">More information</div>
+            <div class="more-info-link">Order via Form</div>
         </div>
         <div class="card-box" onclick="openModal('codModal')">
-            <img src="https://i.postimg.cc/g0gnwKnX/COD.png" alt="Cash on Delivery">
+            <img src="https://i.postimg.cc/yxpKvnXp/Cash-on-Delivery.png" alt="Cash on Delivery">
             <div class="card-price" id="gridPriceCOD">Rs. 0/-</div>
             <div class="more-info-link">Order via Form</div>
         </div>
-        <div class="card-box">
-            <img src="https://i.postimg.cc/NGrRrJwH/imgi-37-pay-visa-master.png" alt="Visa Mastercard">
+        <div class="card-box" id="visaCardBox" onclick="handleVisaBoxClick(event)">
+            <div class="discount-sidebar" id="visaDiscountSidebar">UP TO 20% OFF</div>
+            <img src="https://i.postimg.cc/4y2GBwbB/VISA-Mastercard.png" alt="Visa Mastercard">
             <div class="card-price" id="gridPriceCard">Rs. 0/-</div>
+            <div class="more-info-link" id="visaMoreInfoLink" style="display:none;">View Offers</div>
         </div>
         <div class="card-box">
-            <img src="https://i.postimg.cc/dQTGTHKS/Google-pay-acceptance-mark-icon-svg.png" alt="Digital Wallets">
+            <img src="https://i.postimg.cc/mkp48Vys/Google-Pay.png" alt="Digital Wallets">
             <div class="card-price" id="gridPriceWallet">Rs. 0/-</div>
         </div>
         <div class="card-box" id="darazOptionCard" onclick="openModal('darazModal')">
-            <img src="https://i.postimg.cc/CMfbfPVk/Daraz-logo.png" alt="Daraz">
+            <img src="https://i.postimg.cc/prcvqkY4/Daraz.png" alt="Daraz">
             <div class="card-price" id="gridPriceDaraz">Rs. 0/-</div>
             <div class="more-info-link">More information</div>
         </div>
@@ -300,17 +1051,17 @@
         <h2 class="section-heading">Installments</h2>
         <div class="grid-container">
             <div class="card-box" onclick="openModal('installmentsModal')">
-                <img src="https://i.postimg.cc/tJPPQT5y/download-(1).png" alt="Commercial Bank">
+                <img src="https://i.postimg.cc/8cXGtwBK/Commercial-Bank.png" alt="Commercial Bank">
                 <div class="card-price" id="gridInstComm">Rs. 0/- x 12</div>
                 <div class="more-info-link">More information</div>
             </div>
             <div class="card-box" onclick="openModal('installmentsModal')">
-                <img src="https://i.postimg.cc/90TT5MpX/download-(4).png" alt="DFCC Bank">
+                <img src="https://i.postimg.cc/kGYCfwv3/DFCC-Bank.png" alt="DFCC Bank">
                 <div class="card-price" id="gridInstDFCC">Rs. 0/- x 12</div>
                 <div class="more-info-link">More information</div>
             </div>
             <div class="card-box" onclick="openModal('installmentsModal')">
-                <img src="https://i.postimg.cc/8C7P7Yrq/download-(3).png" alt="HNB Bank">
+                <img src="https://i.postimg.cc/yxpKvnyB/HNB-Bank.png" alt="HNB Bank">
                 <div class="card-price" id="gridInstHNB">Rs. 0/- x 6</div>
                 <div class="more-info-link">More information</div>
             </div>
@@ -333,9 +1084,9 @@
         <div class="support-links">
             <p class="support-heading">Support Links</p>
             <div class="support-links-row">
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Delivery & Returns</a>
+                <a href="https://sites.google.com/view/chess-saviya-app-store/home/terms-and-conditions">Terms & Conditions</a>
+                <a href="https://sites.google.com/view/chess-saviya-app-store/home/privacy-policy">Privacy Policy</a>
+                <a href="https://sites.google.com/view/chess-saviya-app-store/home/delivery-and-returns-policy">Delivery & Returns</a>
             </div>
         </div>
 
@@ -364,7 +1115,6 @@
     </div>
 </div>
 
-<!-- Main Checkout Methods Modal -->
 <div class="modal-overlay" id="buyNowModal">
     <div class="modal-content">
         <button class="close-btn" onclick="closeModal('buyNowModal')">&times;</button>
@@ -384,96 +1134,24 @@
     </div>
 </div>
 
-<!-- Advanced COD Checkout Modal -->
-<div class="modal-overlay" id="codModal">
+<div class="modal-overlay" id="cardDiscountModal">
     <div class="modal-content">
-        <button class="close-btn" onclick="closeModal('codModal')">&times;</button>
+        <button class="close-btn" onclick="closeModal('cardDiscountModal')">&times;</button>
+        <h2 class="modal-title" style="color: var(--danger);"><i class="fas fa-gift"></i> Special Card Offers</h2>
+        <p class="modal-instruction" style="margin-bottom: 10px;">Pay with participating bank cards for exclusive savings.</p>
         
-        <!-- Phase 1: Checkout Form -->
-        <div id="checkout-container">
-            <h2 class="modal-title">Cash on Delivery Checkout</h2>
-            
-            <form id="shipping-form" novalidate>
-                <!-- Product Data (Hidden, updated via JS variant logic) -->
-                <input type="hidden" id="hiddenProductName" name="product" value="">
-                <input type="hidden" id="hiddenProductSku" name="sku" value="">
-                <input type="hidden" id="hiddenPrice" name="item_price" value="0">
-                <input type="hidden" id="hiddenTotalAmount" name="total" value="0">
+        <div class="bank-discount-list" id="discountBankList">
+            </div>
 
-                <!-- District Selection -->
-                <div class="input-group">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">District *</label>
-                    <select class="custom-select" id="districtSelect" name="district" onchange="handleDistrictChange()" required>
-                        <option value="" disabled selected>-- Select your District --</option>
-                    </select>
-                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Please select your district.</small>
-                </div>
-
-                <!-- Price Breakdown (Appears after District selection) -->
-                <div class="price-breakdown" id="codPriceDetails" style="margin-bottom: 20px;">
-                    <div class="price-row"><span>Item Price:</span> <span id="codItemPrice">Rs. 0/-</span></div>
-                    <div class="price-row"><span>Delivery:</span> <span id="codDeliveryFee">Rs. 0/-</span></div>
-                    <div class="price-row total"><span>Total:</span> <span id="codTotalPrice" style="color: var(--text-dark);">Rs. 0/-</span></div>
-                </div>
-
-                <!-- Customer Details -->
-                <div class="input-group">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Full Name *</label>
-                    <input type="text" name="name" class="custom-select" placeholder="Enter your full name" required>
-                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Name is required.</small>
-                </div>
-
-                <div class="input-group">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Shipping Address *</label>
-                    <input type="text" name="address1" class="custom-select" style="margin-bottom:8px" placeholder="Home number and street name" required>
-                    <input type="text" name="address2" class="custom-select" placeholder="Apartment, suite, etc. (optional)">
-                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Street address is required.</small>
-                </div>
-
-                <div class="input-group">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Town / City *</label>
-                    <input type="text" name="city" class="custom-select" placeholder="Enter your city" required>
-                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Town or city is required.</small>
-                </div>
-
-                <div style="display: flex; gap: 10px;">
-                    <div class="input-group" style="flex: 1;">
-                        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Phone *</label>
-                        <input type="tel" name="phone" class="custom-select" placeholder="07XXXXXXXX" required>
-                        <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid phone is required.</small>
-                    </div>
-                    <div class="input-group" style="flex: 1;">
-                        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Email *</label>
-                        <input type="email" name="email" class="custom-select" placeholder="email@example.com" required>
-                        <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid email is required.</small>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Order Notes (optional)</label>
-                    <textarea name="notes" class="custom-select" style="height: 60px; resize: none;" placeholder="Notes about your order, e.g. special delivery instructions."></textarea>
-                </div>
-
-                <button type="submit" class="btn-primary" id="submit-order-btn" style="margin-top: 10px;">Place COD Order</button>
-            </form>
+        <div style="background: #f8f9fa; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; margin-top: 20px;">
+            <p style="font-size: 0.85rem; color: var(--text-dark); margin-bottom: 5px;" id="discountMinMaxText">Min Order Value: Rs. 0/- | Max Discount: Rs. 0/-</p>
+            <p style="font-size: 0.8rem; color: var(--danger); font-weight: 600;" id="discountValidText">Valid until: --</p>
         </div>
 
-        <!-- Phase 2: Modern Thank You Card (Hidden by default) -->
-        <div id="thank-you-card" style="display: none; text-align: center; padding: 20px;">
-            <div style="font-size: 4rem; color: var(--success); margin-bottom: 15px;">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h2 style="color: var(--text-dark); margin-bottom: 10px;">Order Placed Successfully!</h2>
-            <p style="color: var(--text-gray); margin-bottom: 20px;">Thank you for your order. We are now processing it and will deliver your professional chess equipment shortly.</p>
-            <div style="background: #f8f9fa; border: 1px dashed var(--border-color); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                <p style="font-size: 0.85rem; color: var(--text-gray);">Our team will contact you via phone or WhatsApp if any further details are needed.</p>
-            </div>
-            <button class="btn-primary" style="background-color: var(--text-gray);" onclick="closeModal('codModal'); location.reload();">Back to Store</button>
-        </div>
+        <button class="btn-primary mt-20" onclick="closeModal('cardDiscountModal'); openPayHere();">Pay with Card</button>
     </div>
 </div>
 
-<!-- Secure PayHere Modal -->
 <div class="modal-overlay" id="payhereModal">
     <div class="modal-content">
         <button class="close-btn" onclick="closeModal('payhereModal')">&times;</button>
@@ -481,17 +1159,16 @@
         <p class="modal-instruction" style="font-size: 1.1rem; color: var(--text-dark);">
             Price: <strong id="payhereModalPrice" style="color: var(--text-dark); font-size: 1.2rem;">Rs. 0/-</strong>
         </p>
-        <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-gray);">
-            Delivery is available islandwide within 2-3 working days. The standard courier fee (<span id="payhereCourierFee" style="font-weight: 600;">Rs. 450/-</span>) can be paid directly to the delivery agent upon receiving your order.
+        <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-gray);" id="payhereModalDesc">
+            Delivery is available islandwide within 2-3 working days. The courier fee (Rs. 450/-) can be paid directly to the delivery partner upon receiving your order.
         </p>
         <p style="margin-bottom: 25px; font-size: 0.95rem; color: var(--text-gray);">
-            To complete your purchase, please provide your shipping details (First Name, Last Name, Email, Phone Number, Address, and City) on the secure payment page and proceed with your selected method.
+            To complete your purchase, please provide your shipping details (Name, Email, Phone Number, Address, and City) on the payment page and proceed with your selected payment method.
         </p>
         <button class="btn-primary" onclick="openPayHere()">Proceed to PayHere</button>
     </div>
 </div>
 
-<!-- Installment Checkout Modal -->
 <div class="modal-overlay" id="installmentCheckoutModal">
     <div class="modal-content">
         <button class="close-btn" onclick="closeModal('installmentCheckoutModal')">&times;</button>
@@ -505,8 +1182,8 @@
         <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-gray);">
             Enjoy flexible installment plans when you use credit cards from <strong>Commercial Bank, DFCC Bank, or HNB Bank</strong> at checkout.
         </p>
-        <p style="margin-bottom: 25px; font-size: 0.95rem; color: var(--text-gray);">
-            Delivery is available islandwide within 2-3 working days. The standard courier fee (<span id="installmentCourierFee" style="font-weight: 600;">Rs. 450/-</span>) can be paid directly to the delivery agent upon receiving your order.
+        <p style="margin-bottom: 25px; font-size: 0.95rem; color: var(--text-gray);" id="installmentModalDesc">
+            Delivery is available islandwide within 2-3 working days. The courier fee (Rs. 450/-) can be paid directly to the delivery partner upon receiving your order.
         </p>
         <button class="btn-primary" onclick="openPayHere()">Proceed to PayHere</button>
     </div>
@@ -515,10 +1192,147 @@
 <div class="modal-overlay" id="bankTransferModal">
     <div class="modal-content">
         <button class="close-btn" onclick="closeModal('bankTransferModal')">&times;</button>
-        <h2 class="modal-title">Bank Transfer Instructions</h2>
-        <p>Please get the bank details via <a href="#" id="modalWaTextLink" target="_blank"><strong>WhatsApp</strong></a> at <strong>+94704484126</strong> and send a photo of the bank receipt or payment screenshot for payment confirmation with these details:</p>
-        <ul style="margin: 15px 0 20px 20px;"><li>Name</li><li>Shipping Address</li><li>Contact Number(s)</li><li>Email Address</li></ul>
-        <button class="btn-primary" style="background-color: #25D366;" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> Order on WhatsApp</button>
+        <h2 class="modal-title">Bank Transfer Checkout</h2>
+        
+        <form id="bank-transfer-form" novalidate>
+            <p style="margin-bottom: 20px; font-size: 0.95rem; color: var(--text-gray);">
+                To complete your order via Bank Transfer, please fill out your shipping details below. You will then be redirected to WhatsApp to receive bank details and finalize your payment.
+            </p>
+
+            <div class="input-group">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">District *</label>
+                <select class="custom-select districtSelectGlobal" name="district" required>
+                    <option value="" disabled selected>-- Select your shipping district --</option>
+                </select>
+                <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Please select your district.</small>
+            </div>
+
+            <div class="input-group">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Full Name *</label>
+                <input type="text" name="name" class="custom-select" placeholder="Enter your full name" autocomplete="name" required>
+                <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Please enter your full name.</small>
+            </div>
+
+            <div class="input-group">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Shipping Address *</label>
+                <input type="text" name="address1" class="custom-select" style="margin-bottom:8px" placeholder="Home number and street name" autocomplete="street-address" required>
+                <input type="text" name="address2" class="custom-select" placeholder="Apartment, suite, etc. (optional)">
+                <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Street address is required.</small>
+            </div>
+
+            <div class="input-group">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Town / City *</label>
+                <input type="text" name="city" class="custom-select" placeholder="Enter your city" autocomplete="address-level2" required>
+                <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Town or city is required.</small>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div class="input-group" style="flex: 1;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Mobile *</label>
+                    <input type="tel" name="phone" class="custom-select" placeholder="07XXXXXXXX" inputmode="tel" maxlength="12" required>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid mobile number is required.</small>
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Email *</label>
+                    <input type="email" name="email" class="custom-select" placeholder="youremail@gmail.com" inputmode="email" autocomplete="email" required>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid email is required.</small>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Order Notes (optional)</label>
+                <textarea name="notes" class="custom-select" style="height: 60px; resize: none;" placeholder="Notes about your order, e.g. special delivery instructions."></textarea>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 15px; font-weight: 500;">
+                Please get the bank details via WhatsApp to make payments and place the order.
+            </p>
+
+            <button type="submit" class="btn-primary" style="background-color: #25D366;">
+                <i class="fab fa-whatsapp"></i> Send order via WhatsApp
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="modal-overlay" id="codModal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('codModal')">&times;</button>
+        
+        <div id="checkout-container">
+            <h2 class="modal-title">Cash on Delivery Checkout</h2>
+            <form id="shipping-form" novalidate>
+                <input type="hidden" id="hiddenProductName" name="product" value="Multi Functional Chess Clock (PS-1688)">
+                <input type="hidden" id="hiddenProductSku" name="sku" value="CSS-104">
+                <input type="hidden" id="hiddenPrice" name="item_price" value="0">
+                <input type="hidden" id="hiddenTotalAmount" name="total" value="0">
+
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">District *</label>
+                    <select class="custom-select districtSelectGlobal" id="districtSelect" name="district" onchange="handleDistrictChange()" required>
+                        <option value="" disabled selected>-- Select your shipping district --</option>
+                    </select>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Please select your district.</small>
+                </div>
+
+                <div class="price-breakdown" id="codPriceDetails" style="margin-bottom: 20px;">
+                    <div class="price-row"><span>Item Price:</span> <span id="codItemPrice">Rs. 0/-</span></div>
+                    <div class="price-row"><span>Delivery Fee:</span> <span id="codDeliveryFee">Rs. 0/-</span></div>
+                    <div class="price-row total"><span>Total:</span> <span id="codTotalPrice" style="color: var(--text-dark);">Rs. 0/-</span></div>
+                </div>
+
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Full Name *</label>
+                    <input type="text" name="name" class="custom-select" placeholder="Enter your full name" autocomplete="name" required>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Please enter your full name.</small>
+                </div>
+
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Shipping Address *</label>
+                    <input type="text" name="address1" class="custom-select" style="margin-bottom:8px" placeholder="Home number and street name" autocomplete="street-address" required>
+                    <input type="text" name="address2" class="custom-select" placeholder="Apartment, suite, etc. (optional)">
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Street address is required.</small>
+                </div>
+
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Town / City *</label>
+                    <input type="text" name="city" class="custom-select" placeholder="Enter your city" autocomplete="address-level2" required>
+                    <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Town or city is required.</small>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="input-group" style="flex: 1;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Mobile *</label>
+                        <input type="tel" name="phone" class="custom-select" placeholder="07XXXXXXXX" inputmode="tel" maxlength="12" required>
+                        <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid mobile number is required.</small>
+                    </div>
+                    <div class="input-group" style="flex: 1;">
+                        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Email *</label>
+                        <input type="email" name="email" class="custom-select" placeholder="youremail@gmail.com" inputmode="email" autocomplete="email" required>
+                        <small class="error-msg" style="color: var(--danger); font-size: 0.75rem; display: none;">Valid email is required.</small>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Order Notes (optional)</label>
+                    <textarea name="notes" class="custom-select" style="height: 60px; resize: none;" placeholder="Notes about your order, e.g. special delivery instructions."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submit-order-btn" style="margin-top: 10px;">Place Order</button>
+            </form>
+        </div>
+
+        <div id="thank-you-card" style="display: none; text-align: center; padding: 20px;">
+            <div style="font-size: 4rem; color: var(--success); margin-bottom: 15px;">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 style="color: var(--text-dark); margin-bottom: 10px;">Order Placed Successfully!</h2>
+            <p style="color: var(--text-gray); margin-bottom: 20px;">Thank you for your order. We are now processing it and will deliver it to you soon!</p>
+            <div style="background: #f8f9fa; border: 1px dashed var(--border-color); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <p style="font-size: 0.85rem; color: var(--text-gray);">Our team will contact you via phone or email if any further details are needed.</p>
+            </div>
+            <button class="btn-framed-close" onclick="closeModal('codModal'); location.reload();">Back to Store</button>
+        </div>
     </div>
 </div>
 
@@ -528,8 +1342,8 @@
         <h2 class="modal-title">Order on Daraz</h2>
         <p>Cash on Delivery and Koko pay installments available on our Daraz Store.</p>
         <div style="display: flex; gap: 15px; margin: 20px 0; align-items: center; justify-content: center;">
-            <img src="https://i.postimg.cc/6qRRJ30N/Cash-on-Delivery.png" alt="COD" style="height: 40px;">
-            <img src="https://i.postimg.cc/Hn55Dx2m/Daraz-Koko.png" alt="Koko Pay" style="height: 40px;">
+            <img src="https://i.postimg.cc/KjpbJQrW/Daraz-COD.png" alt="COD" style="height: 40px;">
+            <img src="https://i.postimg.cc/wM4z0FcP/Daraz-Koko.png" alt="Koko Pay" style="height: 40px;">
         </div>
         <p class="italic-gray text-center" style="margin-bottom: 20px;">Price may vary due to seasonal offers on Daraz.</p>
         <button class="btn-primary" style="background-color: #f85606;" onclick="openDaraz()">Order on Daraz</button>
@@ -571,76 +1385,86 @@
 
 <script>
     /* =========================================================
-       ADVANCED VARIABLE CONFIGURATION PANEL
+       CENTRALIZED CONFIGURATION PANEL
        ========================================================= */
     const config = {
+        stockStatus: 'in-stock',  // 'in-stock', 'out-of-stock', 'limited-stock'
+        
         ui: {
             showOriginalPrice: true, 
-            showDiscountBadge: true,   
+            showDiscountBadge: false,   // Toggle for the percentage badge
+            discountPercentage: 10,    // The number to display in the discount badge (e.g. 15, 20, 25)
             showDaraz: true,           
             showInstallments: true     
         },
 
+        images: {
+            regularMain: "https://i.postimg.cc/Hx3SF66p/download-(4).png",
+            saleMain: "https://i.postimg.cc/Hx3SF66p/download-(4).png" // Replace with your highlighted Sale image
+        },
+
+        links: {
+            whatsappBaseUrl: "https://wa.me/94704484126",
+            whatsappRegular: "?text=Hello%2C%20Chess%20Saviya%20Store.%20%E2%99%9F%EF%B8%8F%F0%9F%8F%AA%20Please%20send%20more%20info%20about%20this.%20*Multi%20Functional%20Chess%20Clock%20(PS-1688)*%20%20*SKU%3A*%20CSS-005-A%20Thank%20you!",
+            whatsappSale: "?text=Hello%2C%20Chess%20Saviya%20Store.%20%E2%99%9F%EF%B8%8F%F0%9F%8F%AA%20Please%20send%20more%20info%20about%20this.%20%E2%9C%A8%20*Multi%20Functional%20Chess%20Clock%20(PS-1688)*%20%F0%9F%94%A5%20*SKU%3A*%20CSS-005-A%20Thank%20you!",
+            darazProduct: "https://www.daraz.lk/products/professional-chess-clock-ps-1688-multi-functional-advanced-digital-chess-timer-i310611599-s1868899423.html",
+            payhereRegular: "https://payhere.lk/pay/o918f258d",
+            payhereSale: "https://payhere.lk/pay/oec808d46"
+        },
+
+        prices: {
+            regular: { mainDisplay: 10990, originalMSRP: 12500, bank: 10990, card: 11350, wallet: 11350, cod: 10990, daraz: 12990 },
+            sale: { mainDisplay: 9900, originalMSRP: 10990, bank: 9900, card: 10250, wallet: 10250, cod: 9900, daraz: 12990 }
+        },
+
         shipping: {
             baseFee: 450,
-            distantFee: 550,
+            distantFee: 500,
             payhereFeeText: "Rs. 450/-"
         },
 
         sale: {
             isActive: true,                
-            startTime: "2026-04-28T00:00:00", 
-            endTime: "2026-05-15T23:59:59",   
+            startTime: "2026-07-20T00:00:00", 
+            endTime: "2026-07-23T23:59:59",   
             showCountdownBoxes: true,      
             showOfferDescription: true,    
-            offerDescription: "Special Avurudu Sale! Grab your favorite color now."
+            offerDescription: "International Chess Day Sale! Grab it before stocks run out."
         },
 
-        activeVariant: "avocado", 
+        // --- NEW: Free Delivery Config ---
+        freeDelivery: {
+            isActive: false,
+            startTime: "2026-04-28T00:00:00",
+            endTime: "2026-06-25T23:59:59",
+            mode: "online" // Choose: "all", "online", or "cod"
+        },
 
-        // Master Variant Database 
-        variants: {
-            "avocado": {
-                name: "Multi Functional Chess Clock (Avocado Green)",
-                sku: "CSS-104-AG",
-                stockStatus: 'in-stock', 
-                discountPercentage: 20,
-                images: {
-                    regularMain: "https://i.postimg.cc/Hx3SF66p/download-(4).png",
-                    saleMain: "https://i.postimg.cc/Hx3SF66p/download-(4).png" 
-                },
-                prices: {
-                    regular: { mainDisplay: 1900, originalMSRP: 2500, bank: 11790, card: 11990, wallet: 11990, cod: 12000, daraz: 12299 },
-                    sale: { mainDisplay: 1500, originalMSRP: 1900, bank: 10500, card: 10800, wallet: 10800, cod: 10500, daraz: 11000 }
-                },
-                links: {
-                    whatsappRegular: "?text=Order%20Inquiry:%20Avocado%20Green%20Clock%20(Regular%20Price)",
-                    whatsappSale: "?text=Order%20Inquiry:%20Avocado%20Green%20Clock%20(Offer%20Price)",
-                    darazProduct: "https://www.daraz.lk/products/green-clock",
-                    payhereRegular: "https://sandbox.payhere.lk/pay/green-regular",
-                    payhereSale: "https://sandbox.payhere.lk/pay/green-sale"
-                }
-            },
-            "sapphire": {
-                name: "Multi Functional Chess Clock (Sapphire Blue)",
-                sku: "CSS-104-SB",
-                stockStatus: 'limited-stock', 
-                discountPercentage: 15,
-                images: {
-                    regularMain: "https://i.postimg.cc/2ShM5F0G/1.jpg", 
-                    saleMain: "https://i.postimg.cc/2ShM5F0G/1.jpg" 
-                },
-                prices: {
-                    regular: { mainDisplay: 2200, originalMSRP: 2800, bank: 12790, card: 12990, wallet: 12990, cod: 13000, daraz: 13299 },
-                    sale: { mainDisplay: 1800, originalMSRP: 2200, bank: 11500, card: 11800, wallet: 11800, cod: 11500, daraz: 12000 }
-                },
-                links: {
-                    whatsappRegular: "?text=Order%20Inquiry:%20Sapphire%20Blue%20Clock%20(Regular%20Price)",
-                    whatsappSale: "?text=Order%20Inquiry:%20Sapphire%20Blue%20Clock%20(Offer%20Price)",
-                    darazProduct: "https://www.daraz.lk/products/blue-clock",
-                    payhereRegular: "https://sandbox.payhere.lk/pay/blue-regular",
-                    payhereSale: "https://sandbox.payhere.lk/pay/blue-sale"
-                }
+        // --- NEW: Card Discounts Config ---
+        cardDiscounts: {
+            isActive: true,
+            startTime: "2026-07-01T00:00:00",
+            endTime: "2026-07-06T23:59:59",
+            minOrderValue: 2000,
+            maxDiscount: 750,
+            banks: {
+                sampath: { name: "Sampath Bank", logo: "https://i.postimg.cc/ZYMG39sP/Sampath-Bank.png", active: true, credit: 10, debit: 5 },
+                commercial: { name: "Commercial Bank", logo: "https://i.postimg.cc/7YJpNxjS/Commercial-Bank.png", active: true, credit: 12, debit: 10 },
+                hsbc: { name: "HSBC", logo: "https://i.postimg.cc/qM69GkWG/HSBC-Bank.png", active: false, credit: 10, debit: 5 },
+                ntb: { name: "Nations Trust Bank", logo: "https://i.postimg.cc/8k02WFX6/Nations-Trust-Bank.png", active: false, credit: 10, debit: 5 },
+                hnb: { name: "HNB", logo: "https://i.postimg.cc/L6grVHG3/HNB-Bank.png", active: true, credit: 10, debit: 5 },
+                ndb: { name: "NDB Bank", logo: "https://i.postimg.cc/Y2s5g4Dg/NDB-Bank.png", active: false, credit: 10, debit: 5 },
+                boc: { name: "Bank of Ceylon", logo: "https://i.postimg.cc/CMQ3DZrc/BOC-Bank.png", active: true, credit: 12, debit: 10 },
+                peoples: { name: "People's Bank", logo: "https://i.postimg.cc/44SDtK2V/Peoples-Bank.png", active: false, credit: 12, debit: 10 },
+                seylan: { name: "Seylan Bank", logo: "https://i.postimg.cc/dQxbd7N8/Seylan-Bank.png", active: true, credit: 10, debit: 5 },
+                dfcc: { name: "DFCC Bank", logo: "https://i.postimg.cc/3J0PZKzC/DFCC-Bank.png", active: true, credit: 10, debit: 5 },
+                lolc: { name: "LOLC Finance", logo: "https://i.postimg.cc/59RhvHKQ/LOLC-Finance.png", active: false, credit: 0, debit: 0 },
+                union: { name: "Union Bank", logo: "https://i.postimg.cc/Y2s5g4Dz/Union-Bank.png", active: false, credit: 0, debit: 0 },
+                panAsia: { name: "Pan Asia Bank", logo: "https://i.postimg.cc/ZYMG39sN/Pan-Asia-Bank.png", active: false, credit: 0, debit: 0 },
+                cdb: { name: "CDB", logo: "https://i.postimg.cc/9FwvBWsZ/CDB-Bank.png", active: false, credit: 0, debit: 0 },
+                cargills: { name: "Cargills Bank", logo: "https://i.postimg.cc/NGz3TyCN/Cargills-Bank.png", active: false, credit: 0, debit: 0 },
+                amana: { name: "Amana Bank", logo: "https://i.postimg.cc/2jKsvq9x/Amana-Bank.png", active: false, credit: 0, debit: 0 },
+                standardChartered: { name: "Standard Chartered", logo: "https://i.postimg.cc/B6ktdSN0/Standard-Chartered-Bank.png", active: false, credit: 0, debit: 0 }
             }
         }
     };
@@ -654,55 +1478,205 @@
 
     let currentPricingState = 'regular'; 
     let countdownInterval;
-
-    function initPage() {
-        document.getElementById('currentYear').innerText = new Date().getFullYear();
-        populateDistricts();
-        updateVariant(config.activeVariant, document.querySelector('.var-btn.active'));
-        toggleConditionalSections();
+    let isFreeDeliveryCOD = false;
+    let isFreeDeliveryOnline = false;
+    let maxCardDiscountVal = 0;
+    
+    /* =========================================================
+       VALIDATION LOGIC
+       ========================================================= */
+    function setFieldError(input, isError) {
+        const errorMsg = input.parentElement.querySelector('.error-msg');
+        if (isError) {
+            if (errorMsg) errorMsg.style.display = 'block';
+            input.style.borderColor = 'var(--danger)';
+        } else {
+            if (errorMsg) errorMsg.style.display = 'none';
+            input.style.borderColor = 'var(--border-color)';
+        }
     }
 
-    function populateDistricts() {
-        const select = document.getElementById('districtSelect');
-        srilankaDistricts.forEach(district => {
-            const option = document.createElement('option');
-            option.value = district;
-            option.text = district;
-            select.appendChild(option);
+    function validateSingleField(input) {
+        let isValid = true;
+        const value = input.value.trim();
+
+        if (input.name === 'name') {
+            const words = value.split(/\s+/).filter(w => w.length > 0);
+            isValid = words.length >= 2;
+        } 
+        else if (input.name === 'phone') {
+            const phoneRegex = /^(?:0|94|\+94)?7[0-9]{8}$/;
+            isValid = phoneRegex.test(value);
+        }
+        else if (input.name === 'email') {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            isValid = emailRegex.test(value);
+        }
+        else if (input.hasAttribute('required')) {
+            isValid = value !== "";
+        }
+
+        setFieldError(input, !isValid);
+        return isValid;
+    }
+
+    function attachLiveValidators() {
+        document.querySelectorAll('#shipping-form input, #shipping-form textarea, #shipping-form select, #bank-transfer-form input, #bank-transfer-form textarea, #bank-transfer-form select').forEach(element => {
+            element.addEventListener('input', () => {
+                validateSingleField(element);
+            });
         });
     }
 
-    // Handles the switching logic when a user clicks a color/type button
-    function updateVariant(variantKey, btnElement) {
-        config.activeVariant = variantKey;
-
-        // Visual UI update for the buttons
-        document.querySelectorAll('.var-btn').forEach(btn => btn.classList.remove('active'));
-        if(btnElement) btnElement.classList.add('active');
-
-        // Update Title & SKU
-        const vData = config.variants[variantKey];
-        document.getElementById('productTitleText').innerText = vData.name;
-        document.getElementById('productSkuText').innerText = `SKU: ${vData.sku}`;
-
-        // Bind data to hidden COD form fields
-        document.getElementById('hiddenProductName').value = vData.name;
-        document.getElementById('hiddenProductSku').value = vData.sku;
-
-        // Re-calculate everything based on new variant
+    /* =========================================================
+       INITIALIZATION & UI UPDATES
+       ========================================================= */
+    function initPage() {
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+        populateDistricts();
+        evaluateCardDiscounts();
+        evaluateFreeDelivery();
         evaluateSaleStatus();
         updateStockBadges();
         updatePricingUI();
         updateLinks();
+        toggleConditionalSections();
+        attachLiveValidators();
 
-        // Refresh dynamic district calculations if the modal form was already touched
-        if(document.getElementById('districtSelect').value !== '') {
-            handleDistrictChange();
+        const initialThumb = document.querySelector('.thumbnail.active');
+        if(initialThumb) initialThumb.click();
+    }
+
+    function populateDistricts() {
+        const selects = document.querySelectorAll('.districtSelectGlobal');
+        selects.forEach(select => {
+            srilankaDistricts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.text = district;
+                select.appendChild(option);
+            });
+        });
+    }
+
+    function evaluateFreeDelivery() {
+        if (!config.freeDelivery.isActive) {
+            isFreeDeliveryCOD = false;
+            isFreeDeliveryOnline = false;
+        } else {
+            const now = new Date().getTime();
+            const start = new Date(config.freeDelivery.startTime).getTime();
+            const end = new Date(config.freeDelivery.endTime).getTime();
+            
+            if (now >= start && now <= end) {
+                if (config.freeDelivery.mode === "all") {
+                    isFreeDeliveryCOD = true; isFreeDeliveryOnline = true;
+                } else if (config.freeDelivery.mode === "cod") {
+                    isFreeDeliveryCOD = true; isFreeDeliveryOnline = false;
+                } else if (config.freeDelivery.mode === "online") {
+                    isFreeDeliveryCOD = false; isFreeDeliveryOnline = true;
+                }
+            } else {
+                isFreeDeliveryCOD = false; isFreeDeliveryOnline = false;
+            }
         }
 
-        // Switch to the main image for this specific variant
-        const masterThumb = document.getElementById('masterThumb');
-        if (masterThumb) masterThumb.click();
+        const fdStrip = document.getElementById('freeDeliveryStrip');
+        if (isFreeDeliveryCOD || isFreeDeliveryOnline) {
+            fdStrip.style.display = 'flex';
+        } else {
+            fdStrip.style.display = 'none';
+        }
+
+        const shipText = document.getElementById('shippingInfoText');
+        const payhereDesc = document.getElementById('payhereModalDesc');
+        const instDesc = document.getElementById('installmentModalDesc');
+
+        if (isFreeDeliveryCOD && isFreeDeliveryOnline) {
+            shipText.innerHTML = "Enjoy <strong>Free Islandwide Delivery</strong> on all orders! Delivered to your doorstep in just 2-3 working days. Cash on Delivery and secure online payments are available.";
+            payhereDesc.innerHTML = "Enjoy <strong>Free Delivery</strong> on this order! Your package will be delivered islandwide within 2-3 working days.";
+            instDesc.innerHTML = payhereDesc.innerHTML;
+        } else if (isFreeDeliveryOnline) {
+            shipText.innerHTML = "Enjoy <strong>Free Islandwide Delivery</strong> on all prepaid online orders! Standard courier charges apply for Cash on Delivery.";
+            payhereDesc.innerHTML = "Enjoy <strong>Free Delivery</strong> on this order! Your package will be delivered islandwide within 2-3 working days.";
+            instDesc.innerHTML = payhereDesc.innerHTML;
+        } else if (isFreeDeliveryCOD) {
+            shipText.innerHTML = "Enjoy <strong>Free Islandwide Delivery</strong> on all Cash on Delivery orders! Standard courier charges apply for prepaid online payments.";
+            payhereDesc.innerHTML = "Delivery is available islandwide within 2-3 working days. The standard courier fee (Rs. 450/-) can be paid directly to the delivery partner upon receiving your order.";
+            instDesc.innerHTML = payhereDesc.innerHTML;
+        } else {
+            shipText.innerHTML = "Islandwide Delivery available. Delivered to your doorstep in just 2-3 working days. Standard courier charges apply.";
+            payhereDesc.innerHTML = "Delivery is available islandwide within 2-3 working days. The standard courier fee (Rs. 450/-) can be paid directly to the delivery partner upon receiving your order.";
+            instDesc.innerHTML = payhereDesc.innerHTML;
+        }
+    }
+
+    function evaluateCardDiscounts() {
+        const visaBox = document.getElementById('visaCardBox');
+        const promoStrip = document.getElementById('bankPromoStrip');
+        const sidebar = document.getElementById('visaDiscountSidebar');
+        const moreInfoLink = document.getElementById('visaMoreInfoLink');
+        
+        let offersActive = false;
+        maxCardDiscountVal = 0;
+
+        if (config.cardDiscounts.isActive) {
+            const now = new Date().getTime();
+            const start = new Date(config.cardDiscounts.startTime).getTime();
+            const end = new Date(config.cardDiscounts.endTime).getTime();
+            if (now >= start && now <= end) {
+                offersActive = true;
+            }
+        }
+
+        if (offersActive) {
+            const listContainer = document.getElementById('discountBankList');
+            const logosContainer = document.getElementById('promoLogosContainer');
+            listContainer.innerHTML = '';
+            logosContainer.innerHTML = '';
+            
+            let activeBanksCount = 0;
+
+            for (const [key, bank] of Object.entries(config.cardDiscounts.banks)) {
+                if (bank.active) {
+                    activeBanksCount++;
+                    if (bank.credit > maxCardDiscountVal) maxCardDiscountVal = bank.credit;
+                    if (bank.debit > maxCardDiscountVal) maxCardDiscountVal = bank.debit;
+
+                    let ratesHtml = '';
+                    if(bank.credit > 0) ratesHtml += `<div>Credit<span>${bank.credit}% OFF</span></div>`;
+                    if(bank.debit > 0) ratesHtml += `<div>Debit<span>${bank.debit}% OFF</span></div>`;
+
+                    listContainer.innerHTML += `
+                        <div class="bank-discount-item">
+                            <img src="${bank.logo}" alt="${bank.name}">
+                            <div class="bank-discount-rates">${ratesHtml}</div>
+                        </div>
+                    `;
+                    logosContainer.innerHTML += `<img src="${bank.logo}" alt="${bank.name}">`;
+                }
+            }
+
+            if (activeBanksCount > 0) {
+                visaBox.classList.add('has-discount');
+                sidebar.innerText = `UP TO ${maxCardDiscountVal}% OFF`;
+                moreInfoLink.style.display = 'block';
+                promoStrip.style.display = 'flex';
+
+                const endDateObj = new Date(config.cardDiscounts.endTime);
+                const options = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                document.getElementById('discountValidText').innerText = `Valid until: ${endDateObj.toLocaleString('en-US', options)}`;
+                document.getElementById('discountMinMaxText').innerText = `Min Order Value: Rs. ${config.cardDiscounts.minOrderValue}/- | Max Discount: Rs. ${config.cardDiscounts.maxDiscount}/-`;
+            } else {
+                offersActive = false;
+            }
+        } 
+
+        if (!offersActive) {
+            visaBox.classList.remove('has-discount');
+            moreInfoLink.style.display = 'none';
+            promoStrip.style.display = 'none';
+        }
     }
 
     function evaluateSaleStatus() {
@@ -710,14 +1684,13 @@
         const countdownBox = document.getElementById('salesCountdownBox');
         const titleText = document.getElementById('countdownTitleText');
         const specialOffer = document.getElementById('specialOfferText');
-        const firstThumbImg = document.getElementById('firstThumbImg');
+        const firstThumbImg = document.querySelector('.thumbnail.active img');
         const discountBadge = document.getElementById('discountBadge');
-        const activeData = config.variants[config.activeVariant];
 
         if (!config.sale.isActive) {
             currentPricingState = 'regular';
             countdownContainer.style.display = 'none'; specialOffer.style.display = 'none'; discountBadge.style.display = 'none';
-            if (firstThumbImg) firstThumbImg.src = activeData.images.regularMain;
+            if (firstThumbImg) firstThumbImg.src = config.images.regularMain;
             return;
         }
 
@@ -731,10 +1704,10 @@
             
             if (config.ui.showDiscountBadge) {
                 discountBadge.style.display = 'inline-block';
-                discountBadge.innerText = `${activeData.discountPercentage}% OFF`; 
+                discountBadge.innerText = `${config.ui.discountPercentage}% OFF`;
             } else { discountBadge.style.display = 'none'; }
 
-            if (firstThumbImg) firstThumbImg.src = activeData.images.saleMain;
+            if (firstThumbImg) firstThumbImg.src = config.images.saleMain;
 
             if (config.sale.showCountdownBoxes) {
                 countdownContainer.style.display = 'block';
@@ -755,9 +1728,8 @@
             }
             
         } else if (now < start) {
-            currentPricingState = 'regular';
-            discountBadge.style.display = 'none';
-            if (firstThumbImg) firstThumbImg.src = activeData.images.regularMain;
+            currentPricingState = 'regular'; discountBadge.style.display = 'none';
+            if (firstThumbImg) firstThumbImg.src = config.images.regularMain;
             
             const timeToStart = start - now;
             if (timeToStart <= (24 * 60 * 60 * 1000)) {
@@ -771,19 +1743,18 @@
             } else { countdownContainer.style.display = 'none'; }
         } else {
             currentPricingState = 'regular'; discountBadge.style.display = 'none';
-            if (firstThumbImg) firstThumbImg.src = activeData.images.regularMain;
+            if (firstThumbImg) firstThumbImg.src = config.images.regularMain;
             countdownContainer.style.display = 'none'; specialOffer.style.display = 'none';
         }
     }
 
     function updateStockBadges() {
-        const activeData = config.variants[config.activeVariant];
         const stockLabel = document.getElementById('stockLabel'); 
         const btnBuyNow = document.getElementById('btnBuyNow');
         
-        if (activeData.stockStatus === 'out-of-stock') {
+        if (config.stockStatus === 'out-of-stock') {
             stockLabel.className = 'stock-label out-of-stock'; stockLabel.innerHTML = 'Out of Stock'; btnBuyNow.style.display = 'none';
-        } else if (activeData.stockStatus === 'limited-stock') {
+        } else if (config.stockStatus === 'limited-stock') {
             stockLabel.className = 'stock-label limited-stock'; stockLabel.innerHTML = 'Limited Stock Only'; btnBuyNow.style.display = 'block';
         } else {
             stockLabel.className = 'stock-label in-stock'; stockLabel.innerHTML = '<i class="fas fa-check-circle"></i> In Stock'; btnBuyNow.style.display = 'block';
@@ -791,8 +1762,7 @@
     }
 
     function updatePricingUI() {
-        const activeData = config.variants[config.activeVariant];
-        const pObj = currentPricingState === 'sale' ? activeData.prices.sale : activeData.prices.regular;
+        const pObj = currentPricingState === 'sale' ? config.prices.sale : config.prices.regular;
         
         document.getElementById('displayPriceMain').innerText = `Rs. ${pObj.mainDisplay}/-`;
         const origPriceEl = document.getElementById('originalPriceMain');
@@ -818,15 +1788,11 @@
         document.getElementById('modComm3').innerText = `Rs. ${c3}.00 /m`; document.getElementById('modComm6').innerText = `Rs. ${c6}.00 /m`; document.getElementById('modComm12').innerText = `Rs. ${c12}.00 /m`;
         document.getElementById('modDfcc3').innerText = `Rs. ${d3}.00 /m`; document.getElementById('modDfcc6').innerText = `Rs. ${d6}.00 /m`; document.getElementById('modDfcc12').innerText = `Rs. ${d12}.00 /m`;
         document.getElementById('modHnb3').innerText = `Rs. ${h3}.00 /m`; document.getElementById('modHnb6').innerText = `Rs. ${h6}.00 /m`;
-
-        document.getElementById('payhereCourierFee').innerText = config.shipping.payhereFeeText;
-        document.getElementById('installmentCourierFee').innerText = config.shipping.payhereFeeText;
     }
 
     function updateLinks() {
-        const activeData = config.variants[config.activeVariant];
-        const waBase = "https://wa.me/94704484126";
-        const customMsg = currentPricingState === 'sale' ? activeData.links.whatsappSale : activeData.links.whatsappRegular;
+        const waBase = config.links.whatsappBaseUrl;
+        const customMsg = currentPricingState === 'sale' ? config.links.whatsappSale : config.links.whatsappRegular;
         const fullWaLink = waBase + customMsg;
 
         const shipLink = document.getElementById('shippingWaLink');
@@ -834,9 +1800,6 @@
 
         const modLink = document.getElementById('modalWaTextLink');
         if (modLink) modLink.href = fullWaLink;
-
-        const payLink = document.getElementById('footerPayHereLink');
-        if (payLink) payLink.href = "https://www.payhere.lk";
     }
 
     function toggleConditionalSections() {
@@ -851,7 +1814,13 @@
         function updateTimer() {
             const now = new Date().getTime(); const distance = targetDateMs - now;
             if (distance < 0) {
-                clearInterval(countdownInterval); evaluateSaleStatus(); updatePricingUI(); updateLinks(); return;
+                clearInterval(countdownInterval); 
+                evaluateSaleStatus(); 
+                evaluateCardDiscounts();
+                evaluateFreeDelivery();
+                updatePricingUI(); 
+                updateLinks(); 
+                return;
             }
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -868,7 +1837,9 @@
         updateTimer(); countdownInterval = setInterval(updateTimer, 1000);
     }
 
-    /* INTERACTION LOGIC */
+    /* =========================================================
+       INTERACTION & MODALS
+       ========================================================= */
     function changeMedia(type, source, thumbnailElement) {
         const displayContainer = document.getElementById('mainDisplay');
         document.querySelectorAll('.thumbnail').forEach(el => el.classList.remove('active'));
@@ -901,25 +1872,22 @@
         overlay.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
     });
 
-    function openWhatsApp() { 
-        const activeData = config.variants[config.activeVariant];
-        const waBase = "https://wa.me/94704484126";
-        const customMsg = currentPricingState === 'sale' ? activeData.links.whatsappSale : activeData.links.whatsappRegular;
-        window.open(waBase + customMsg, '_blank'); 
+    function handleVisaBoxClick(e) {
+        if(document.getElementById('visaCardBox').classList.contains('has-discount')) {
+            openModal('cardDiscountModal');
+        } else {
+            const pObj = currentPricingState === 'sale' ? config.prices.sale : config.prices.regular;
+            setupPayhereModal('Visa / Mastercard Payment', pObj.card);
+            openModal('payhereModal');
+        }
     }
-    
-    function openDaraz() { 
-        const activeData = config.variants[config.activeVariant];
-        window.open(activeData.links.darazProduct, '_blank'); 
-    }
-    
+
+    function openDaraz() { window.open(config.links.darazProduct, '_blank'); }
     function openPayHere() { 
-        const activeData = config.variants[config.activeVariant];
-        const link = currentPricingState === 'sale' ? activeData.links.payhereSale : activeData.links.payhereRegular;
+        const link = currentPricingState === 'sale' ? config.links.payhereSale : config.links.payhereRegular;
         window.open(link, '_blank'); 
     }
 
-    // Dynamic Checkout Handlers
     function handleDistrictChange() {
         const select = document.getElementById('districtSelect');
         const breakdown = document.getElementById('codPriceDetails');
@@ -934,17 +1902,18 @@
         if(distantDistricts.includes(select.value)) {
             fee = config.shipping.distantFee;
         }
+        if(isFreeDeliveryCOD) {
+            fee = 0;
+        }
 
-        const activeData = config.variants[config.activeVariant];
-        const pObj = currentPricingState === 'sale' ? activeData.prices.sale : activeData.prices.regular;
+        const pObj = currentPricingState === 'sale' ? config.prices.sale : config.prices.regular;
         const codPrice = pObj.cod;
         const total = codPrice + fee;
 
         document.getElementById('codItemPrice').innerText = `Rs. ${codPrice}/-`;
-        document.getElementById('codDeliveryFee').innerText = `Rs. ${fee}/-`;
+        document.getElementById('codDeliveryFee').innerText = fee === 0 ? "Free" : `Rs. ${fee}/-`;
         document.getElementById('codTotalPrice').innerText = `Rs. ${total}/-`;
         
-        // Pass to Google form hidden inputs
         document.getElementById('hiddenPrice').value = codPrice; 
         document.getElementById('hiddenTotalAmount').value = total;
 
@@ -964,8 +1933,7 @@
         const selectedOption = document.querySelector('input[name="paymentMethod"]:checked');
         if (!selectedOption) return alert('Please select a payment method to proceed.');
         
-        const activeData = config.variants[config.activeVariant];
-        const pObj = currentPricingState === 'sale' ? activeData.prices.sale : activeData.prices.regular;
+        const pObj = currentPricingState === 'sale' ? config.prices.sale : config.prices.regular;
 
         switch(selectedOption.value) {
             case 'bank': 
@@ -996,35 +1964,35 @@
         }
     }
 
-    // Google Apps Script Form Submission Logic
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbziSezd2NDl8no5FJ74IwQQMluuGW2-ZkS1lsZ6o5liJukBfhkx8Nt8eBVT0vTDZiwF/exec'; // Replace with actual URL
-    const form = document.getElementById('shipping-form');
+    /* =========================================================
+       FORM SUBMISSION LOGIC (COD & BANK TRANSFER)
+       ========================================================= */
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbziSezd2NDl8no5FJ74IwQQMluuGW2-ZkS1lsZ6o5liJukBfhkx8Nt8eBVT0vTDZiwF/exec'; // Replace with actual Google Script URL
+    
+    // COD FORM
+    const codForm = document.getElementById('shipping-form');
     const checkoutContainer = document.getElementById('checkout-container');
     const thankYouCard = document.getElementById('thank-you-card');
     const submitBtn = document.getElementById('submit-order-btn');
 
-    form.addEventListener('submit', e => {
+    codForm.addEventListener('submit', e => {
         e.preventDefault();
-        let isValid = true;
+        let formIsValid = true;
 
-        form.querySelectorAll('[required]').forEach(input => {
-            const error = input.nextElementSibling;
-            if (!input.value || (input.type === 'email' && !input.value.includes('@'))) {
-                if (error && error.classList.contains('error-msg')) error.style.display = 'block';
-                input.style.borderColor = 'var(--danger)';
-                isValid = false;
-            } else {
-                if (error && error.classList.contains('error-msg')) error.style.display = 'none';
-                input.style.borderColor = 'var(--border-color)';
-            }
+        codForm.querySelectorAll('[required], input[name="email"], input[name="phone"]').forEach(input => {
+            if (!validateSingleField(input)) formIsValid = false;
         });
 
-        if (!isValid) return;
+        if (!formIsValid) {
+            const firstError = codForm.querySelector('.error-msg[style*="block"]');
+            if (firstError) firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
 
         submitBtn.disabled = true;
         submitBtn.innerText = "Processing Your Order...";
 
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        fetch(scriptURL, { method: 'POST', body: new FormData(codForm)})
         .then(response => {
             checkoutContainer.style.display = "none";
             thankYouCard.style.display = "block";
@@ -1032,8 +2000,49 @@
         .catch(error => {
             alert("Connectivity error. Please try again or contact WhatsApp support.");
             submitBtn.disabled = false;
-            submitBtn.innerText = "Place COD Order";
+            submitBtn.innerText = "Place Order";
         });
+    });
+
+    // BANK TRANSFER FORM (WHATSAPP ROUTING)
+    const btForm = document.getElementById('bank-transfer-form');
+    btForm.addEventListener('submit', e => {
+        e.preventDefault();
+        let formIsValid = true;
+
+        btForm.querySelectorAll('[required], input[name="email"], input[name="phone"]').forEach(input => {
+            if (!validateSingleField(input)) formIsValid = false;
+        });
+
+        if (!formIsValid) {
+            const firstError = btForm.querySelector('.error-msg[style*="block"]');
+            if (firstError) firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        // Build Customized WhatsApp Message
+        let msg = `*New Order*\n\n`;
+        msg += `*Product:* Multi Functional Chess Clock (PS-1688)\n`;
+        msg += `*SKU:* CSS-104\n`;
+        msg += `*District:* ${btForm.district.value}\n`;
+        msg += `*Name:* ${btForm.name.value}\n`;
+        msg += `*Phone:* ${btForm.phone.value}\n`;
+        msg += `*Email:* ${btForm.email.value}\n`;
+        
+        let fullAddress = btForm.address1.value;
+        if(btForm.address2.value) fullAddress += `, ${btForm.address2.value}`;
+        fullAddress += `, ${btForm.city.value}`;
+        msg += `*Address:* ${fullAddress}\n`;
+        
+        if(btForm.notes.value) msg += `*Notes:* ${btForm.notes.value}\n`;
+        
+        msg += `\n_Please provide bank details to proceed with payment._`;
+
+        const waUrl = `${config.links.whatsappBaseUrl}?text=${encodeURIComponent(msg)}`;
+        
+        window.open(waUrl, '_blank');
+        closeModal('bankTransferModal');
+        btForm.reset();
     });
 
     window.addEventListener('DOMContentLoaded', initPage);
